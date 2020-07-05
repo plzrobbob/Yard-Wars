@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Scenes/LVLWIP/level1scene.unity
+- path: Assets/Scenes/PLRSCN/PlayerSCN1.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
