@@ -21,6 +21,10 @@ public class PlayerCharacterController : MonoBehaviour
 
     public GameObject gun;
 
+    public GameObject camera;
+
+    public GameObject aim_placeholder;
+
     private Vector3 Velocity;
 
     public bool Grounded;
@@ -34,6 +38,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         CharController = GetComponent<CharacterController>();
         height = CharController.height;
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
@@ -52,6 +57,7 @@ public class PlayerCharacterController : MonoBehaviour
         Jump();
         Movement();
         ThirdPersonCameraLookDirection();
+        gunrot();
     }
 
     void Movement()
@@ -90,16 +96,8 @@ public class PlayerCharacterController : MonoBehaviour
         fwd = fwd.normalized;//normalize for cleaner rotation
         Quaternion rot = Quaternion.LookRotation(fwd, Vector3.up);//change the vector3 into a quaternion for rotation
         transform.rotation = rot;//apply rotation
-        //GunRot();
     }
 
-    //void GunRot()
-    //{
-    //    Vector3 fwd = transform.position - Camera.main.transform.position; //gets the position of the palyer in relation to the camera
-    //    fwd = fwd.normalized;//normalize for cleaner rotation
-    //    Quaternion rot = Quaternion.LookRotation(fwd, Vector3.up);//change the vector3 into a quaternion for rotation
-    //    gun.transform.rotation = rot;//apply rotation
-    //}
     void OnSlope()
     {
         float x = Input.GetAxis("Horizontal");
@@ -126,5 +124,12 @@ public class PlayerCharacterController : MonoBehaviour
         {
             CharController.Move(Vector3.down * height / 2 * SlopeForce * Time.deltaTime);
         }
+    }
+
+    void gunrot()
+    {
+        //Vector3 v = gun.transform.rotation.eulerAngles;
+        //gun.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
+        gun.transform.LookAt(aim_placeholder.transform);
     }
 }

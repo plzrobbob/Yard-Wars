@@ -6,6 +6,33 @@ using UnityEngine.Animations;
 
 public class WeaponAim_Fire : MonoBehaviour
 {
+    public GameObject Weapon;
+
+    public GameObject projectile;
+
+    private float WeaponCooldown;
+
+    private void Update()
+    {
+        ShootController();
+        WeaponCooldown += Time.deltaTime;
+    }
+
+    private void ShootController()
+    {
+        if (Input.GetButtonDown("Fire1") && WeaponCooldown > .5f)
+        {
+            CreateBullet();
+            WeaponCooldown = 0;
+        }
+    }
+
+    private void CreateBullet()
+    {
+        Instantiate(projectile, Weapon.transform.position, transform.rotation);
+    }
+}
+    /*
     public GameObject m_Camera;
     public GameObject Weapon;
     public GameObject PlayerCapsule;
@@ -37,7 +64,8 @@ public class WeaponAim_Fire : MonoBehaviour
 
     private void ControllLook()
     {
-        //Debug.DrawRay(m_Camera.transform.position, m_Camera.transform.forward * 20, Color.green);
+
+        Debug.DrawRay(m_Camera.transform.position, m_Camera.transform.forward * 100, Color.green);
         bool ray = Physics.Raycast(m_Camera.transform.position, m_Camera.transform.forward, out var hit, 100, mask);
         if (ray)
         {
@@ -45,20 +73,13 @@ public class WeaponAim_Fire : MonoBehaviour
             Vector3 toPosition = hit.point;
             Vector3 direction = toPosition - fromPosition;
             Physics.Raycast(Weapon.transform.position, direction, out var hit2, 100);
-            //Debug.DrawRay(Weapon.transform.position, direction * 20, Color.red);
+            Debug.DrawRay(Weapon.transform.position, direction * 100, Color.red);
             GunTarget = hit2.point;
-            Vector3 target = hit2.point;
-            Quaternion lookOnLook = Quaternion.LookRotation(target - PlayerCapsule.transform.position);
-            Quaternion temp = Quaternion.Slerp(PlayerCapsule.transform.rotation, lookOnLook, 6 * Time.deltaTime);
-            temp.x = 0;
-            temp.z = 0;
-            PlayerCapsule.transform.rotation = temp;
         }
         else if (!ray)
         {
-            Physics.Raycast(Weapon.transform.position, m_Camera.transform.forward, out var hit3, 100);
-            //Debug.DrawRay(Weapon.transform.position, m_Camera.transform.forward * 20, Color.blue);
-            PlayerCapsule.transform.rotation = Quaternion.Slerp(PlayerCapsule.transform.rotation, PlayerHolder.transform.rotation, 6 * Time.deltaTime);
+            Physics.Raycast(Weapon.transform.position, m_Camera.transform.forward, out var hit3, 50);
+            Debug.DrawRay(Weapon.transform.position, m_Camera.transform.forward * 100, Color.blue);
             GunTarget = hit3.point;
         }
     }
@@ -77,4 +98,4 @@ public class WeaponAim_Fire : MonoBehaviour
         var bullet = Instantiate(projectile, Weapon.transform.position, transform.rotation);
         bullet.GetComponent<BulletTransform>().Target = GunTarget;
     }
-}
+}*/
