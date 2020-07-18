@@ -12,6 +12,7 @@ public class BulletTransform : MonoBehaviour
     public float mass;
     public float maxmass;
     public float massMult;
+    public float Damages;
     private Vector3 bullettransfrom;
 
     private float bulletTime;
@@ -45,11 +46,14 @@ public class BulletTransform : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("hit");
-        Destroy(gameObject);
         if (collision.gameObject.tag == "Enemy")
         {
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
+            HealthScript M_HealthScript = collision.gameObject.GetComponent<HealthScript>();
+            M_HealthScript.DamageHandler();
+            M_HealthScript.CurrentHealth -= Damages;
         }
 
+        Destroy(gameObject);
     }
 }

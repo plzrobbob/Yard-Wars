@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 1957973271}
   - component: {fileID: 1957973270}
   - component: {fileID: 1957973269}
+  - component: {fileID: 1957973273}
   m_Layer: 9
   m_Name: Cube
   m_TagString: Enemy
@@ -400,6 +401,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1957973273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957973268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8450751fec03164092b1e168ec73da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  CurrentHealth: 100
+  regentimer: 2
+  regenmult: 4
+  damaged: 0
 --- !u!1001 &6545992583660785977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -407,40 +425,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6545992583554807459, guid: 95dec3d279b8be64b94eb1290cf43e87,
+    - target: {fileID: 6545992583244892667, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 30
+      propertyPath: m_LocalRotation.y
+      value: -0.000000007688999
+      objectReference: {fileID: 0}
+    - target: {fileID: 6545992583244892667, guid: 95dec3d279b8be64b94eb1290cf43e87,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 1.01277355e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6545992583258178083, guid: 95dec3d279b8be64b94eb1290cf43e87,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000004816326
+      objectReference: {fileID: 0}
+    - target: {fileID: 6545992583258178083, guid: 95dec3d279b8be64b94eb1290cf43e87,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.00000005656261
       objectReference: {fileID: 0}
     - target: {fileID: 6545992583658902019, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.16018227
+      value: -0.11519517
       objectReference: {fileID: 0}
     - target: {fileID: 6545992583658902019, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000030203836
+      value: -0.000000010510821
       objectReference: {fileID: 0}
     - target: {fileID: 6545992583658902019, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000035425676
+      value: 0.0000000025306324
       objectReference: {fileID: 0}
     - target: {fileID: 6545992583992137984, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.10321068
+      value: 0.05793856
       objectReference: {fileID: 0}
     - target: {fileID: 6545992583992137984, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000014022502
-      objectReference: {fileID: 0}
-    - target: {fileID: 6545992583992137984, guid: 95dec3d279b8be64b94eb1290cf43e87,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.000000027276139
+      value: -0.0000000015852261
       objectReference: {fileID: 0}
     - target: {fileID: 6545992584745139568, guid: 95dec3d279b8be64b94eb1290cf43e87,
         type: 3}
@@ -501,16 +529,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerHolder
-      objectReference: {fileID: 0}
-    - target: {fileID: 8943474317747585622, guid: 95dec3d279b8be64b94eb1290cf43e87,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.464
-      objectReference: {fileID: 0}
-    - target: {fileID: 8943474317747585622, guid: 95dec3d279b8be64b94eb1290cf43e87,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95dec3d279b8be64b94eb1290cf43e87, type: 3}

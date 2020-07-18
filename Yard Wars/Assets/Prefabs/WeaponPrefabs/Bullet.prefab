@@ -112,6 +112,7 @@ MonoBehaviour:
   mass: 20
   maxmass: 60
   massMult: 5
+  Damages: 10
 --- !u!54 &2477761014398263437
 Rigidbody:
   m_ObjectHideFlags: 0
