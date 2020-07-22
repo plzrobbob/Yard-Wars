@@ -8,6 +8,9 @@ TagManager:
   - PlayerCapsule
   - PlayerHolder
   - Enemy
+  - Fire
+  - EnemyTarget
+  - PathwayIntersection
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - 
   - Ground
   - Enemy
-  - 
+  - MinionPath
   - 
   - 
   - 
