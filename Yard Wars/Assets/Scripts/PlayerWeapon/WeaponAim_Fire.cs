@@ -32,6 +32,8 @@ public class WeaponAim_Fire : MonoBehaviour
         Instantiate(projectile, Weapon.transform.position, transform.rotation);
     }
 }
+
+//keep this cause its cool 
     /*
     public GameObject m_Camera;
     public GameObject Weapon;
