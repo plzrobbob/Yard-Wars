@@ -10250,8 +10250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &267615272
 NavMeshAgent:
@@ -10263,17 +10261,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &267615273
 CapsuleCollider:
@@ -24634,8 +24632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &676916830
 NavMeshAgent:
@@ -24647,17 +24643,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &676916831
 CapsuleCollider:
@@ -24953,8 +24949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &688709241
 NavMeshAgent:
@@ -24966,17 +24960,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &688709242
 CapsuleCollider:
@@ -38899,8 +38893,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &1046145685
 NavMeshAgent:
@@ -38911,18 +38903,18 @@ NavMeshAgent:
   m_GameObject: {fileID: 1046145683}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 1
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &1046145686
 CapsuleCollider:
@@ -39005,7 +38997,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23238
+  m_Name: pb_Mesh23186
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -46774,17 +46766,17 @@ PrefabInstance:
     - target: {fileID: 7701271044711426780, guid: 8f3aa04828537be48b4fe807273bd642,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.07005692
+      value: 0.07005694
       objectReference: {fileID: 0}
     - target: {fileID: 7701271044711426780, guid: 8f3aa04828537be48b4fe807273bd642,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.61350155
+      value: -0.6135016
       objectReference: {fileID: 0}
     - target: {fileID: 7701271044711426780, guid: 8f3aa04828537be48b4fe807273bd642,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.031145904
+      value: 0.031145917
       objectReference: {fileID: 0}
     - target: {fileID: 7701271044711426780, guid: 8f3aa04828537be48b4fe807273bd642,
         type: 3}
@@ -54126,8 +54118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &1448458781
 NavMeshAgent:
@@ -54138,18 +54128,18 @@ NavMeshAgent:
   m_GameObject: {fileID: 1448458779}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 1
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &1448458782
 CapsuleCollider:
@@ -58458,8 +58448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &1553613972
 NavMeshAgent:
@@ -58471,17 +58459,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &1553613973
 CapsuleCollider:
@@ -61807,8 +61795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &1652926343
 NavMeshAgent:
@@ -61820,17 +61806,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &1652926344
 CapsuleCollider:
@@ -65748,8 +65734,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &1723910055
 NavMeshAgent:
@@ -65760,18 +65744,18 @@ NavMeshAgent:
   m_GameObject: {fileID: 1723910053}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Radius: 1
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &1723910056
 CapsuleCollider:
@@ -77961,8 +77945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cornerPoints: []
-  cols: []
   PF_Index: 0
 --- !u!195 &2050968068
 NavMeshAgent:
@@ -77974,17 +77956,17 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 3
+  m_Acceleration: 3
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_AngularSpeed: 0.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 5
   m_ObstacleAvoidanceType: 4
 --- !u!136 &2050968069
 CapsuleCollider:
