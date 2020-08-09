@@ -44,7 +44,7 @@ public class BulletTransform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("hit");
+        //Debug.Log("hit");
         if (collision.gameObject.tag == "Enemy")
         {
             HealthScript M_HealthScript = collision.gameObject.GetComponent<HealthScript>();

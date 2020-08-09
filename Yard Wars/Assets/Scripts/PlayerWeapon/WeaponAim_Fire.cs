@@ -12,6 +12,13 @@ public class WeaponAim_Fire : MonoBehaviour
 
     private float WeaponCooldown;
 
+    public PlaceDefense m_placeDefense;
+
+    private void Start()
+    {
+        m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
+    }
+
     private void Update()
     {
         ShootController();
@@ -20,7 +27,7 @@ public class WeaponAim_Fire : MonoBehaviour
 
     private void ShootController()
     {
-        if (Input.GetButtonDown("Fire1") && WeaponCooldown > .5f)
+        if (Input.GetButtonDown("Fire1") && WeaponCooldown > .5f && !m_placeDefense.placing)
         {
             CreateBullet();
             WeaponCooldown = 0;
