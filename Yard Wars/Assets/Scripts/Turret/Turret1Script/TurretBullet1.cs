@@ -4,51 +4,41 @@ using UnityEngine;
 
 public class TurretBullet1 : MonoBehaviour
 {
-    public GameObject Weapon;
+    private GameObject Target;
 
-    private Rigidbody rb;
-    public float bulletSpeed;
-    public float mass;
-    public float maxmass;
-    public float massMult;
+    [Header("This is set in the turret GO")]
     public float Damages;
-    private Vector3 bullettransfrom;
+    public float speed;
 
-    private float bulletTime;
-
-    private void Start()
+    public void Chase(GameObject _target)
     {
-        rb = GetComponent<Rigidbody>();
-        bullettransfrom = Weapon.transform.forward;
+        Target = _target;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
-        rb.MovePosition(transform.position + bullettransfrom * bulletSpeed * Time.fixedDeltaTime);
-
-        if (mass < maxmass)
-        {
-            mass += Time.deltaTime;
-        }
-
-        rb.AddForce(-transform.up * mass * massMult * Time.deltaTime);
-
-        bulletTime += Time.deltaTime;
-        if (bulletTime > 10f)
+        if (Target == null)
         {
             Destroy(gameObject);
+            return;
         }
+
+        Vector3 dir = Target.transform.position - transform.position;
+        float distanceThisFrame = speed * Time.deltaTime;
+        if (dir.magnitude <= distanceThisFrame)
+        {
+            HitTarget();
+            return;
+        }
+
+        transform.Translate(dir.normalized * distanceThisFrame, Space.World);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void HitTarget()
     {
-        Debug.Log("hit");
-        if (collision.gameObject.tag == "Enemy")
-        {
-            HealthScript M_HealthScript = collision.gameObject.GetComponent<HealthScript>();
-            M_HealthScript.DamageHandler();
-            M_HealthScript.CurrentHealth -= Damages;
-        }
         Destroy(gameObject);
+        HealthScript M_HealthScript = Target.gameObject.GetComponent<HealthScript>();
+        M_HealthScript.DamageHandler();
+        M_HealthScript.CurrentHealth -= Damages;
     }
 }

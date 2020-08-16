@@ -252,12 +252,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f23aaf2d2f7ee24293192a1f1ae627d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  range: 20
-  EnemyTag: Enemy
   PartToRotate: {fileID: 2358703379495286024}
-  TurnSpeed: 5
   PlaceHoldertarget: {fileID: 5361176953130853322}
+  EnemyTag: Enemy
+  BulletPrefab: {fileID: 2115809243748121822, guid: 14877bb8736507742873d04a47f736a3,
+    type: 3}
+  FirePoint: {fileID: 23495094}
+  TurnSpeed: 5
+  fireRate: 1
+  fireCountDown: 0
+  range: 20
+  bulletDamages: 5
+  bulletSpeed: 30
 --- !u!1 &5361176953130853322
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,6 +366,12 @@ PrefabInstance:
 --- !u!4 &2358703379495286024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6574251975746196666, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+    type: 3}
+  m_PrefabInstance: {fileID: 8901262877186810290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &23495094 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8901262877175963652, guid: fd3dc12f7e1f2ff438e837c0b1953905,
     type: 3}
   m_PrefabInstance: {fileID: 8901262877186810290}
   m_PrefabAsset: {fileID: 0}

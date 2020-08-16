@@ -6,17 +6,22 @@ using UnityEngine;
 
 public class TurretController : MonoBehaviour
 {
-    public GameObject target;
-
-    public int range;
-
+    [Header("SetupFields")]
+    private GameObject target;
+    public Transform PartToRotate;
+    public GameObject PlaceHoldertarget;
     public string EnemyTag;
 
-    public Transform PartToRotate;
+    public GameObject BulletPrefab;
+    public Transform FirePoint;
 
+    [Header("Attributes")]
     public float TurnSpeed = 5f;
-
-    public GameObject PlaceHoldertarget;
+    public float fireRate = 1f;
+    public float fireCountDown = 0f;
+    public float range;
+    public float bulletDamages;
+    public float bulletSpeed;
 
     void Start()
     {
@@ -87,6 +92,25 @@ public class TurretController : MonoBehaviour
             Quaternion LookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(PartToRotate.rotation, LookRotation, Time.deltaTime * TurnSpeed).eulerAngles;
             PartToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        }
+
+        if (fireCountDown <= 0f)
+        {
+            Shoot();
+            fireCountDown = 1f / fireRate;
+        }
+        fireCountDown -= Time.deltaTime; 
+    }
+    void Shoot()
+    {
+        GameObject bulletGO = (GameObject)Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
+        TurretBullet1 bullet = bulletGO.GetComponent<TurretBullet1>();
+
+        if (bullet != null)
+        {
+            bullet.Chase(target);
+            bullet.Damages = bulletDamages;
+            bullet.speed = bulletSpeed;
         }
     }
 
