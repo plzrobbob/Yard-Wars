@@ -260,10 +260,10 @@ MonoBehaviour:
   FirePoint: {fileID: 23495094}
   TurnSpeed: 5
   fireRate: 1
-  fireCountDown: 0
   range: 20
   bulletDamages: 5
-  bulletSpeed: 30
+  bulletSpeed: 50
+  timerToShoot: 0.5
 --- !u!1 &5361176953130853322
 GameObject:
   m_ObjectHideFlags: 0

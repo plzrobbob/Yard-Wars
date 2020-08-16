@@ -7,7 +7,7 @@ using UnityEngine;
 public class TurretController : MonoBehaviour
 {
     [Header("SetupFields")]
-    private GameObject target;
+    public GameObject target;
     public Transform PartToRotate;
     public GameObject PlaceHoldertarget;
     public string EnemyTag;
@@ -18,10 +18,14 @@ public class TurretController : MonoBehaviour
     [Header("Attributes")]
     public float TurnSpeed = 5f;
     public float fireRate = 1f;
-    public float fireCountDown = 0f;
     public float range;
     public float bulletDamages;
     public float bulletSpeed;
+    private float canshootTimer;
+    public float timerToShoot;
+    private float fireCountDown = 0f;
+
+    public GameObject[] enemies;
 
     void Start()
     {
@@ -30,7 +34,8 @@ public class TurretController : MonoBehaviour
 
     void UpdateTarget()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(EnemyTag);
+        Debug.Log("Update");
+        enemies = GameObject.FindGameObjectsWithTag(EnemyTag);
 
         float shortestDitance = Mathf.Infinity;
         GameObject nearestEnemy = null;
@@ -39,7 +44,7 @@ public class TurretController : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-            if (distanceToEnemy < shortestDitance)
+            if (distanceToEnemy < shortestDitance && enemy.GetComponent<HealthScript>().CurrentHealth > 0)
             {
                 shortestDitance = distanceToEnemy;
                 nearestEnemy = enemy;
@@ -50,8 +55,7 @@ public class TurretController : MonoBehaviour
         {
             target = null;
         }
-
-        if (nearestEnemy != null && shortestDitance <= range)
+        else if (nearestEnemy != null && shortestDitance <= range)
         {
             if (target == null)
             {
@@ -66,10 +70,6 @@ public class TurretController : MonoBehaviour
 
     private void Update()
     {
-        //if (target == null)
-        //{
-        //    return;
-        //}
         try
         {
             if (target.GetComponent<HealthScript>().CurrentHealth <= 0)
@@ -92,13 +92,15 @@ public class TurretController : MonoBehaviour
             Quaternion LookRotation = Quaternion.LookRotation(dir);
             Vector3 rotation = Quaternion.Lerp(PartToRotate.rotation, LookRotation, Time.deltaTime * TurnSpeed).eulerAngles;
             PartToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+            canshootTimer = 0;
         }
 
-        if (fireCountDown <= 0f)
+        if (fireCountDown <= 0f && canshootTimer >= timerToShoot)
         {
             Shoot();
             fireCountDown = 1f / fireRate;
         }
+        canshootTimer += Time.deltaTime;
         fireCountDown -= Time.deltaTime; 
     }
     void Shoot()

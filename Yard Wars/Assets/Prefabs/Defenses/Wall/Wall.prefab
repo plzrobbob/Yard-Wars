@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7257214703760662667}
   - component: {fileID: 7257214703760662664}
   - component: {fileID: 7257214703760662660}
-  m_Layer: 9
+  - component: {fileID: 8134580768386667480}
+  m_Layer: 0
   m_Name: Wall
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -111,3 +112,19 @@ MonoBehaviour:
   regentimer: 0
   regenmult: 0
   damaged: 0
+--- !u!208 &8134580768386667480
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7257214703760662665}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
