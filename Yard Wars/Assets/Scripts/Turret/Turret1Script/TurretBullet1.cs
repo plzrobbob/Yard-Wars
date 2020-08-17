@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurretBullet1 : MonoBehaviour
 {
     private GameObject Target;
-    public Vector3 targettransform;
+    private Vector3 targettransform;
     private float timer = 10;
     private float bullettime;
     private Rigidbody rb;
@@ -13,6 +13,8 @@ public class TurretBullet1 : MonoBehaviour
     [Header("This is set in the turret GO")]
     public float Damages;
     public float speed;
+    public string EnemyTag;
+
     public void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,9 +60,13 @@ public class TurretBullet1 : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("hit");
-        if (collision.gameObject != Target)
+        if (collision.gameObject.tag != EnemyTag)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            collision.gameObject.GetComponent<HealthScript>().CurrentHealth -= Damages;
         }
     }
 }

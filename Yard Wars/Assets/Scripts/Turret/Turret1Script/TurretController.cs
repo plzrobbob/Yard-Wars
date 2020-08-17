@@ -113,6 +113,7 @@ public class TurretController : MonoBehaviour
             bullet.Chase(target);
             bullet.Damages = bulletDamages;
             bullet.speed = bulletSpeed;
+            bullet.EnemyTag = EnemyTag;
         }
     }
 
