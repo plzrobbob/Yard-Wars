@@ -64,9 +64,13 @@ public class TurretBullet1 : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else
+        else if(collision.gameObject.tag == EnemyTag)
         {
-            collision.gameObject.GetComponent<HealthScript>().CurrentHealth -= Damages;
+            if (collision.gameObject.GetComponent<HealthScript>().CurrentHealth > 0)
+            {
+                collision.gameObject.GetComponent<HealthScript>().CurrentHealth -= Damages;
+            }
+            Destroy(gameObject);
         }
     }
 }
