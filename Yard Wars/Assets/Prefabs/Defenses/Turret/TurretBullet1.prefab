@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2115809243748121793}
   - component: {fileID: 2115809243748121792}
   - component: {fileID: 2115809243748121823}
-  - component: {fileID: -2402445342358581257}
   - component: {fileID: 2477761014398263437}
+  - component: {fileID: 3366235856840092322}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: TurretBullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,24 +95,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-2402445342358581257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115809243748121822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd54c983490e8b544ad895e4fa93a981, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Weapon: {fileID: 4253739503936706458, guid: 11d0cae9abb2783499ff0632581f4338, type: 3}
-  bulletSpeed: 50
-  mass: 70
-  maxmass: 60
-  massMult: 10
-  Damages: 10
 --- !u!54 &2477761014398263437
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,3 +111,21 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3366235856840092322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115809243748121822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a69b9b8229595e4da3f5c6f45d2d288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Weapon: {fileID: 0}
+  bulletSpeed: 35.1
+  mass: 30
+  maxmass: 60
+  massMult: 10
+  Damages: 5
