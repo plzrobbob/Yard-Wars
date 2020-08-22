@@ -133,24 +133,41 @@ public class PlaceDefense : MonoBehaviour
     private void SetDefenseHeight()
     {
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
-        if (Physics.Raycast(transform.position, transform.forward, out var hit, 5.5f, raymask))
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, 5.5f, raymask))//placing against a wall.  defenses will not intersect
         {
             Debug.DrawRay(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up * 20, Color.blue);
             if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask))
             {
-                DefenseHolder.transform.position = hit2.point + (transform.up * 1.8f);
+                if (hit2.collider.gameObject.layer == 12)
+                {
+                    canplace = false;
+                    return;
+                }
+                else
+                {
+                    DefenseHolder.transform.position = hit2.point + (transform.up * 1.8f);
+                }
             }
             else
             {
                 canplace = false;
+                return;
             }
         }
-        else 
+        else//if there is no wall player can just place
         {
             Debug.DrawRay(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up * 20, Color.blue);
             if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask))
             {
-                DefenseHolder.transform.position = hit2.point + (transform.up * 1.8f);
+                if (hit2.collider.gameObject.layer == 12)
+                {
+                    canplace = false;
+                    return;
+                }
+                else
+                {
+                    DefenseHolder.transform.position = hit2.point + (transform.up * 1.8f);
+                }
             }
             else
             {
@@ -158,13 +175,16 @@ public class PlaceDefense : MonoBehaviour
             }
         }
 
+        //if hit.point exists and it isnt more than 1.5 meters from the palyer then you can palce a defense
         if (Vector3.Distance(this.transform.position, hit.point) < 1.5f)
         {
             canplace = false;
+            return;
         }
         else
         { 
-            canplace = true; 
+            canplace = true;
+            return;
         }
 
     }

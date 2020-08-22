@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2358703379989481289}
   - component: {fileID: 2358703379989481288}
   - component: {fileID: 2358703379989481303}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2358703380112429923}
   - component: {fileID: 2358703380112429922}
   - component: {fileID: 2358703380112429921}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,9 +198,9 @@ GameObject:
   - component: {fileID: 2358703380950018145}
   - component: {fileID: 67541905745364531}
   - component: {fileID: 7382398885801488264}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Turret
-  m_TagString: Untagged
+  m_TagString: Defense
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -252,6 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f23aaf2d2f7ee24293192a1f1ae627d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
   PartToRotate: {fileID: 2358703379495286024}
   PlaceHoldertarget: {fileID: 5361176953130853322}
   EnemyTag: Enemy
@@ -264,6 +265,7 @@ MonoBehaviour:
   bulletDamages: 5
   bulletSpeed: 50
   timerToShoot: 0.5
+  enemies: []
 --- !u!1 &5361176953130853322
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5506088600883760579}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: PlaceHolderTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,6 +307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: turrethead
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574251975746196645, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6574251975746196666, guid: fd3dc12f7e1f2ff438e837c0b1953905,
         type: 3}
@@ -360,6 +367,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574251975872058796, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574251976075389228, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574251977341141111, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6574251977623922322, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901262877175963655, guid: fd3dc12f7e1f2ff438e837c0b1953905,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
