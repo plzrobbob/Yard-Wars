@@ -8,9 +8,8 @@ TagManager:
   - PlayerCapsule
   - PlayerHolder
   - Enemy
-  - Fire
-  - EnemyTarget
-  - PathwayIntersection
+  - PlaceholderDefense
+  - Defense
   layers:
   - Default
   - TransparentFX
@@ -22,9 +21,9 @@ TagManager:
   - 
   - Ground
   - Enemy
-  - MinionPath
-  - 
-  - 
+  - Placeholder
+  - Player
+  - Defense
   - 
   - 
   - 

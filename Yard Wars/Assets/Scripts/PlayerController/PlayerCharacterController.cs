@@ -32,10 +32,13 @@ public class PlayerCharacterController : MonoBehaviour
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
 
+    public PlaceDefense m_placeDefense;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
         CharController = GetComponent<CharacterController>();
         height = CharController.height;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -58,6 +61,16 @@ public class PlayerCharacterController : MonoBehaviour
         Movement();
         ThirdPersonCameraLookDirection();
         gunrot();
+
+
+        if (m_placeDefense.placing)
+        {
+            gun.SetActive(false);
+        }
+        else
+        {
+            gun.SetActive(true);
+        }
     }
 
     void Movement()

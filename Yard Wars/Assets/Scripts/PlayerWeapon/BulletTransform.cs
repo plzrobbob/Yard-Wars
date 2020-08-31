@@ -24,7 +24,6 @@ public class BulletTransform : MonoBehaviour
         bullettransfrom = Weapon.transform.right;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         rb.MovePosition(transform.position + bullettransfrom * bulletSpeed * Time.fixedDeltaTime);
@@ -45,15 +44,13 @@ public class BulletTransform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("hit");
+        //Debug.Log("hit");
         if (collision.gameObject.tag == "Enemy")
         {
-            //Destroy(collision.gameObject);
             HealthScript M_HealthScript = collision.gameObject.GetComponent<HealthScript>();
             M_HealthScript.DamageHandler();
             M_HealthScript.CurrentHealth -= Damages;
         }
-
         Destroy(gameObject);
     }
 }
