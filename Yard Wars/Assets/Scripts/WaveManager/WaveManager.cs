@@ -5,8 +5,8 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     bool ready4Wave; // if this bool is true then the wave is over and ready for the next one
-   public bool waveInProgress; // if this bool is true then wave spawning is still happening
-    public List<Vector3> spawnPointList = new List<Vector3>();
+    public bool waveInProgress; // if this bool is true then wave spawning is still happening
+    public List<GameObject> spawnPointList = new List<GameObject>();
 
     int waveNumber;
     int waveAmount;
@@ -88,7 +88,7 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < waveAmount; i++)         //loop until the amount of minions for this wave have spawned
             {
-                Instantiate(minionPrefabTypeOne, spawnPointList[Random.Range(0, 2)], Quaternion.identity); //spawn a specified amount of minions at a random spawn point
+                Instantiate(minionPrefabTypeOne, spawnPointList[Random.Range(0, 2)].transform.position, Quaternion.identity); //spawn a specified amount of minions at a random spawn point
                 yield return new WaitForSeconds(0.1f);
                 //Debug.Log("Holy fuck my guy, did you fucking see that shit spawn in a fucking random location???");
             }
@@ -97,7 +97,7 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < waveAmount; i++)        //loop until the amount of minions for this wave have spawned
             {
-                Instantiate(minionPrefabTypeOne, spawnPointList[spawn - 1], Quaternion.identity);
+                Instantiate(minionPrefabTypeOne, spawnPointList[spawn - 1].transform.position, Quaternion.identity);
                 yield return new WaitForSeconds(0.1f);
                 //Debug.Log("Holy fuck my guy, did you fucking see that shit spawn in a totally NOT fucking random location???");
             }
