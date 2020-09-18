@@ -108,10 +108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapon: {fileID: 4253739503936706458, guid: 11d0cae9abb2783499ff0632581f4338, type: 3}
-  bulletSpeed: 15
-  mass: 20
+  bulletSpeed: 50
+  mass: 70
   maxmass: 60
-  massMult: 5
+  massMult: 10
   Damages: 10
 --- !u!54 &2477761014398263437
 Rigidbody:

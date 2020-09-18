@@ -17,7 +17,10 @@ public class HealthScript : MonoBehaviour
 
     public void Update()
     {
-        RegenHandler();
+        if (CurrentHealth > 0)
+        {
+            RegenHandler();
+        }
         if (CurrentHealth <= 0)
         {
             Dead();
@@ -59,6 +62,7 @@ public class HealthScript : MonoBehaviour
     public void Dead()
     {
         //die time
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        //gameObject.SetActive(false);
     }
 }
