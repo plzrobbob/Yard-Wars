@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Weapon
+  - PlayerCapsule
+  - PlayerHolder
+  - Enemy
+  - PlaceholderDefense
+  - Defense
   layers:
   - Default
   - TransparentFX
@@ -13,11 +19,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Enemy
+  - Placeholder
+  - Player
+  - Defense
   - 
   - 
   - 
