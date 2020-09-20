@@ -14,6 +14,13 @@ public class HealthScript : MonoBehaviour
 
     public bool damaged;
 
+    public GameObject Playerbody;
+    public PlayerCharacterController m_PlayerCharacterController;
+    public WeaponAim_Fire m_weaponAim_Fire;
+    public PlaceDefense m_placeDefense;
+    public GameObject PlayerCineCamera;
+    public GameObject DeathCamCineCamera;
+
 
     public void Update()
     {
@@ -23,7 +30,12 @@ public class HealthScript : MonoBehaviour
         }
         if (CurrentHealth <= 0)
         {
-            Dead();
+            StartCoroutine(Dead());
+        }
+
+        if (Input.GetAxis("Die") != 0)
+        {
+            CurrentHealth = 0;
         }
     }
 
@@ -59,10 +71,28 @@ public class HealthScript : MonoBehaviour
         curregentime = 0;
     }
 
-    public void Dead()
+    public IEnumerator Dead()
     {
-        //die time
-        //Destroy(gameObject);
-        //gameObject.SetActive(false);
+        //play death aniamtion
+        Playerbody.SetActive(false);
+        m_PlayerCharacterController.enabled = false;
+        m_weaponAim_Fire.enabled = false;
+        m_placeDefense.enabled = false;
+        PlayerCineCamera.SetActive(false);
+
+
+        yield return new WaitForSeconds(2);
+        DeathCamCineCamera.SetActive(false);
+        //this is where the player should be transformed to his spawn
+
+        yield return new WaitForSeconds(6);
+        //respawn the palyer
+        CurrentHealth = 100;
+        Playerbody.SetActive(true);
+        m_PlayerCharacterController.enabled = true;
+        m_weaponAim_Fire.enabled = true;
+        m_placeDefense.enabled = true;
+        PlayerCineCamera.SetActive(true);
+        DeathCamCineCamera.SetActive(true);
     }
 }
