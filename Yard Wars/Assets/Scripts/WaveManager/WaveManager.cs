@@ -91,9 +91,10 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < waveAmount; i++)         //loop until the amount of minions for this wave have spawned
             {
-                Vector3 tempSpawnLocation = spawnPointList[Random.Range(0, 3)].transform.position;
+                GameObject tempSpawnObject = spawnPointList[Random.Range(0, spawnPointList.Count)];
+                Vector3 tempSpawnLocation = tempSpawnObject.transform.position;
 
-                switch (spawnPointList[0] ? "1" : spawnPointList[1] ? "2" : spawnPointList[2] ? "3" : "Other")
+                switch (tempSpawnObject == spawnPointList[0] ? "1" : tempSpawnObject == spawnPointList[1] ? "2" : tempSpawnObject == spawnPointList[2] ? "3" : "Other")
                 {
                     case "1":
                         newFirstNode = firstNodeList[0];
@@ -119,9 +120,10 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < waveAmount; i++)        //loop until the amount of minions for this wave have spawned
             {
-                Vector3 tempSpawnLocation = spawnPointList[spawn - 1].transform.position;
+                GameObject tempSpawnObject = spawnPointList[spawn - 1];
+                Vector3 tempSpawnLocation = tempSpawnObject.transform.position;
 
-                switch (spawnPointList[0] ? "1" : spawnPointList[1] ? "2" : spawnPointList[2] ? "3" : "Other")
+                switch (tempSpawnObject == spawnPointList[0] ? "1" : tempSpawnObject == spawnPointList[1] ? "2" : tempSpawnObject == spawnPointList[2] ? "3" : "Other")
                 {
                     case "1":
                         newFirstNode = firstNodeList[0];

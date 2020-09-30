@@ -250,7 +250,7 @@ MonoBehaviour:
   DeathCamCineCamera: {fileID: 0}
   Player_Animator: {fileID: 0}
   respawnTimer: 0
-  player: {fileID: 0}
+  TopBody: {fileID: 2358703380950018144}
 --- !u!114 &7382398885801488264
 MonoBehaviour:
   m_ObjectHideFlags: 0

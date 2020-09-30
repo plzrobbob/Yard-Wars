@@ -29,11 +29,15 @@ public class HealthScript : MonoBehaviour
 
     public int respawnTimer;
 
-    public GameObject player;
+    public GameObject TopBody;
+    void Start()
+    {
+        CurrentHealth = MaxHealth;
+    }
 
     public void Update()
     {
-        if (CurrentHealth > 0)
+        if (CurrentHealth > 0 && TopBody.gameObject.tag == "Player")
         {
             RegenHandler();
         }
@@ -43,7 +47,7 @@ public class HealthScript : MonoBehaviour
             StartCoroutine(Dead());
         }
 
-        if (Input.GetAxis("Die") != 0)
+        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.tag == "Player")
         {
             CurrentHealth = 0;
         }
@@ -83,38 +87,47 @@ public class HealthScript : MonoBehaviour
 
     public IEnumerator Dead()
     {
-        m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls
-        m_weaponAim_Fire.enabled = false;
-        m_placeDefense.enabled = false;
-        PlayerCineCamera.SetActive(false);
-        Player_Animator.SetBool("IsDead", true);
-        yield return new WaitForSeconds(1);
+        if (TopBody.gameObject.tag != "Player")
+        {
+            yield return new WaitForSeconds(1);
+            Destroy(TopBody);
+        }
+        if (TopBody.gameObject.tag == "Player")
+        {
 
-        yield return new WaitForSeconds(2);//camera transition
-        Playerbody.SetActive(false);
-        DeathCamCineCamera.SetActive(false);
-        //this is where the player should be transformed to his spawn
+            m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls
+            m_weaponAim_Fire.enabled = false;
+            m_placeDefense.enabled = false;
+            PlayerCineCamera.SetActive(false);
+            Player_Animator.SetBool("IsDead", true);
+            yield return new WaitForSeconds(1);
 
-        yield return new WaitForSeconds(respawnTimer);//reset player values and renable cameras to begin transition after specified respawn timer
-        CurrentHealth = MaxHealth;
-        Playerbody.SetActive(true);
-        Player_Animator.SetBool("IsDead", false);
-        PlayerCineCamera.SetActive(true);
-        DeathCamCineCamera.SetActive(true);
-        Respawn();
+            yield return new WaitForSeconds(2);//camera transition
+            Playerbody.SetActive(false);
+            DeathCamCineCamera.SetActive(false);
+            //this is where the player should be transformed to his spawn
 
-        yield return new WaitForSeconds(1);//give controlls back to player
-        m_PlayerCharacterController.enabled = true;
-        m_weaponAim_Fire.enabled = true;
-        m_placeDefense.enabled = true;
-        Isdead = false;
+            yield return new WaitForSeconds(respawnTimer);//reset player values and renable cameras to begin transition after specified respawn timer
+            CurrentHealth = MaxHealth;
+            Playerbody.SetActive(true);
+            Player_Animator.SetBool("IsDead", false);
+            PlayerCineCamera.SetActive(true);
+            DeathCamCineCamera.SetActive(true);
+            Respawn();
+
+            yield return new WaitForSeconds(1);//give controlls back to player
+            m_PlayerCharacterController.enabled = true;
+            m_weaponAim_Fire.enabled = true;
+            m_placeDefense.enabled = true;
+            Isdead = false;
+        }
     }
 
     public void Respawn()
     {
         //RespawnBoundries
 
-        Vector3 destination = new Vector3(Random.Range(RespawnBoundries[0].transform.position.x, RespawnBoundries[1].transform.position.x), RespawnBoundries[0].transform.position.y + m_PlayerCharacterController.CharController.height/2, Random.Range(RespawnBoundries[0].transform.position.z, RespawnBoundries[2].transform.position.z));
-        player.transform.position = destination;
+        Vector3 destination = new Vector3(Random.Range(RespawnBoundries[0].transform.position.x, RespawnBoundries[1].transform.position.x), RespawnBoundries[0].transform.position.y + m_PlayerCharacterController.CharController.height / 2, Random.Range(RespawnBoundries[0].transform.position.z, RespawnBoundries[2].transform.position.z));
+        TopBody.transform.position = destination;
     }
 }

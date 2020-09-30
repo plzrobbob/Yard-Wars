@@ -121,7 +121,7 @@ MonoBehaviour:
   DeathCamCineCamera: {fileID: 0}
   Player_Animator: {fileID: 0}
   respawnTimer: 0
-  player: {fileID: 0}
+  TopBody: {fileID: 7257214703760662665}
 --- !u!208 &8134580768386667480
 NavMeshObstacle:
   m_ObjectHideFlags: 0
