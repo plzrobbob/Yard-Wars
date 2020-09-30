@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class HealthScript : MonoBehaviour
 {
+    public GameObject[] RespawnBoundries;
+
     public float MaxHealth = 100;
     public float CurrentHealth;
 
@@ -26,6 +28,8 @@ public class HealthScript : MonoBehaviour
     private bool Isdead;
 
     public int respawnTimer;
+
+    public GameObject player;
 
     public void Update()
     {
@@ -97,11 +101,20 @@ public class HealthScript : MonoBehaviour
         Player_Animator.SetBool("IsDead", false);
         PlayerCineCamera.SetActive(true);
         DeathCamCineCamera.SetActive(true);
+        Respawn();
 
         yield return new WaitForSeconds(1);//give controlls back to player
         m_PlayerCharacterController.enabled = true;
         m_weaponAim_Fire.enabled = true;
         m_placeDefense.enabled = true;
         Isdead = false;
+    }
+
+    public void Respawn()
+    {
+        //RespawnBoundries
+
+        Vector3 destination = new Vector3(Random.Range(RespawnBoundries[0].transform.position.x, RespawnBoundries[1].transform.position.x), RespawnBoundries[0].transform.position.y + m_PlayerCharacterController.CharController.height/2, Random.Range(RespawnBoundries[0].transform.position.z, RespawnBoundries[2].transform.position.z));
+        player.transform.position = destination;
     }
 }

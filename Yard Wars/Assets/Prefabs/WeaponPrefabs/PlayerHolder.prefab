@@ -622,7 +622,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6545992583658902016}
-  m_LocalRotation: {x: 0.00000044667706, y: -0.115195245, z: 0.99334294, w: 0.000003882234}
+  m_LocalRotation: {x: 0.00000042147786, y: -0.11519527, z: 0.99334294, w: 0.000003879312}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1297,6 +1297,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8450751fec03164092b1e168ec73da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RespawnBoundries:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   MaxHealth: 100
   CurrentHealth: 100
   regentimer: 2
@@ -1556,7 +1561,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8071860504909152113}
-  m_LocalRotation: {x: 0.39001358, y: 0.08036198, z: -0.033629112, w: 0.9166791}
+  m_LocalRotation: {x: 0.39001355, y: 0.08036192, z: -0.033629082, w: 0.9166791}
   m_LocalPosition: {x: -1.7464828, y: 10.390001, z: -9.848078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
