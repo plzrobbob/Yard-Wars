@@ -107,11 +107,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8450751fec03164092b1e168ec73da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 100
+  RespawnBoundries: []
+  MaxHealth: 50
+  CurrentHealth: 50
   regentimer: 0
   regenmult: 0
   damaged: 0
+  Playerbody: {fileID: 0}
+  m_PlayerCharacterController: {fileID: 0}
+  m_weaponAim_Fire: {fileID: 0}
+  m_placeDefense: {fileID: 0}
+  PlayerCineCamera: {fileID: 0}
+  DeathCamCineCamera: {fileID: 0}
+  Player_Animator: {fileID: 0}
+  respawnTimer: 0
+  TopBody: {fileID: 7257214703760662665}
 --- !u!208 &8134580768386667480
 NavMeshObstacle:
   m_ObjectHideFlags: 0
