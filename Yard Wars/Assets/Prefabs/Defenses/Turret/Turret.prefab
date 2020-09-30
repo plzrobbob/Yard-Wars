@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 2358703380950018145}
   - component: {fileID: 67541905745364531}
   - component: {fileID: 7382398885801488264}
+  - component: {fileID: 537640984439907047}
   m_Layer: 12
   m_Name: Turret
   m_TagString: Defense
@@ -235,11 +236,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8450751fec03164092b1e168ec73da4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RespawnBoundries: []
   MaxHealth: 100
   CurrentHealth: 100
   regentimer: 2
   regenmult: 4
   damaged: 0
+  Playerbody: {fileID: 0}
+  m_PlayerCharacterController: {fileID: 0}
+  m_weaponAim_Fire: {fileID: 0}
+  m_placeDefense: {fileID: 0}
+  PlayerCineCamera: {fileID: 0}
+  DeathCamCineCamera: {fileID: 0}
+  Player_Animator: {fileID: 0}
+  respawnTimer: 0
+  player: {fileID: 0}
 --- !u!114 &7382398885801488264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +277,22 @@ MonoBehaviour:
   bulletSpeed: 50
   timerToShoot: 0.5
   enemies: []
+--- !u!208 &537640984439907047
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358703380950018144}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5361176953130853322
 GameObject:
   m_ObjectHideFlags: 0
