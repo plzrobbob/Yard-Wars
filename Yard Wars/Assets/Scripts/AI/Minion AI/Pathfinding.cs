@@ -11,6 +11,7 @@ public class Pathfinding : MonoBehaviour
     public GameObject currentNode;
     public IntersectionPathingRandomization prcpy;
     public float distanceForDebug;
+    public float distanceToNode;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class Pathfinding : MonoBehaviour
     void Update()
     {
         distanceForDebug = Vector3.Distance(gameObject.transform.position, target);
-        if (Vector3.Distance(gameObject.transform.position, target) <= 2.0f)
+        if (Vector3.Distance(gameObject.transform.position, target) <= distanceToNode)
         {
             currentNode = prcpy.nextNode;
             prcpy = currentNode.GetComponent<IntersectionPathingRandomization>();

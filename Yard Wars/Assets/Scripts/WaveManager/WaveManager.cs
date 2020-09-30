@@ -5,8 +5,11 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     bool ready4Wave; // if this bool is true then the wave is over and ready for the next one
-   public bool waveInProgress; // if this bool is true then wave spawning is still happening
-    public List<Vector3> spawnPointList = new List<Vector3>();
+    public bool waveInProgress; // if this bool is true then wave spawning is still happening
+    public List<GameObject> spawnPointList = new List<GameObject>(); // List of Spawn point objects
+    public List<GameObject> firstNodeList = new List<GameObject>(); // List of first nodes corresponding with each spawn point
+    GameObject currEnemyPrefab; // The most current enemy prefab, meant to be overwritten at each iteration
+    GameObject newFirstNode; // The first node for the pathfinding script to follow along a path for each enemy
 
     int waveNumber;
     int waveAmount;
@@ -76,7 +79,7 @@ public class WaveManager : MonoBehaviour
 
         //If wave is ready to start check the wave number and get the amount of minions for that wave using the minion count algorithm:
 
-        waveAmount = waveNumber * Random.Range(50, 100);
+        waveAmount = waveNumber * Random.Range(5, 10);
         spawn++;
         StartCoroutine(Spawner());
     }
@@ -88,7 +91,27 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < waveAmount; i++)         //loop until the amount of minions for this wave have spawned
             {
-                Instantiate(minionPrefabTypeOne, spawnPointList[Random.Range(0, 2)], Quaternion.identity); //spawn a specified amount of minions at a random spawn point
+                GameObject tempSpawnObject = spawnPointList[Random.Range(0, spawnPointList.Count)];
+                Vector3 tempSpawnLocation = tempSpawnObject.transform.position;
+
+                switch (tempSpawnObject == spawnPointList[0] ? "1" : tempSpawnObject == spawnPointList[1] ? "2" : tempSpawnObject == spawnPointList[2] ? "3" : "Other")
+                {
+                    case "1":
+                        newFirstNode = firstNodeList[0];
+                        break;
+                    case "2":
+                        newFirstNode = firstNodeList[1];
+                        break;
+                    case "3":
+                        newFirstNode = firstNodeList[2];
+                        break;
+                    case "Other":
+                        Debug.Log("Homeboy, what the fucking shit did you do? This shit ain't supposed to happen");
+                        break;
+                }
+
+                currEnemyPrefab = Instantiate(minionPrefabTypeOne, tempSpawnLocation, Quaternion.identity); //spawn a specified amount of minions at a random spawn point
+                currEnemyPrefab.GetComponent<Pathfinding>().firstNode = newFirstNode;
                 yield return new WaitForSeconds(0.1f);
                 //Debug.Log("Holy fuck my guy, did you fucking see that shit spawn in a fucking random location???");
             }
@@ -97,7 +120,27 @@ public class WaveManager : MonoBehaviour
         {
             for (int i = 0; i < waveAmount; i++)        //loop until the amount of minions for this wave have spawned
             {
-                Instantiate(minionPrefabTypeOne, spawnPointList[spawn - 1], Quaternion.identity);
+                GameObject tempSpawnObject = spawnPointList[spawn - 1];
+                Vector3 tempSpawnLocation = tempSpawnObject.transform.position;
+
+                switch (tempSpawnObject == spawnPointList[0] ? "1" : tempSpawnObject == spawnPointList[1] ? "2" : tempSpawnObject == spawnPointList[2] ? "3" : "Other")
+                {
+                    case "1":
+                        newFirstNode = firstNodeList[0];
+                        break;
+                    case "2":
+                        newFirstNode = firstNodeList[1];
+                        break;
+                    case "3":
+                        newFirstNode = firstNodeList[2];
+                        break;
+                    case "Other":
+                        Debug.Log("Homeboy, what the fucking shit did you do? This shit ain't supposed to happen");
+                        break;
+                }
+
+                currEnemyPrefab = Instantiate(minionPrefabTypeOne, tempSpawnLocation, Quaternion.identity);
+                currEnemyPrefab.GetComponent<Pathfinding>().firstNode = newFirstNode;
                 yield return new WaitForSeconds(0.1f);
                 //Debug.Log("Holy fuck my guy, did you fucking see that shit spawn in a totally NOT fucking random location???");
             }
@@ -120,4 +163,5 @@ public class WaveManager : MonoBehaviour
             Destroy(enemyList[i]);
         }
     }
+
 }
