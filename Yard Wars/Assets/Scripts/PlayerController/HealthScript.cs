@@ -37,7 +37,7 @@ public class HealthScript : MonoBehaviour
 
     public void Update()
     {
-        if (CurrentHealth > 0 && TopBody.gameObject.tag == "Player")
+        if (CurrentHealth > 0 && TopBody.gameObject.tag == "PlayerHolder")
         {
             RegenHandler();
         }
@@ -47,8 +47,9 @@ public class HealthScript : MonoBehaviour
             StartCoroutine(Dead());
         }
 
-        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.tag == "Player")
+        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.tag == "PlayerHolder")
         {
+            Debug.Log("dead");
             CurrentHealth = 0;
         }
     }
@@ -87,12 +88,12 @@ public class HealthScript : MonoBehaviour
 
     public IEnumerator Dead()
     {
-        if (TopBody.gameObject.tag != "Player")
+        if (TopBody.gameObject.tag != "PlayerHolder")//destroy ai and defenses
         {
             yield return new WaitForSeconds(1);
             Destroy(TopBody);
         }
-        if (TopBody.gameObject.tag == "Player")
+        if (TopBody.gameObject.tag == "PlayerHolder")//respawn the player
         {
 
             m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls

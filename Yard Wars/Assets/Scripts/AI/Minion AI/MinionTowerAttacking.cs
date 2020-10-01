@@ -14,21 +14,19 @@ public class MinionTowerAttacking : MonoBehaviour
     public int MinionDamage;
     private bool cooldown;
     private Collider NearestTarget;
-    // Start is called before the first frame update
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
         cooldown = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (navAgent.pathStatus == NavMeshPathStatus.PathPartial)
         {
             TargetsInRange = Physics.OverlapSphere(transform.position, detectionRadius, mask);
             float shortestDitance = Mathf.Infinity;
-             NearestTarget = null;
+            NearestTarget = null;
 
             foreach (Collider Target in TargetsInRange)
             {
@@ -41,19 +39,19 @@ public class MinionTowerAttacking : MonoBehaviour
                 Debug.Log(NearestTarget);
             }
            if (NearestTarget != null && cooldown == true)    
-            {
+           {
                 cooldown = false;
                 Invoke("damagewall", 1.0f);
-                
-            }
-
+           }
         }
     }
 
     void damagewall()
     {
         cooldown = true;
-        NearestTarget.GetComponent<HealthScript>().CurrentHealth -= MinionDamage;
+        if (NearestTarget != null && NearestTarget.GetComponent<HealthScript>().CurrentHealth > 0)
+        {
+            NearestTarget.GetComponent<HealthScript>().CurrentHealth -= MinionDamage;
+        }
     }
-
 }
