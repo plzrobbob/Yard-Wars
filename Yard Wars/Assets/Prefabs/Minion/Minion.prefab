@@ -14,8 +14,11 @@ GameObject:
   - component: {fileID: 6256169380176961695}
   - component: {fileID: 6256169380176961692}
   - component: {fileID: 6256169380176961693}
+  - component: {fileID: -5991294570088636633}
+  - component: {fileID: 7086946271873579684}
+  - component: {fileID: 7380466412345064840}
   m_Layer: 0
-  m_Name: Minion (2)
+  m_Name: Minion
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -113,7 +116,7 @@ NavMeshAgent:
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 5
@@ -130,7 +133,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583adec5a81341f4b8daddbff396cb89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {x: 0, y: 0, z: 0}
   firstNode: {fileID: 0}
   currentNode: {fileID: 0}
   prcpy: {fileID: 0}
   distanceForDebug: 0
+  distanceToNode: 3.5
+  MinionPlayerAttacking: {fileID: 7380466412345064840}
+--- !u!114 &-5991294570088636633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256169380176961682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8450751fec03164092b1e168ec73da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RespawnBoundries: []
+  MaxHealth: 50
+  CurrentHealth: 50
+  regentimer: 0
+  regenmult: 0
+  damaged: 0
+  Playerbody: {fileID: 0}
+  m_PlayerCharacterController: {fileID: 0}
+  m_weaponAim_Fire: {fileID: 0}
+  m_placeDefense: {fileID: 0}
+  PlayerCineCamera: {fileID: 0}
+  DeathCamCineCamera: {fileID: 0}
+  Player_Animator: {fileID: 0}
+  respawnTimer: 0
+  TopBody: {fileID: 6256169380176961682}
+--- !u!114 &7086946271873579684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256169380176961682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cfdad1b2eff72e44928cc9bc0bf9eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetsInRange: []
+  detectionRadius: 5
+  mask:
+    serializedVersion: 2
+    m_Bits: 4096
+  MinionDamage: 10
+--- !u!114 &7380466412345064840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256169380176961682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c78830501c233247ac7f163ac497c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MinionDamage: 10
+  m_pathfinding: {fileID: 6256169380176961693}
+  Player: {x: 0, y: 0, z: 0}
+  previousnode: {x: 0, y: 0, z: 0}
