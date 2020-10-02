@@ -9,15 +9,19 @@ public class MinionTowerAttacking : MonoBehaviour
 
     private NavMeshAgent navAgent;
     public Collider[] TargetsInRange;
+    private Pathfinding pathfinding;
     public float detectionRadius;
     public LayerMask mask;
     public int MinionDamage;
     private bool cooldown;
     private Collider NearestTarget;
+    private GameObject ultiTarget;
     void Start()
     {
         navAgent = GetComponent<NavMeshAgent>();
         cooldown = true;
+        pathfinding = GetComponent<Pathfinding>();
+        ultiTarget = GameObject.FindGameObjectWithTag("MinionGoal");
     }
 
     void Update()
@@ -44,6 +48,15 @@ public class MinionTowerAttacking : MonoBehaviour
                 Invoke("damagewall", 1.0f);
            }
         }
+
+        if(pathfinding.currentNode.name == "THE ORB")
+        {
+            if (Vector3.Distance(transform.position, ultiTarget.transform.position) <= 2.0f)
+            {
+                cooldown = false;
+                Invoke("damageorb", 1.0f);
+            }
+        }
     }
 
     void damagewall()
@@ -53,5 +66,11 @@ public class MinionTowerAttacking : MonoBehaviour
         {
             NearestTarget.GetComponent<HealthScript>().CurrentHealth -= MinionDamage;
         }
+    }
+
+    void damageorb()
+    {
+        cooldown = true;
+        ultiTarget.GetComponent<HealthScript>().CurrentHealth -= MinionDamage;
     }
 }

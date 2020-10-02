@@ -11,7 +11,7 @@ public class WaveManager : MonoBehaviour
     GameObject currEnemyPrefab; // The most current enemy prefab, meant to be overwritten at each iteration
     GameObject newFirstNode; // The first node for the pathfinding script to follow along a path for each enemy
 
-    int waveNumber;
+   public int waveNumber;
     int waveAmount;
 
     public GameObject minionPrefabTypeOne;
