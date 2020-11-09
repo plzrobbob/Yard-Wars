@@ -53,7 +53,7 @@ public class TurretBullet1 : MonoBehaviour
     {
         Destroy(gameObject);
         HealthScript M_HealthScript = Target.gameObject.GetComponent<HealthScript>();
-        M_HealthScript.DamageHandler();
+        //M_HealthScript.DamageHandler();
         M_HealthScript.CurrentHealth -= Damages;
     }
 

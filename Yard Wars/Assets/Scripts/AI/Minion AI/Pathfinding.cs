@@ -5,12 +5,14 @@ using UnityEngine.AI;
 
 public class Pathfinding : MonoBehaviour
 {
-    private Vector3 target;
+    public Vector3 target;
     private NavMeshAgent navAgent;
     public GameObject firstNode;
     public GameObject currentNode;
     public IntersectionPathingRandomization prcpy;
     public float distanceForDebug;
+    public float distanceToNode;
+    public MinionPlayerAttacking MinionPlayerAttacking;
 
     // Start is called before the first frame update
     void Start()
@@ -26,12 +28,14 @@ public class Pathfinding : MonoBehaviour
     void Update()
     {
         distanceForDebug = Vector3.Distance(gameObject.transform.position, target);
-        if (Vector3.Distance(gameObject.transform.position, target) <= 2.0f)
+        if (Vector3.Distance(gameObject.transform.position, target) <= distanceToNode)
         {
             currentNode = prcpy.nextNode;
             prcpy = currentNode.GetComponent<IntersectionPathingRandomization>();
             target = prcpy.AddPathVariance();
             navAgent.SetDestination(target);
+
+            MinionPlayerAttacking.previousnode = target;
         }
     }
 
