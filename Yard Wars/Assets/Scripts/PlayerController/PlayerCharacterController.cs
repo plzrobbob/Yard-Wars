@@ -34,6 +34,8 @@ public class PlayerCharacterController : MonoBehaviour
 
     public PlaceDefense m_placeDefense;
 
+    public Animator Player_Animator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +79,15 @@ public class PlayerCharacterController : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+
+        if ((x != 0 || z != 0) && Grounded)
+        {
+            Player_Animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            Player_Animator.SetBool("IsWalking", false);
+        }
 
         //transform.right and transform.forward uses local coords instead of world coords
         Vector3 move = transform.right * x + transform.forward * z;

@@ -49,6 +49,11 @@ public class TurretController : MonoBehaviour
                 shortestDitance = distanceToEnemy;
                 nearestEnemy = enemy;
             }
+            //else if (distanceToEnemy < shortestDitance && enemy.GetComponent<HealthScript>().CurrentHealth > 0 && enemy.tag=="EnemyPlayer")
+            //{//use this if turret can target enemy players
+            //    shortestDitance = distanceToEnemy;
+            //    nearestEnemy = enemy;
+            //}
         }
 
         if (target != null && Vector3.Distance(transform.position, target.transform.position) > range)
