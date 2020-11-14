@@ -7,7 +7,7 @@ public class PlayerCharacterController : MonoBehaviour
     public CharacterController CharController;
 
     public float Gravity = -9.81f;
-    public float MoveSpeed = 5;
+    public float MoveSpeed;
     public float JumpHeight = 3f;
     private float GroundDistance = 0.4f;
     private float fallmult = 2.5f; //increase gravity pull for better feel
@@ -92,9 +92,12 @@ public class PlayerCharacterController : MonoBehaviour
         //transform.right and transform.forward uses local coords instead of world coords
         Vector3 move = transform.right * x + transform.forward * z;
 
-        //Debug.Log(Velocity);
+        //Clamps the maximum magnitude to fix the issue where the player can press two movement input keys and increase their speed
+        move = Vector3.ClampMagnitude(move, 1f);
+
         CharController.Move(Velocity * Time.deltaTime);
         CharController.Move(move * MoveSpeed * Time.deltaTime);
+
     }
 
     void Jump()
