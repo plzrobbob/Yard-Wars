@@ -199,5 +199,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinionDamage: 10
   m_pathfinding: {fileID: 6256169380176961693}
-  Player: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
   previousnode: {x: 0, y: 0, z: 0}

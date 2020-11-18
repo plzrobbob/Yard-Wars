@@ -16,7 +16,7 @@ public class WaveManager : MonoBehaviour
     GameObject currEnemyPrefab; // The most current enemy prefab, meant to be overwritten at each iteration
     GameObject newFirstNode; // The first node for the pathfinding script to follow along a path for each enemy
 
-    int waveNumber; //This int corrolates to the number of waves that have gone by
+    public int waveNumber; //This int corrolates to the number of waves that have gone by
     int waveAmount; //The amount of minions spawned during the current wave
 
     public GameObject minionPrefabTypeOne; //The prefab for enemy type 1 which is: TBD
