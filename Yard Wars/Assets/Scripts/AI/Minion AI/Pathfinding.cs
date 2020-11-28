@@ -48,4 +48,15 @@ public class Pathfinding : MonoBehaviour
 
         }
     }
+
+
+    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS STEPHENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
+    //    
+    //    Signed,
+    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
+    //  
+
+
+
+
 }

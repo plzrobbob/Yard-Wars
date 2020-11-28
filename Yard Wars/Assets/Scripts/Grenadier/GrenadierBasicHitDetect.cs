@@ -29,6 +29,8 @@ public class GrenadierBasicHitDetect : MonoBehaviour
     }
     private void DoDamage()
     {
+
+        //Fix this because this is outdated and will not work vs other players
         for (int  i = 0; i < HitTargets.Length; i++)
         {
             if ( HitTargets[i].gameObject.tag == "Enemy")
