@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -5991294570088636633}
   - component: {fileID: 7086946271873579684}
   - component: {fileID: 7380466412345064840}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Minion
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -199,5 +199,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinionDamage: 10
   m_pathfinding: {fileID: 6256169380176961693}
-  Player: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
   previousnode: {x: 0, y: 0, z: 0}
