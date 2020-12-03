@@ -20,6 +20,7 @@ public class Pathfinding2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        frame_delay = 4;
         navAgent = GetComponent<NavMeshAgent>();
         navAgent.SetDestination(target.transform.position);
         path_copy = navAgent.path;
@@ -61,10 +62,15 @@ public class Pathfinding2 : MonoBehaviour
     bool ComparePaths() 
     {
         if (path_copy.corners.Length <= 1)
-            path_copy = navAgent.path;
-        if (path_copy.corners[1] != navAgent.path.corners[1] || navAgent.path.corners.Length == 1 || path_copy.corners.Length == 1)
         {
             path_copy = navAgent.path;
+            //frame_delay = 4;
+            return false;
+        }
+        if (path_copy.corners[1] != navAgent.path.corners[1] || (navAgent.path.corners.Length == 1 && path_copy.corners.Length == 1))
+        {
+            path_copy = navAgent.path;
+            frame_delay = 4;
             return true;
         }
         else return false;
