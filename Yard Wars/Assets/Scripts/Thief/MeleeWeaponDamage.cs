@@ -6,6 +6,11 @@ public class MeleeWeaponDamage : MonoBehaviour
 {
     public bool attackSuccessful;
     public float damageAmount;
+    public float range;
+
+    public LayerMask EnemyMask;
+    public Collider[] enemiesHit;
+    public int numberLETSFUCKINGGOOOOOOBOYYYYSSSSS;
 
 
     // Start is called before the first frame update
@@ -25,8 +30,15 @@ public class MeleeWeaponDamage : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
+        
+
+
         if (collider.gameObject.tag == "Enemy")
         {
+            enemiesHit = Physics.OverlapSphere(transform.position, range, EnemyMask);
+            Debug.Log("enemiesHit = " + EnemyMask);
+
+
             //add code here to cause damage to whatever enters the trigger hitbox
             HealthScript M_HealthScript = collider.gameObject.GetComponent<HealthScript>();
             M_HealthScript.DamageHandler();
