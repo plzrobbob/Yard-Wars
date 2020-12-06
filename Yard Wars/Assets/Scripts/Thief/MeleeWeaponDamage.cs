@@ -6,16 +6,32 @@ public class MeleeWeaponDamage : MonoBehaviour
 {
     public bool attackSuccessful;
     public float damageAmount;
-    public float range;
 
-    public LayerMask EnemyMask;
-    public Collider[] enemiesHit;
+    //public float range;
+
+    //public LayerMask EnemyMask;
+    //public Collider[] enemiesHit;
+
+    private Collider[] HitTargets;
+    private Vector3 overlapCheck;
+    public float area;
+    public int layernum;
+    private LayerMask layer;
 
 
     // Start is called before the first frame update
     void Start()
     {
         attackSuccessful = false;
+
+        if (layernum == 20)
+        {
+            layer = LayerMask.GetMask("Team2");
+        }
+        else if (layernum == 21)
+        {
+            layer = LayerMask.GetMask("Team1");
+        }
     }
 
     // Update is called once per frame
@@ -34,11 +50,10 @@ public class MeleeWeaponDamage : MonoBehaviour
         
 
 
-        if (collider.gameObject.tag == "Enemy")
-        {
-            enemiesHit = Physics.OverlapSphere(transform.position, range, EnemyMask);
-            Debug.Log("enemiesHit = " + EnemyMask);
+        //if (collider.gameObject.tag == "Enemy")
+        //{
 
+            HitTargets = Physics.OverlapSphere(transform.position, area, layer);
             DoDamage();
 
             //add code here to cause damage to whatever enters the trigger hitbox
@@ -47,23 +62,23 @@ public class MeleeWeaponDamage : MonoBehaviour
             //M_HealthScript.CurrentHealth -= damageAmount;
             attackSuccessful = true;
             Debug.Log("Sir, an iceburg struck the Trigger collider, I believe the ship is going down.");
-        } 
+        //} 
 
 
     }
 
     void DoDamage()
     {
-        for (int i = 0; i < enemiesHit.Length; i++)
+        for (int i = 0; i < HitTargets.Length; i++)
         {
-            HealthScript E_HealthScript = enemiesHit[i].gameObject.GetComponent<HealthScript>();
-            E_HealthScript.CurrentHealth -= damageAmount;
+            HealthScript M_HealthScript = HitTargets[i].gameObject.GetComponent<HealthScript>();
+            M_HealthScript.CurrentHealth -= damageAmount;
         }
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position, range);
+        Gizmos.DrawSphere(transform.position, area);
     }
 }
