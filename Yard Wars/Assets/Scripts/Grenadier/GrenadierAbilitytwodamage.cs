@@ -48,6 +48,8 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
         float value = float.Parse(string3);
         Debug.Log(value);
         Debug.Log(collision.gameObject.layer == numberLETSFUCKINGGOOOOOOBOYYYYSSSSS);
+
+
         if (collision.gameObject.layer == numberLETSFUCKINGGOOOOOOBOYYYYSSSSS)
         {
             enemiesHit = Physics.OverlapSphere(transform.position, range, EnemyMask);

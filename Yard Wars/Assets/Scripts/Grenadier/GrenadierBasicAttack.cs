@@ -13,11 +13,13 @@ public class GrenadierBasicAttack : MonoBehaviour
     public float ExitSpeed;
     private float weaponCooldown;
     public GameObject BalloonOrigin;
+    public int TeamLayer;
+    public float damage;
 
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -27,6 +29,7 @@ public class GrenadierBasicAttack : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && weaponCooldown > 1)
         {
             CreateBalloon();
+            Debug.Log(TeamLayer);
             weaponCooldown = 0;
         }
     }
@@ -37,6 +40,10 @@ public class GrenadierBasicAttack : MonoBehaviour
         //Maybe also have it where when you throw it, the balloon that it looks like the player is carrying is turned off until they "reload"
         GameObject obj = Instantiate(WaterBalloon, BalloonOrigin.transform.position, BalloonOrigin.transform.rotation);
         obj.GetComponent<Rigidbody>().velocity = (Camera.main.transform.forward * ExitSpeed) ;
-        //BalloonOrigin.transform.forward
+
+        //In GrenadierBaiscHitDetect I describe what I set up to make this work, the following line
+        //is me setting the integer that is going to be compared later on down the line in HitDetect
+        obj.GetComponent<GrenadierBasicHitDetect>().layernum = TeamLayer;
+        obj.GetComponent<GrenadierBasicHitDetect>().damage = damage;
     }
 }

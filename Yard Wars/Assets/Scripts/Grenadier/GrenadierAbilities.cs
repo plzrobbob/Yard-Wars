@@ -125,6 +125,7 @@ public class GrenadierAbilities : MonoBehaviour
             SetDefenseHeight();
             DoAbilityTwo();
         }
+
         if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !placing && !UltimatePressed)
         {
             Debug.Log("Ability Two initiated");
