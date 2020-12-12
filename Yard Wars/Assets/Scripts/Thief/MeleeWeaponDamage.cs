@@ -12,7 +12,7 @@ public class MeleeWeaponDamage : MonoBehaviour
     //public LayerMask EnemyMask;
     //public Collider[] enemiesHit;
 
-    private Collider[] HitTargets;
+    public Collider[] HitTargets;
     private Vector3 overlapCheck;
     public float area;
     public int layernum;
@@ -42,7 +42,7 @@ public class MeleeWeaponDamage : MonoBehaviour
             attackSuccessful = false;
         }
 
-        OnDrawGizmos();
+        //OnDrawGizmos();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -73,6 +73,7 @@ public class MeleeWeaponDamage : MonoBehaviour
         {
             HealthScript M_HealthScript = HitTargets[i].gameObject.GetComponent<HealthScript>();
             M_HealthScript.CurrentHealth -= damageAmount;
+            Debug.Log("Name of thing being damaged is: " + M_HealthScript);
         }
     }
 
