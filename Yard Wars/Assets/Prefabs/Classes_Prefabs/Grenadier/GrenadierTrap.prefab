@@ -118,6 +118,7 @@ MonoBehaviour:
   range: 0
   enemiesHit: []
   numberLETSFUCKINGGOOOOOOBOYYYYSSSSS: 0
+  Self: {fileID: 3336666610635074820}
 --- !u!54 &3012663383249231948
 Rigidbody:
   m_ObjectHideFlags: 0

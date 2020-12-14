@@ -13,6 +13,9 @@ public class Pathfinding : MonoBehaviour
     public float distanceForDebug;
     public float distanceToNode;
     public MinionPlayerAttacking MinionPlayerAttacking;
+    public float BaseSpeed;
+    public float EditedSpeed;
+    //public float speedHolder;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +25,8 @@ public class Pathfinding : MonoBehaviour
         prcpy = currentNode.GetComponent<IntersectionPathingRandomization>();
         target = prcpy.AddPathVariance();
         navAgent.SetDestination(target);
+        BaseSpeed = navAgent.speed;
+
     }
 
     // Update is called once per frame
@@ -49,6 +54,34 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
+
+    public void Slowed(float percentage, float time)
+    {
+        EditedSpeed = BaseSpeed * percentage;
+        Debug.Log("Base speed" + BaseSpeed + "percentage" + percentage + "EditedSpeed" + EditedSpeed);
+
+        navAgent.speed = EditedSpeed;
+        Debug.Log(navAgent.speed);
+
+        Invoke("resetSpeed", time);
+    }
+
+    public void Faster(float percentage, float time)
+    {
+        EditedSpeed = BaseSpeed * percentage;
+        navAgent.speed = EditedSpeed;
+
+        Invoke("resetSpeed", time);
+    }
+
+
+    void resetSpeed()
+    {
+        navAgent.speed = BaseSpeed;
+        Debug.Log("SpeedReset");
+        Debug.Log(navAgent.speed);
+
+    }
 
     //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS STEPHENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
     //    

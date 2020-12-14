@@ -17,6 +17,7 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
     public float range;
     public Collider[] enemiesHit;
     public int numberLETSFUCKINGGOOOOOOBOYYYYSSSSS;
+    public GameObject Self;
 
 
     // Start is called before the first frame update
@@ -61,7 +62,7 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
 
 
             GameObject obj = Instantiate(FallingBalloon, FBalloonSpawn.position, FBalloonSpawn.rotation);
-
+            Destroy(Self);
             //I am adding this to speed up it hitting the ground
             obj.GetComponent<Rigidbody>().velocity = (obj.transform.forward * 2f);
         }
@@ -89,13 +90,15 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
         {
             if (enemiesHit[i].gameObject.tag == "PlayerHolder")
             {
+                enemiesHit[i].gameObject.GetComponent<PlayerCharacterController>().Slowed(0.65f, 3f);
                 //Call to that function in PlayerCharacterController to slow them
                 //It would be something like: enemiesHit[i].gameObject.getComponent<PlayerCharacterController>().*functionName*
             }
             else if (enemiesHit[i].gameObject.tag == "Enemy")
             {
+                enemiesHit[i].gameObject.GetComponent<Pathfinding>().Slowed(0.65f, 3f);
                 //Actually not sure what to call in here. Maybe add a function to pathfinding script that calls to NavMeshAgent and temporarily changes speed.
-                //It would be something like: enemiesHit[i].gameObject.getComponent<PlayerCharacterController>().*functionName*
+                //It would be something like: enemiesHit[i].gameObject.getComponent<Pathfinding>().*functionName*
             }
         }
 
