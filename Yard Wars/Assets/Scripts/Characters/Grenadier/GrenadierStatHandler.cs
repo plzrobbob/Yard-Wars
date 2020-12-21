@@ -12,6 +12,8 @@ public class GrenadierStatHandler : MonoBehaviour
     private float AbilityOneRange = 5f;
     private float AbilityTwoDamage = 40f;
     private float AbilityTwoDamageRange = 2.5f;
+    private float UltiDamage = 75f;
+   
 
     void Start()
     {
@@ -23,6 +25,7 @@ public class GrenadierStatHandler : MonoBehaviour
         this.GetComponent<GrenadierAbilities>().AbilityTwoDamage = AbilityTwoDamage;
         this.GetComponent<GrenadierAbilities>().AbilityTwoDamageRange = AbilityTwoDamageRange;
         this.GetComponent<GrenadierBasicAttack>().damage = GrenadierDamage;
+        this.GetComponent<GrenadierAbilities>().UltiDamageNum = UltiDamage;
 
         //Currently they only way I know how to get the layermask to work is this way. Effectively what you are doing is comparing the players own layer, and if it is 
         //team 1, set it's target to Team2 
@@ -32,10 +35,12 @@ public class GrenadierStatHandler : MonoBehaviour
         if (gameObject.layer == 20)
         {
             this.GetComponent<GrenadierBasicAttack>().TeamLayer = 20;
+            this.GetComponent<GrenadierAbilities>().Target = LayerMask.GetMask("Team2");
         }
         else
         {
             this.GetComponent<GrenadierBasicAttack>().TeamLayer = 21;
+            this.GetComponent<GrenadierAbilities>().Target = LayerMask.GetMask("Team1");
 
         }
 

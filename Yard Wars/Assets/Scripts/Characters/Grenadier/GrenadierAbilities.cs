@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.VFX;
 
 public class GrenadierAbilities : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class GrenadierAbilities : MonoBehaviour
     //So this bool right here is to lock down the OnUpdate so that someone cann't be spamming all of the abilities. i will be implementing it later on
     //I am placing this here as a reminder that this will need to be added, or a way that you can't activate multiple abilities at once
     public bool AbilityInUse;
+
+    public Mesh mesh;
 
     //These are the variables I am using for ability one
     //Damage numbers come from GrenadierStatHandler
@@ -62,7 +65,7 @@ public class GrenadierAbilities : MonoBehaviour
 
 
 
-    //These are the variables I am using for Ability two
+    //These are the variables I am using for Ultimate
     public float UltimateCooldown;
     public bool UltimatePressed;
     public GameObject PlayerCam;
@@ -72,6 +75,15 @@ public class GrenadierAbilities : MonoBehaviour
     public GameObject Cam;
     public Vector3 DACLAMPA;
     public LayerMask UltiRaymask;
+    public VisualEffect effect;
+    public bool UltiFired = false;
+    public bool inProgress = false;
+    public Vector3 UltiAreaDamage;
+    private Collider[] damaging;
+    public LayerMask Target;
+    public float UltiDamageNum;
+
+
 
 
     public GameObject UltiBalloon;
@@ -80,6 +92,8 @@ public class GrenadierAbilities : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        effect = reticle.GetComponent<VisualEffect>();
+        
         spawnRad = 1f;
         placing = false;
         AbilityOnecooldown = 5f;
@@ -143,7 +157,7 @@ public class GrenadierAbilities : MonoBehaviour
         UltimateCooldown += Time.deltaTime;
         if (UltimatePressed)
         {
-            Debug.Log("lOOp");
+           // Debug.Log("lOOp");
 
             DoUltimate();
         }
@@ -163,20 +177,47 @@ public class GrenadierAbilities : MonoBehaviour
         }
 
 
+        // I am working on vfx.
+        /*
+        if (UltiFired && !inProgress)
+        {
 
+            effect.Play();
+            inProgress = true;
+            UltiFired = false;
+        }
 
+        if (inProgress)
+        {
+            Debug.Log("gets hjere");
+            Debug.Log(effect.GetFloat("Current_time_to_impact"));
+
+            if (effect.GetFloat("Current_time_to_impact") < 1f)
+            {
+                effect.SetFloat("Current_time_to_impact", effect.GetFloat("Current_time_to_impact") + (Time.deltaTime));
+            }
+            else
+            {
+                inProgress = false;
+                effect.SetFloat("Current_time_to_impact", 0f);
+            }
+        }
+        
+
+        */
 
     }
 
     //Useful Debug tool I added. remove when Grenadier in final stage.
-    /*
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position, AbilityOneRange);
+       // Gizmos.DrawSphere(transform.position, AbilityOneRange);
+       // Gizmos.DrawMesh(mesh, -1, transform.position, Quaternion.identity, new Vector3(1, 1, 1));
 
     }
-    */
+    
     //FUNCTIONS ASSOCIATED WITH ABILITY 1:
 
     void DoDamageAbilityOne()
@@ -232,10 +273,12 @@ public class GrenadierAbilities : MonoBehaviour
             GameObject obj = Instantiate(TripWire, TripWire.transform.position, TripWire.transform.rotation);
             obj.GetComponentInChildren<GrenadierAbilitytwodamage>().damage = AbilityTwoDamage;
             obj.GetComponentInChildren<GrenadierAbilitytwodamage>().range = AbilityTwoDamageRange;
+            obj.GetComponentInChildren<GrenadierAbilitytwodamage>().EnemyMask = Target;
 
             if (gameObject.layer == 20)
             {
                 obj.GetComponentInChildren<GrenadierAbilitytwodamage>().numberLETSFUCKINGGOOOOOOBOYYYYSSSSS = 21;
+
             }
             else if (gameObject.layer == 21)
             {
@@ -340,7 +383,7 @@ public class GrenadierAbilities : MonoBehaviour
     {
         Debug.DrawRay(Cam.transform.position, Cam.transform.forward *2000000, Color.red);
         Physics.Raycast(Cam.transform.position, Cam.transform.forward, out var hit, 75f, UltiRaymask);
-        Debug.Log(hit.point);
+      //  Debug.Log(hit.point);
 
         if (hit.point != new Vector3(0,0,0))
         {
@@ -383,8 +426,13 @@ public class GrenadierAbilities : MonoBehaviour
             PlayerCam.SetActive(true);
             PlayerCam.transform.rotation = UltiCam.transform.rotation;
 
+            
 
+            ReticleController.GetComponent<MeshRenderer>().enabled = false;
+            Destroy(ReticleController, 2.5f);
+            
             fireUlti();
+            UltiFired = true;
         }
 
 
@@ -408,10 +456,26 @@ public class GrenadierAbilities : MonoBehaviour
 
     }
 
+
     void fireUlti()
     {
         GameObject obj = Instantiate(UltiBalloon, transform.position, Quaternion.identity);
-        obj.gameObject.GetComponent<Rigidbody>().velocity = HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f);
+        UltiAreaDamage = obj.gameObject.transform.position;
+        obj.gameObject.GetComponent<Rigidbody>().velocity = HitTargetAtTime(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 2.5f);
+        //HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f)
+        Destroy(obj, 2.5f);
+        Invoke("UltiDamage", 2.5f);
+    }
+
+    void UltiDamage()
+    {
+
+        damaging = Physics.OverlapSphere(UltiAreaDamage, 3.0f, Target);
+        for (int i = 0; i < damaging.Length; i++)
+        {
+            HealthScript M_HealthScript = damaging[i].gameObject.GetComponent<HealthScript>();
+            M_HealthScript.CurrentHealth -= UltiDamageNum;
+        }
 
     }
 

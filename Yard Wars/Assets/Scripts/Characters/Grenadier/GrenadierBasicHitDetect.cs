@@ -52,6 +52,8 @@ public class GrenadierBasicHitDetect : MonoBehaviour
         
     }
 
+ 
+
     private void OnCollisionEnter(Collision collision)
     {
        //The reason I have it spawning on collision.contacts[0].point is to try and replicate how a balloon would work

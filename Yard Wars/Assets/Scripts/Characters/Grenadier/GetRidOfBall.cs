@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GetRidOfBall : MonoBehaviour
 {
+
+    /// <summary>
+    /// This shit is temporary. I am just trying to make sure stuff doesn't get cluttered
+    /// </summary>
+
     // Start is called before the first frame update
     void Start()
     {

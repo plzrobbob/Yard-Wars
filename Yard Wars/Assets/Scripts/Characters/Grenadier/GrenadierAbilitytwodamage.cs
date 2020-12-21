@@ -10,7 +10,6 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
     /// </summary>
 
     public LayerMask EnemyMask;
-   
     public GameObject FallingBalloon;
     public Transform FBalloonSpawn;
     public float damage;
@@ -36,7 +35,7 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
     {
         Debug.Log("Detected");
         Debug.Log(collision.gameObject.layer);
-        Debug.Log(EnemyMask);
+        Debug.Log(EnemyMask.value);
 
 
         var EnemyMask1 = EnemyMask >> collision.gameObject.layer;
@@ -48,7 +47,9 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
         Debug.Log("String3 = " + string3);
         float value = float.Parse(string3);
         Debug.Log(value);
-        Debug.Log(collision.gameObject.layer == numberLETSFUCKINGGOOOOOOBOYYYYSSSSS);
+        Debug.Log(collision.gameObject.layer == EnemyMask);
+
+
 
 
         if (collision.gameObject.layer == numberLETSFUCKINGGOOOOOOBOYYYYSSSSS)
@@ -90,7 +91,7 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
         {
             if (enemiesHit[i].gameObject.tag == "PlayerHolder")
             {
-                enemiesHit[i].gameObject.GetComponent<PlayerCharacterController>().Slowed(0.65f, 3f);
+                enemiesHit[i].gameObject.GetComponent<PlayerCharacterController>().Slowed(0.2f, 3f);
                 //Call to that function in PlayerCharacterController to slow them
                 //It would be something like: enemiesHit[i].gameObject.getComponent<PlayerCharacterController>().*functionName*
             }
