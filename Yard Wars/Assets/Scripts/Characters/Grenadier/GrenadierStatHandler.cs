@@ -12,7 +12,7 @@ public class GrenadierStatHandler : MonoBehaviour
     private float AbilityOneRange = 5f;
     private float AbilityTwoDamage = 40f;
     private float AbilityTwoDamageRange = 2.5f;
-    private float UltiDamage = 75f;
+    private float UltiDamage = 10f;
    
 
     void Start()

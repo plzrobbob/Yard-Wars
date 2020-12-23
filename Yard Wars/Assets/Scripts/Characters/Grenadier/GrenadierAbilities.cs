@@ -169,7 +169,7 @@ public class GrenadierAbilities : MonoBehaviour
 
             PlayerCam.SetActive(false);
             UltiCam.SetActive(true);
-            UltiCam.transform.rotation = PlayerCam.transform.rotation;
+            //UltiCam.transform.rotation = PlayerCam.transform.rotation;
 
             GameObject obj = Instantiate(reticle, gameObject.transform.position, Quaternion.identity);
             ReticleController = obj;
@@ -213,8 +213,8 @@ public class GrenadierAbilities : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-       // Gizmos.DrawSphere(transform.position, AbilityOneRange);
-       // Gizmos.DrawMesh(mesh, -1, transform.position, Quaternion.identity, new Vector3(1, 1, 1));
+        Gizmos.DrawSphere(UltiAreaDamage, AbilityOneRange);
+        Gizmos.DrawMesh(mesh, -1, transform.position, Quaternion.identity, new Vector3(1, 1, 1));
 
     }
     
@@ -430,7 +430,8 @@ public class GrenadierAbilities : MonoBehaviour
 
             ReticleController.GetComponent<MeshRenderer>().enabled = false;
             Destroy(ReticleController, 2.5f);
-            
+            UltiAreaDamage = ReticleController.gameObject.transform.position;
+
             fireUlti();
             UltiFired = true;
         }
@@ -460,7 +461,6 @@ public class GrenadierAbilities : MonoBehaviour
     void fireUlti()
     {
         GameObject obj = Instantiate(UltiBalloon, transform.position, Quaternion.identity);
-        UltiAreaDamage = obj.gameObject.transform.position;
         obj.gameObject.GetComponent<Rigidbody>().velocity = HitTargetAtTime(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 2.5f);
         //HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f)
         Destroy(obj, 2.5f);
@@ -469,12 +469,13 @@ public class GrenadierAbilities : MonoBehaviour
 
     void UltiDamage()
     {
-
         damaging = Physics.OverlapSphere(UltiAreaDamage, 3.0f, Target);
         for (int i = 0; i < damaging.Length; i++)
         {
+            damaging[i].gameObject.GetComponent<Pathfinding>().Stunned(2.0f);
             HealthScript M_HealthScript = damaging[i].gameObject.GetComponent<HealthScript>();
             M_HealthScript.CurrentHealth -= UltiDamageNum;
+            Debug.Log("UltiDamage");
         }
 
     }

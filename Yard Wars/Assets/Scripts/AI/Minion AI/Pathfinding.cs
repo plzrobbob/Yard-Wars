@@ -13,8 +13,22 @@ public class Pathfinding : MonoBehaviour
     public float distanceForDebug;
     public float distanceToNode;
     public MinionPlayerAttacking MinionPlayerAttacking;
+
+
+
+
+    //This is used for Slowing enemies for the AI
     public float BaseSpeed;
     public float EditedSpeed;
+
+
+
+    //This is used for stunning the enemy
+    public Pathfinding pathfinding;
+    public GameObject StunVFX;
+    public MinionTowerAttacking MTA;
+    public MinionPlayerAttacking MPA;
+
     //public float speedHolder;
 
     // Start is called before the first frame update
@@ -55,6 +69,19 @@ public class Pathfinding : MonoBehaviour
     }
 
 
+
+
+
+
+
+
+    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS STEPHENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
+    //    
+    //    Signed,
+    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
+    //  
+
+
     public void Slowed(float percentage, float time)
     {
         EditedSpeed = BaseSpeed * percentage;
@@ -83,13 +110,32 @@ public class Pathfinding : MonoBehaviour
 
     }
 
-    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS STEPHENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
-    //    
-    //    Signed,
-    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
-    //  
+    public void Stunned(float time)
+    {
+        Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
+        navAgent.speed = 0f;
+        StunVFX.SetActive(true);
+        DisableAll();
+        Invoke("Unstunned", time);
+    }
 
+    void Unstunned()
+    {
+        StunVFX.SetActive(false);
+        resetSpeed();
+        EnableAll();
+    }
 
+    void DisableAll()
+    {
+        MTA.enabled = false;
+        MPA.enabled = false;
+    }
 
+    void EnableAll()
+    {
+        MTA.enabled = true;
+        MPA.enabled = true;
+    }
 
 }

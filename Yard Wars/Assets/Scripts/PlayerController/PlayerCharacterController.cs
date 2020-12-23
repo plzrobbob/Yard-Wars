@@ -37,9 +37,16 @@ public class PlayerCharacterController : MonoBehaviour
     public Animator Player_Animator;
 
 
+
+    public PlayerCharacterController pcc;
+    public GameObject StunVFX;
+
+
     //Stuff Cameron added
     public float EditedSpeed;
     public float UnEditedSpeed;
+
+    public bool test;
 
 
     // Start is called before the first frame update
@@ -78,6 +85,11 @@ public class PlayerCharacterController : MonoBehaviour
         else
         {
             gun.SetActive(true);
+        }
+
+        if(test)
+        {
+            Stunned(4.0f);
         }
     }
 
@@ -166,6 +178,20 @@ public class PlayerCharacterController : MonoBehaviour
         gun.transform.LookAt(aim_placeholder.transform);
     }
 
+
+
+
+
+
+
+
+    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS BENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
+    //    
+    //    Signed,
+    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
+    //  
+
+
     public void Slowed(float percentage, float time)
     {
         EditedSpeed = UnEditedSpeed * percentage;
@@ -198,9 +224,21 @@ public class PlayerCharacterController : MonoBehaviour
     }
 
 
-    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS BENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
-    //    
-    //    Signed,
-    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
-    //  
+    public void Stunned(float time)
+    {
+        Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
+        pcc.enabled = false;
+        StunVFX.SetActive(true);
+
+        Invoke("Unstunned", time);
+    }
+
+    void Unstunned()
+    {
+
+        StunVFX.SetActive(false);
+
+        pcc.enabled = true;
+    }
+
 }

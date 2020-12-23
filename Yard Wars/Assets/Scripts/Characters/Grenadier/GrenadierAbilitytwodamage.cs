@@ -91,7 +91,7 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
         {
             if (enemiesHit[i].gameObject.tag == "PlayerHolder")
             {
-                enemiesHit[i].gameObject.GetComponent<PlayerCharacterController>().Slowed(0.2f, 3f);
+                enemiesHit[i].gameObject.GetComponent<PlayerCharacterController>().Slowed(0.7f, 3f);
                 //Call to that function in PlayerCharacterController to slow them
                 //It would be something like: enemiesHit[i].gameObject.getComponent<PlayerCharacterController>().*functionName*
             }

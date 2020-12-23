@@ -7,6 +7,7 @@ public class GrenadierBasicHitDetect : MonoBehaviour
     // Start is called before the first frame update
     private Collider[] HitTargets;
     private Vector3 overlapCheck;
+   // public float mainDamage;  
     public float damage;
     public float area;
     public int layernum;
@@ -58,6 +59,7 @@ public class GrenadierBasicHitDetect : MonoBehaviour
     {
        //The reason I have it spawning on collision.contacts[0].point is to try and replicate how a balloon would work
        //When it pops, the water will splash off of the first thign it, so the aoe damage is based on that location
+
        
         HitTargets = Physics.OverlapSphere(collision.contacts[0].point, area, layer);
         DoDamage();
