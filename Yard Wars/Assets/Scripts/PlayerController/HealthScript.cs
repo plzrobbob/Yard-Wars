@@ -6,13 +6,15 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour
 {
     public GameObject[] RespawnBoundries;
-
+    public bool PleaseWork;
     public float MaxHealth = 100;
     public float CurrentHealth;
 
     public float regentimer;
     public float regenmult;
     private float curregentime;
+    private IEnumerator dotDamage;
+    private bool DottyDamage = false;
 
     public bool damaged;
 
@@ -37,6 +39,7 @@ public class HealthScript : MonoBehaviour
 
     public void Update()
     {
+      
         if (CurrentHealth > 0 && TopBody.gameObject.tag == "PlayerHolder")
         {
             RegenHandler();
@@ -51,6 +54,11 @@ public class HealthScript : MonoBehaviour
         {
             Debug.Log("dead");
             CurrentHealth = 0;
+        }
+        else if(DottyDamage)
+        {
+            StartCoroutine(SpecialDuration());
+            DottyDamage = false;
         }
     }
 
@@ -83,6 +91,7 @@ public class HealthScript : MonoBehaviour
     public void DamageHandler()
     {
         damaged = true;
+        Debug.Log("Current  Health = " + CurrentHealth);
         curregentime = 0;
     }
 
@@ -130,5 +139,21 @@ public class HealthScript : MonoBehaviour
 
         Vector3 destination = new Vector3(Random.Range(RespawnBoundries[0].transform.position.x, RespawnBoundries[1].transform.position.x), RespawnBoundries[0].transform.position.y + m_PlayerCharacterController.CharController.height / 2, Random.Range(RespawnBoundries[0].transform.position.z, RespawnBoundries[2].transform.position.z));
         TopBody.transform.position = destination;
+    }
+
+    // This is Tin's code. The code made by tin. Tin's code. The code specifically written by Tin.
+  
+   
+    IEnumerator SpecialDuration()
+    {
+        int i;
+        Debug.Log("Hey The Coroutine in the healthscript is turned on");
+        for (i = 0; i < 4; i++)   // for three seconds, 0 > 1 > 2 > 3 but not 4
+        {
+            CurrentHealth -= 1; //take damage BITCH
+            Debug.Log("Health of the Minion: " + CurrentHealth); //so I can show off
+            //Debug.Log(i);
+            yield return new WaitForSeconds(1f); // waits the specified timeframe
+        }
     }
 }
