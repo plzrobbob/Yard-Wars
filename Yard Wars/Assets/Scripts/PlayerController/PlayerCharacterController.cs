@@ -37,6 +37,18 @@ public class PlayerCharacterController : MonoBehaviour
     public Animator Player_Animator;
 
 
+
+    public PlayerCharacterController pcc;
+    public GameObject StunVFX;
+
+
+    //Stuff Cameron added
+    public float EditedSpeed;
+    public float UnEditedSpeed;
+
+    public bool test;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +56,7 @@ public class PlayerCharacterController : MonoBehaviour
         CharController = GetComponent<CharacterController>();
         height = CharController.height;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
+        UnEditedSpeed = MoveSpeed;
     }
 
     // Update is called once per frame
@@ -72,6 +85,11 @@ public class PlayerCharacterController : MonoBehaviour
         else
         {
             gun.SetActive(true);
+        }
+
+        if(test)
+        {
+            Stunned(4.0f);
         }
     }
 
@@ -159,4 +177,68 @@ public class PlayerCharacterController : MonoBehaviour
         //gun.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
         gun.transform.LookAt(aim_placeholder.transform);
     }
+
+
+
+
+
+
+
+
+    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS BENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
+    //    
+    //    Signed,
+    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
+    //  
+
+
+    public void Slowed(float percentage, float time)
+    {
+        EditedSpeed = UnEditedSpeed * percentage;
+        Debug.Log("Base speed" + UnEditedSpeed + "percentage" + percentage + "EditedSpeed" + EditedSpeed);
+
+        MoveSpeed = EditedSpeed;
+        Debug.Log(MoveSpeed);
+
+        Invoke("resetSpeed", time);
+    }
+
+    public void Faster(float percentage, float time)
+    {
+        EditedSpeed = UnEditedSpeed * percentage;
+        Debug.Log("Base speed" + UnEditedSpeed + "percentage" + percentage + "EditedSpeed" + EditedSpeed);
+
+        MoveSpeed = EditedSpeed;
+        Debug.Log(MoveSpeed);
+
+        Invoke("resetSpeed", time);
+    }
+
+
+    void resetSpeed()
+    {
+        MoveSpeed = UnEditedSpeed;
+        Debug.Log("SpeedReset");
+        Debug.Log(MoveSpeed);
+
+    }
+
+
+    public void Stunned(float time)
+    {
+        Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
+        pcc.enabled = false;
+        StunVFX.SetActive(true);
+
+        Invoke("Unstunned", time);
+    }
+
+    void Unstunned()
+    {
+
+        StunVFX.SetActive(false);
+
+        pcc.enabled = true;
+    }
+
 }
