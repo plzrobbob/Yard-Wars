@@ -7,7 +7,7 @@ public class PlayerCharacterController : MonoBehaviour
     public CharacterController CharController;
 
     public float Gravity = -9.81f;
-    public float MoveSpeed = 5;
+    public float MoveSpeed;
     public float JumpHeight = 3f;
     private float GroundDistance = 0.4f;
     private float fallmult = 2.5f; //increase gravity pull for better feel
@@ -34,6 +34,20 @@ public class PlayerCharacterController : MonoBehaviour
 
     public PlaceDefense m_placeDefense;
 
+    public Animator Player_Animator;
+
+
+
+    public PlayerCharacterController pcc;
+    public GameObject StunVFX;
+
+
+    //Stuff Cameron added
+    public float EditedSpeed;
+    public float UnEditedSpeed;
+
+    public bool test;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +56,7 @@ public class PlayerCharacterController : MonoBehaviour
         CharController = GetComponent<CharacterController>();
         height = CharController.height;
         camera = GameObject.FindGameObjectWithTag("MainCamera");
+        UnEditedSpeed = MoveSpeed;
     }
 
     // Update is called once per frame
@@ -71,6 +86,11 @@ public class PlayerCharacterController : MonoBehaviour
         {
             gun.SetActive(true);
         }
+
+        if(test)
+        {
+            Stunned(4.0f);
+        }
     }
 
     void Movement()
@@ -78,12 +98,24 @@ public class PlayerCharacterController : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
+        if ((x != 0 || z != 0) && Grounded)
+        {
+            Player_Animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            Player_Animator.SetBool("IsWalking", false);
+        }
+
         //transform.right and transform.forward uses local coords instead of world coords
         Vector3 move = transform.right * x + transform.forward * z;
 
-        //Debug.Log(Velocity);
+        //Clamps the maximum magnitude to fix the issue where the player can press two movement input keys and increase their speed
+        move = Vector3.ClampMagnitude(move, 1f);
+
         CharController.Move(Velocity * Time.deltaTime);
         CharController.Move(move * MoveSpeed * Time.deltaTime);
+
     }
 
     void Jump()
@@ -145,4 +177,68 @@ public class PlayerCharacterController : MonoBehaviour
         //gun.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
         gun.transform.LookAt(aim_placeholder.transform);
     }
+
+
+
+
+
+
+
+
+    //I AM CLAIMING THIS SECTION OF THE SCRIPT. I UNDERSTAND THIS IS BENS BUT I HAVE ALTERED THE DEAL. PRAY I DO NOT ALTER IT FURTHER.
+    //    
+    //    Signed,
+    //          The muffled yelling from someone sounding similar to cameron from the safety of his Compile Bear Bunker.
+    //  
+
+
+    public void Slowed(float percentage, float time)
+    {
+        EditedSpeed = UnEditedSpeed * percentage;
+        Debug.Log("Base speed" + UnEditedSpeed + "percentage" + percentage + "EditedSpeed" + EditedSpeed);
+
+        MoveSpeed = EditedSpeed;
+        Debug.Log(MoveSpeed);
+
+        Invoke("resetSpeed", time);
+    }
+
+    public void Faster(float percentage, float time)
+    {
+        EditedSpeed = UnEditedSpeed * percentage;
+        Debug.Log("Base speed" + UnEditedSpeed + "percentage" + percentage + "EditedSpeed" + EditedSpeed);
+
+        MoveSpeed = EditedSpeed;
+        Debug.Log(MoveSpeed);
+
+        Invoke("resetSpeed", time);
+    }
+
+
+    void resetSpeed()
+    {
+        MoveSpeed = UnEditedSpeed;
+        Debug.Log("SpeedReset");
+        Debug.Log(MoveSpeed);
+
+    }
+
+
+    public void Stunned(float time)
+    {
+        Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
+        pcc.enabled = false;
+        StunVFX.SetActive(true);
+
+        Invoke("Unstunned", time);
+    }
+
+    void Unstunned()
+    {
+
+        StunVFX.SetActive(false);
+
+        pcc.enabled = true;
+    }
+
 }
