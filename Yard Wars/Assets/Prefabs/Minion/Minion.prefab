@@ -145,6 +145,8 @@ MonoBehaviour:
   EditedSpeed: 0
   pathfinding: {fileID: 6256169380176961693}
   StunVFX: {fileID: 7671168574098347255}
+  MTA: {fileID: 7086946271873579684}
+  MPA: {fileID: 7380466412345064840}
 --- !u!114 &-5991294570088636633
 MonoBehaviour:
   m_ObjectHideFlags: 0
