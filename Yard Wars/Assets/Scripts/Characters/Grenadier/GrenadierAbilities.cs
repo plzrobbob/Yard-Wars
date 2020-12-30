@@ -62,6 +62,12 @@ public class GrenadierAbilities : MonoBehaviour
     public float newrot;
     public LayerMask raymask;
 
+    public GameObject AbilitytwoSpawn;
+    public GameObject AbilityTwoBola;
+    [Range(5.0f, 25.0f)]
+    public float AbilityTwoSpeed;
+    public float AbilityTwoSlowSpeed;
+    public float AbilityTwoDistance;
 
 
 
@@ -135,18 +141,24 @@ public class GrenadierAbilities : MonoBehaviour
         //Here we will control the rotating and placing of the ability.
         if (placing)
         {
-            RotateDefense();
-            SetDefenseHeight();
-            DoAbilityTwo();
+          //  RotateDefense();
+        //    SetDefenseHeight();
+        //    DoAbilityTwo();
         }
 
         if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !placing && !UltimatePressed)
         {
             Debug.Log("Ability Two initiated");
-            placing = true;
+         //   placing = true;
             
-            deactivate = true;
-            TripWire.SetActive(true);
+      //      deactivate = true;
+       //     TripWire.SetActive(true);
+        }
+
+        if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !UltimatePressed)
+        {
+            AbilityTwoV2();
+         //   AbilityTwoCooldown = 0f;
         }
 
 
@@ -175,36 +187,6 @@ public class GrenadierAbilities : MonoBehaviour
             ReticleController = obj;
 
         }
-
-
-        // I am working on vfx.
-        /*
-        if (UltiFired && !inProgress)
-        {
-
-            effect.Play();
-            inProgress = true;
-            UltiFired = false;
-        }
-
-        if (inProgress)
-        {
-            Debug.Log("gets hjere");
-            Debug.Log(effect.GetFloat("Current_time_to_impact"));
-
-            if (effect.GetFloat("Current_time_to_impact") < 1f)
-            {
-                effect.SetFloat("Current_time_to_impact", effect.GetFloat("Current_time_to_impact") + (Time.deltaTime));
-            }
-            else
-            {
-                inProgress = false;
-                effect.SetFloat("Current_time_to_impact", 0f);
-            }
-        }
-        
-
-        */
 
     }
 
@@ -291,6 +273,25 @@ public class GrenadierAbilities : MonoBehaviour
             TripWire.SetActive(false);
             
 
+        }
+    }
+
+    void AbilityTwoV2 ()
+    {
+        GameObject obj = Instantiate(AbilityTwoBola, AbilitytwoSpawn.transform.position, AbilitytwoSpawn.transform.rotation);
+        obj.gameObject.GetComponent<Rigidbody>().velocity = AbilitytwoSpawn.transform.forward * AbilityTwoSpeed;
+        obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().damage = AbilityTwoDamage;
+        obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().slowTime = AbilityTwoSlowSpeed;
+        obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().distanceAllowed = AbilityTwoDistance;
+
+        if (gameObject.layer == 20)
+        {
+            obj.GetComponentInChildren<GrenadierAbilityTwoBola>().targetNum = 21;
+
+        }
+        else if (gameObject.layer == 21)
+        {
+            obj.GetComponentInChildren<GrenadierAbilityTwoBola>().targetNum = 20;
         }
     }
 

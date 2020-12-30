@@ -19,7 +19,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     public LayerMask GroundMask;
 
-    public GameObject gun;
+   // public GameObject gun;
 
     public GameObject camera;
 
@@ -80,11 +80,11 @@ public class PlayerCharacterController : MonoBehaviour
 
         if (m_placeDefense.placing)
         {
-            gun.SetActive(false);
+        //    gun.SetActive(false);
         }
         else
         {
-            gun.SetActive(true);
+          //  gun.SetActive(true);
         }
 
         if(test)
@@ -175,7 +175,7 @@ public class PlayerCharacterController : MonoBehaviour
     {
         //Vector3 v = gun.transform.rotation.eulerAngles;
         //gun.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
-        gun.transform.LookAt(aim_placeholder.transform);
+       // gun.transform.LookAt(aim_placeholder.transform);
     }
 
 
