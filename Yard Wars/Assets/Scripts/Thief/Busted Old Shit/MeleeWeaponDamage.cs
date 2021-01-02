@@ -6,14 +6,7 @@ public class MeleeWeaponDamage : MonoBehaviour
 {
     public bool attackSuccessful;
     public float damageAmount;
-
-    //public float range;
-
-    //public LayerMask EnemyMask;
-    //public Collider[] enemiesHit;
-
     public Collider[] HitTargets;
-    private Vector3 overlapCheck;
     public float area;
     public int layernum;
     private LayerMask layer;
@@ -23,6 +16,8 @@ public class MeleeWeaponDamage : MonoBehaviour
     void Start()
     {
         attackSuccessful = false;
+
+        Debug.Log("layernum equals " + layernum);
 
         if (layernum == 20)
         {
@@ -42,17 +37,10 @@ public class MeleeWeaponDamage : MonoBehaviour
             attackSuccessful = false;
         }
 
-        //OnDrawGizmos();
     }
 
     private void OnTriggerEnter(Collider collider)
     {
-        
-
-
-        //if (collider.gameObject.tag == "Enemy")
-        //{
-
             HitTargets = Physics.OverlapSphere(transform.position, area, layer);
             DoDamage();
 
@@ -62,8 +50,6 @@ public class MeleeWeaponDamage : MonoBehaviour
             //M_HealthScript.CurrentHealth -= damageAmount;
             attackSuccessful = true;
             Debug.Log("Sir, an iceburg struck the Trigger collider, I believe the ship is going down.");
-        //} 
-
 
     }
 

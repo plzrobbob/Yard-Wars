@@ -28,6 +28,8 @@ public class PlayerCharacterController : MonoBehaviour
     private Vector3 Velocity;
 
     public bool Grounded;
+    public float MaxJmpCount = 1f; //This is new, I added this for Thief
+    public float JmpCount; //This is new, I added this for Thief
     private bool CanJmp;
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
@@ -56,6 +58,7 @@ public class PlayerCharacterController : MonoBehaviour
         }
         if (Grounded)
         {
+            JmpCount = 0f; //This is new, I added this for Thief
             CanJmp = true;
         }
         OnSlope();
@@ -103,10 +106,15 @@ public class PlayerCharacterController : MonoBehaviour
         {
             Velocity.y = 0f;
         }
-        if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
+        if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded && JmpCount < MaxJmpCount)//get input for jump
         {
             Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
             CanJmp = false;
+        }
+        if (Input.GetAxis("Jump") != 0 && !CanJmp && JmpCount < MaxJmpCount)//This is new, I added this for Thief
+        {
+            CanJmp = true; //This is new, I added this for Thief
+            JmpCount++; //This is new, I added this for Thief
         }
         if (!Grounded)
         {
