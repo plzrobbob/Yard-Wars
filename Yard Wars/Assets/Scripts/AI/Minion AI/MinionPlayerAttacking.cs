@@ -55,7 +55,7 @@ public class MinionPlayerAttacking : MonoBehaviour
         while (test)
         {
             float distance = Vector3.Distance(gameObject.transform.position, Player.transform.position);
-            Debug.Log(distance);
+           // Debug.Log(distance);
             if (distance < 3)
             {
                 Debug.Log("hit");

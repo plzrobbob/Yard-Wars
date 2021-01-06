@@ -11,6 +11,7 @@ TagManager:
   - PlaceholderDefense
   - Defense
   - MinionGoal
+  - UltiView
   layers:
   - Default
   - TransparentFX
