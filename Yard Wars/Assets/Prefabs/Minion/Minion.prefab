@@ -164,6 +164,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 0}
   PlayerCineCamera: {fileID: 0}
   DeathCamCineCamera: {fileID: 0}
+  player_resources: {fileID: 0}
+  death_value: 2
   Player_Animator: {fileID: 0}
   respawnTimer: 0
   TopBody: {fileID: 6256169380176961682}
@@ -199,5 +201,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinionDamage: 10
   m_pathfinding: {fileID: 6256169380176961693}
-  Player: {x: 0, y: 0, z: 0}
+  Player: {fileID: 0}
   previousnode: {x: 0, y: 0, z: 0}

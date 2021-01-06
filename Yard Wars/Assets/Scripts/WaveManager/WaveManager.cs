@@ -11,14 +11,17 @@ public class WaveManager : MonoBehaviour
     GameObject currEnemyPrefab; // The most current enemy prefab, meant to be overwritten at each iteration
     GameObject newFirstNode; // The first node for the pathfinding script to follow along a path for each enemy
 
-   public int waveNumber;
+    public int waveNumber;
+    public int maxWaves;
     int waveAmount;
+    public float maxWaveValue;
 
     public GameObject minionPrefabTypeOne;
     public GameObject minionPrefabTypeTwo;
     public GameObject minionPrefabTypeThree;
     public GameObject minionPrefabTypeFour;
     public GameObject minionPrefabTypeFive;
+    public PlayerResourceSystem player_resources;
 
     private int spawn; // n is equal to spawn n 
                         // 1 is equal to spawn 1, 2 is equal to spawn 2, 3 is equal to spawn 3, 4 random pick spawner
@@ -49,7 +52,10 @@ public class WaveManager : MonoBehaviour
             {
                 ready4Wave = false;
                 waveInProgress = true;
-
+                if (waveNumber != 1)
+                {
+                    player_resources.Gain((float)waveNumber * maxWaveValue / maxWaves);
+                }
                 Wave();
             }
 
@@ -67,7 +73,7 @@ public class WaveManager : MonoBehaviour
 
     void WaveCheck()
     {
-        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0 && ready4Wave == false)
         {
             ready4Wave = true;
         }
@@ -160,6 +166,7 @@ public class WaveManager : MonoBehaviour
 
         for (var i = 0; i < enemyList.Length; i++)
         {
+            enemyList[i].GetComponent<HealthScript>().StartCoroutine(enemyList[i].GetComponent<HealthScript>().Dead());
             Destroy(enemyList[i]);
         }
     }
