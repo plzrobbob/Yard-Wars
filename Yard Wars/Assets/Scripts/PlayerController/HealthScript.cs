@@ -97,7 +97,7 @@ public class HealthScript : MonoBehaviour
         {
 
             m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls
-            m_weaponAim_Fire.enabled = false;
+            //m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
             Player_Animator.SetBool("IsDead", true);
@@ -106,19 +106,19 @@ public class HealthScript : MonoBehaviour
             yield return new WaitForSeconds(2);//camera transition
             Playerbody.SetActive(false);
             DeathCamCineCamera.SetActive(false);
+            Player_Animator.SetBool("IsDead", false);
             //this is where the player should be transformed to his spawn
 
             yield return new WaitForSeconds(respawnTimer);//reset player values and renable cameras to begin transition after specified respawn timer
             CurrentHealth = MaxHealth;
             Playerbody.SetActive(true);
-            Player_Animator.SetBool("IsDead", false);
             PlayerCineCamera.SetActive(true);
             DeathCamCineCamera.SetActive(true);
             Respawn();
 
             yield return new WaitForSeconds(1);//give controlls back to player
             m_PlayerCharacterController.enabled = true;
-            m_weaponAim_Fire.enabled = true;
+            //m_weaponAim_Fire.enabled = true;
             m_placeDefense.enabled = true;
             Isdead = false;
         }

@@ -123,15 +123,24 @@ public class PlayerCharacterController : MonoBehaviour
         if (Grounded && Input.GetAxis("Jump") == 0)
         {
             Velocity.y = 0f;
+            Player_Animator.SetBool("IsJumping", false);
         }
         if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
         {
+            Player_Animator.SetBool("IsJumping", true);
+
             Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
             CanJmp = false;
         }
         if (!Grounded)
         {
             Velocity += Vector3.up * Gravity * (fallmult - 1) * Time.deltaTime; // increases fall gravity for better feel
+        }
+
+        //need to raycast down to see how far away from the ground the player is.
+        if (Physics.Raycast(transform.position, -transform.up, 1f, GroundMask))
+        {
+            Player_Animator.SetBool("IsJumping", false);
         }
     }
     void ThirdPersonCameraLookDirection()
@@ -228,6 +237,9 @@ public class PlayerCharacterController : MonoBehaviour
     {
         Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
         pcc.enabled = false;
+
+        Player_Animator.SetBool("IsStunned", true);
+
         StunVFX.SetActive(true);
 
         Invoke("Unstunned", time);
@@ -235,6 +247,7 @@ public class PlayerCharacterController : MonoBehaviour
 
     void Unstunned()
     {
+        Player_Animator.SetBool("IsStunned", false);
 
         StunVFX.SetActive(false);
 
