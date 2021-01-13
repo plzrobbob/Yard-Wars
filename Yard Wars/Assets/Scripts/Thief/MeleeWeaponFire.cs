@@ -8,8 +8,8 @@ public class MeleeWeaponFire : MonoBehaviour
     private float WeaponCooldown;
     public float maxWeaponCooldown = 0.5f; //maximum seconds per attack
     public PlaceDefense m_placeDefense;
-    public float attackDuration = .25f;
-    public float attackSpeed = 1f;
+    //public float attackDuration = .25f;
+    //public float attackSpeed = 1f;
 
     public bool attackSuccessful;
     public float damageAmount;
@@ -46,7 +46,7 @@ public class MeleeWeaponFire : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && WeaponCooldown > maxWeaponCooldown && !m_placeDefense.placing)
         {
-            HitTargets = Physics.OverlapSphere(transform.position, area, layer);
+            HitTargets = Physics.OverlapSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z + 1.75f), area, layer);
             DoDamage();
 
             //StartCoroutine(AttackDuration());
@@ -60,12 +60,12 @@ public class MeleeWeaponFire : MonoBehaviour
         //it causes damage to anything that touches it.
     }
 
-    IEnumerator AttackDuration()
-    {
+    //IEnumerator AttackDuration()
+    //{
 
-        yield return new WaitForSeconds(attackDuration);
+        //yield return new WaitForSeconds(attackDuration);
         //Debug.Log("Attack Duration Coroutine has is fukcing hapened are yuo having am stroke?");
-    }
+    //}
 
     void DoDamage()
     {
@@ -78,11 +78,11 @@ public class MeleeWeaponFire : MonoBehaviour
         }
     }
 
-   /* void OnDrawGizmos()
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(transform.position, area);
-    } */
+        //Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z + 1.75f), area);
+    } 
 
 
 }

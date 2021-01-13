@@ -29,7 +29,10 @@ public class NewThiefAbilityOne : MonoBehaviour
     {
         canUseAbility = false;
 
-        CharController.Move(transform.forward * dashForce * Time.deltaTime);
+        Vector3 move = transform.forward;
+        move = Vector3.ClampMagnitude(move, 1f);
+        CharController.Move(move * dashForce * Time.deltaTime);
+
         Debug.Log("Activate dash motherfucker");
         Debug.Log(transform.forward);
         Debug.Log(dashForce);

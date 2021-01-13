@@ -71,10 +71,13 @@ public class GuardAbilityOne : MonoBehaviour
             HealthScript M_HealthScript = HitTargets[i].gameObject.GetComponent<HealthScript>();
             M_HealthScript.CurrentHealth -= damageAmount;
 
-            NavMeshAgent navAgent = HitTargets[i].GetComponent<NavMeshAgent>();
+            Pathfinding pathfindingScript = HitTargets[i].GetComponent<Pathfinding>();
+            pathfindingScript.Slowed(0.5f,5);
+
+            /*NavMeshAgent navAgent = HitTargets[i].GetComponent<NavMeshAgent>();
             originalEnemySpeed = navAgent.speed;
             Debug.Log("originalEnemySpeed is: " + originalEnemySpeed);
-            StartCoroutine(EnemySlowDown(navAgent, originalEnemySpeed));
+            StartCoroutine(EnemySlowDown(navAgent, originalEnemySpeed));*/
 
             Debug.Log("Name of thing being damaged is: " + M_HealthScript);
         }
