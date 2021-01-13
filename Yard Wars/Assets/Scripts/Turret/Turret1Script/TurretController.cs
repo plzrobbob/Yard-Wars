@@ -21,6 +21,10 @@ public class TurretController : MonoBehaviour
     public float range;
     public float bulletDamages;
     public float bulletSpeed;
+    public bool buffed = false;
+    private float buffValue;
+    private float buffDuration;
+    private float buffTime;
     private float canshootTimer;
     public float timerToShoot;
     private float fireCountDown = 0f;
@@ -100,12 +104,23 @@ public class TurretController : MonoBehaviour
             canshootTimer = 0;
         }
 
+        // if the turret is buffed, this updates the timer and ends the buff when buffTime >= buffDuration
+        if (buffed)
+        {
+            buffTime += Time.deltaTime;
+            if (buffTime >= buffDuration)
+            {
+                buffed = false;
+                bulletDamages -= buffValue;
+            }
+        }
+
         if (fireCountDown <= 0f && canshootTimer >= timerToShoot)
         {
             Shoot();
             fireCountDown = 1f / fireRate;
         }
-        canshootTimer += Time.deltaTime;
+        canshootTimer += Time.deltaTime; 
         fireCountDown -= Time.deltaTime; 
     }
     void Shoot()
@@ -125,5 +140,28 @@ public class TurretController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+    public void Buff(float value, float duration)
+    {
+        if (!buffed)
+        {
+            // the raw amount to buff damage by
+            buffValue = value;
+
+            // how long the buff will last
+            buffDuration = duration;
+
+            // starts the buff timer 
+            buffed = true; 
+            buffTime = 0; 
+
+            // applies the damage buff
+            bulletDamages += buffValue;
+            Debug.Log("Wow, that turret is looking really buff.");
+        }
+        else
+        {
+            Debug.Log("This turret is already buffed! I'm only set up to handle one buff at a time!");
+        }
     }
 }
