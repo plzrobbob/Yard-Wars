@@ -224,6 +224,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starting_funds: 10
   player_funds: 0
+  MoveSpeed: 0
+  JumpHeight: 3
+  SlopeRayLength: 1
+  SlopeForce: 1
+  GroundCheck: {fileID: 0}
+  GroundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  gun: {fileID: 0}
+  camera: {fileID: 0}
+  aim_placeholder: {fileID: 0}
+  Grounded: 0
+  ThirdPesronCamera: 0
+  IsOnSlope: 0
+  m_placeDefense: {fileID: 0}
+  Player_Animator: {fileID: 0}
 --- !u!1 &7701271043860972085
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +252,7 @@ GameObject:
   - component: {fileID: 7701271043860972087}
   - component: {fileID: 7701271043860972086}
   - component: {fileID: 7701271043860972082}
-  - component: {fileID: 583324424490681275}
+  - component: {fileID: 8681279842542218139}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -343,7 +359,7 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &583324424490681275
+--- !u!114 &8681279842542218139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -832,7 +848,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7701271044660983561}
-  m_LocalRotation: {x: -0.2018132, y: 0.000000017566668, z: 0.000000006939177, w: 0.97942406}
+  m_LocalRotation: {x: -0.2018132, y: -0.00000001613802, z: -5.7735505e-12, w: 0.97942406}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

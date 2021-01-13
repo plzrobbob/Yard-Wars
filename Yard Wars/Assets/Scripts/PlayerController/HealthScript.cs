@@ -7,7 +7,7 @@ public class HealthScript : MonoBehaviour
 {
     public GameObject[] RespawnBoundries;
 
-    public float MaxHealth = 100;
+    public float MaxHealth;
     public float CurrentHealth;
 
     public float regentimer;
