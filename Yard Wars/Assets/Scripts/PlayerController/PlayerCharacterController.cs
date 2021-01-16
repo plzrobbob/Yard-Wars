@@ -28,9 +28,10 @@ public class PlayerCharacterController : MonoBehaviour
     private Vector3 Velocity;
 
     public bool Grounded;
-    public float MaxJmpCount = 1f; //This is new, I added this for Thief
+    public float MaxJmpCount; //This is new, I added this for Thief
     public float JmpCount; //This is new, I added this for Thief
     private bool CanJmp;
+    public bool CanThiefJump;
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
 
@@ -38,18 +39,14 @@ public class PlayerCharacterController : MonoBehaviour
 
     public Animator Player_Animator;
 
-
-
     public PlayerCharacterController pcc;
     public GameObject StunVFX;
-
 
     //Stuff Cameron added
     public float EditedSpeed;
     public float UnEditedSpeed;
 
     public bool test;
-
 
     // Start is called before the first frame update
     void Start()
@@ -61,6 +58,11 @@ public class PlayerCharacterController : MonoBehaviour
         UnEditedSpeed = MoveSpeed;
     }
 
+    private void Update()
+    {
+        Jump();
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -69,13 +71,13 @@ public class PlayerCharacterController : MonoBehaviour
         {
             Grounded = CharController.isGrounded;
         }
+
         if (Grounded)
         {
             JmpCount = 0f; //This is new, I added this for Thief
             CanJmp = true;
         }
         OnSlope();
-        Jump();
         Movement();
         ThirdPersonCameraLookDirection();
         gunrot();
@@ -127,16 +129,31 @@ public class PlayerCharacterController : MonoBehaviour
         {
             Velocity.y = 0f;
         }
-        if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded && JmpCount < MaxJmpCount)//get input for jump
+
+        if (CanThiefJump)
         {
-            Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
-            CanJmp = false;
+            if (Input.GetButtonDown("Jump") && CanJmp && JmpCount < MaxJmpCount)
+            {
+                Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                //Jumping = true;
+                CanJmp = false;
+            }
+            else if (Input.GetButtonUp("Jump") && !CanJmp)
+            {
+                Debug.Log("but-up");
+                CanJmp = true;
+                JmpCount++;
+            }
         }
-        if (Input.GetAxis("Jump") != 0 && !CanJmp && JmpCount < MaxJmpCount)//This is new, I added this for Thief
+        else
         {
-            CanJmp = true; //This is new, I added this for Thief
-            JmpCount++; //This is new, I added this for Thief
+            if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
+            {
+                Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
+                CanJmp = false;
+            }
         }
+
         if (!Grounded)
         {
             Velocity += Vector3.up * Gravity * (fallmult - 1) * Time.deltaTime; // increases fall gravity for better feel
@@ -183,7 +200,11 @@ public class PlayerCharacterController : MonoBehaviour
     {
         //Vector3 v = gun.transform.rotation.eulerAngles;
         //gun.transform.rotation = Quaternion.Euler(camera.transform.rotation.eulerAngles.x, 0, 0);
-        gun.transform.LookAt(aim_placeholder.transform);
+        try
+        {
+            gun.transform.LookAt(aim_placeholder.transform);
+        }
+        catch { Debug.Log("NoGun error"); }
     }
 
 
