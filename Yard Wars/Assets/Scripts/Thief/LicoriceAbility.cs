@@ -14,6 +14,9 @@ public class LicoriceAbility : MonoBehaviour
 
     public PlaceDefense m_placeDefense;
 
+    public Quaternion LicoRotate = Quaternion.Euler(0, 14.75f, 0);
+
+
     private void Start()
     {
         m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
@@ -36,7 +39,8 @@ public class LicoriceAbility : MonoBehaviour
 
     private void CreateBullet()
     {
-        Instantiate(projectile, Weapon.transform.position, transform.rotation);
+        //projectile.transform.rotation = Quaternion.Euler(0, 14.75f, 0);
+        Instantiate(projectile, Weapon.transform.position, LicoRotate * transform.rotation);
     }
 }
 

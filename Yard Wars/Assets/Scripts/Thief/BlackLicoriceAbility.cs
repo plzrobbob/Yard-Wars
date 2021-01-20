@@ -40,11 +40,12 @@ public class BlackLicoriceAbility : MonoBehaviour
             return;
         }
         */
+        /*
         if (Vector3.Distance(transform.position, Target.transform.position) < 1)
         {
             HitTarget();
             return;
-        }
+        }*/
 
         rb.AddForce(transform.forward * speed);
 
@@ -54,10 +55,10 @@ public class BlackLicoriceAbility : MonoBehaviour
         }
         bullettime += Time.deltaTime;
     }
-
+    /*
     void HitTarget()
     {
-        Destroy(gameObject);
+        Destroy(this.gameObject);
         HealthScript M_HealthScript = Target.gameObject.GetComponent<HealthScript>();
         //M_HealthScript.DamageHandler();
         M_HealthScript.CurrentHealth -= Damages;
