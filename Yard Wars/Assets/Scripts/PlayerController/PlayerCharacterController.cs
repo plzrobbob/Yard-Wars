@@ -14,6 +14,10 @@ public class PlayerCharacterController : MonoBehaviour
     private float height;
     public float SlopeRayLength = 1f;
     public float SlopeForce = 1f;
+    public float TurnSpeed = 3f;
+    public Transform InvisibleCameraOrigin;
+    public float VerticalRotMin = -80;
+    public float VerticalRotMax = 80;
 
     public Transform GroundCheck;
 
@@ -74,7 +78,7 @@ public class PlayerCharacterController : MonoBehaviour
         OnSlope();
         Jump();
         Movement();
-        ThirdPersonCameraLookDirection();
+       // ThirdPersonCameraLookDirection();
         gunrot();
 
 
@@ -116,8 +120,28 @@ public class PlayerCharacterController : MonoBehaviour
         CharController.Move(Velocity * Time.deltaTime);
         CharController.Move(move * MoveSpeed * Time.deltaTime);
 
-    }
+        var rotInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        var rot = transform.eulerAngles;
+        rot.y += rotInput.x * TurnSpeed;
+        transform.rotation = Quaternion.Euler(rot);
 
+        if (InvisibleCameraOrigin != null)
+        {
+            rot = InvisibleCameraOrigin.localRotation.eulerAngles;
+            rot.x -= rotInput.y * TurnSpeed;
+            if (rot.x > 180)
+                rot.x -= 360;
+            rot.x = Mathf.Clamp(rot.x, VerticalRotMin, VerticalRotMax);
+            InvisibleCameraOrigin.localRotation = Quaternion.Euler(rot);
+        }
+
+    }
+    void bla(GameObject obj)
+    {
+        //your code
+
+
+    }
     void Jump()
     {
         if (Grounded && Input.GetAxis("Jump") == 0)
@@ -205,6 +229,12 @@ public class PlayerCharacterController : MonoBehaviour
 
     public void Faster(float percentage, float time)
     {
+
+        ///<summary>
+        ///float percentage is the percentage you want it to be, example if you want to decrease them by 30%, 
+        ///You would set percentage to 0.7f
+        ///Time is self explanatory how many seconds do you want them to be slowed by?
+        /// </summary>
         EditedSpeed = UnEditedSpeed * percentage;
         Debug.Log("Base speed" + UnEditedSpeed + "percentage" + percentage + "EditedSpeed" + EditedSpeed);
 

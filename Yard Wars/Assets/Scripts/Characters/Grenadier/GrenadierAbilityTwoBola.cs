@@ -64,7 +64,6 @@ public class GrenadierAbilityTwoBola : MonoBehaviour
         if (collision.gameObject.layer == targetNum)
         {
             Debug.Log("Gets Here");
-            Damaged(collision);
             if (collision.gameObject.CompareTag("Enemy"))
             {
                 //DamagedMinion(collision);
@@ -76,6 +75,13 @@ public class GrenadierAbilityTwoBola : MonoBehaviour
               //  DamagedPlayer(collision);
                 SlowedPlayer(collision);
             }
+            Damaged(collision);
+
+        }
+        else
+        {
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            Invoke("DestroyObject", 2.0f);
         }
     }
 
@@ -92,7 +98,11 @@ public class GrenadierAbilityTwoBola : MonoBehaviour
     {
         Debug.Log("We have done damage to: " + collision.gameObject.name);
         collision.gameObject.GetComponent<HealthScript>().CurrentHealth -= damage;
+        Destroy(gameObject);
     }
+
+
+
 
     //I don't need this.... Yet....
     void DamagedMinion(Collision collision)
@@ -102,5 +112,10 @@ public class GrenadierAbilityTwoBola : MonoBehaviour
     void DamagedPlayer(Collision collision)
     {
 
+    }
+
+    void DestroyObject()
+    {
+        Destroy(gameObject);
     }
 }

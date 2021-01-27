@@ -16,9 +16,11 @@ public class GrenadierBasicAttack : MonoBehaviour
     public int TeamLayer;
     public float damage;
 
+    public PlaceDefense m_placeDefense;
 
     void Start()
     {
+        m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
 
     }
 
@@ -26,7 +28,7 @@ public class GrenadierBasicAttack : MonoBehaviour
     void Update()
     {
         weaponCooldown += Time.deltaTime;
-        if (Input.GetButtonDown("Fire1") && weaponCooldown > 1)
+        if (Input.GetButtonDown("Fire1") && weaponCooldown > 1 && !m_placeDefense.placing)
         {
             CreateBalloon();
             Debug.Log(TeamLayer);
@@ -39,7 +41,7 @@ public class GrenadierBasicAttack : MonoBehaviour
         //This is temporarily positioned in front of the player. When player is created, have it spawn from the top of their hand and lets hope it looks good
         //Maybe also have it where when you throw it, the balloon that it looks like the player is carrying is turned off until they "reload"
         GameObject obj = Instantiate(WaterBalloon, BalloonOrigin.transform.position, BalloonOrigin.transform.rotation);
-        obj.GetComponent<Rigidbody>().velocity = (Camera.main.transform.forward * ExitSpeed) ;
+        obj.GetComponent<Rigidbody>().velocity = (Camera.main.transform.forward * ExitSpeed);
 
         //In GrenadierBaiscHitDetect I describe what I set up to make this work, the following line
         //is me setting the integer that is going to be compared later on down the line in HitDetect

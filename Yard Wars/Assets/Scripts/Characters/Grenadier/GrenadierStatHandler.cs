@@ -5,15 +5,15 @@ using UnityEngine;
 public class GrenadierStatHandler : MonoBehaviour
 {
     // Start is called before the first frame update
-    private float GrenadierHealth = 120f;
-    private float GrenadierDamage = 10f;
-    private float GrenadierSpeed = 10f;
-    private float AbilityOneDamage = 50f;
-    private float AbilityOneRange = 5f;
-    private float AbilityTwoDamage = 40f;
-    private float AbilityTwoRange = 2.5f;
-    private float AbilityTwoslowTime = 2f;
-    private float UltiDamage = 10f;
+    public float GrenadierHealth = 120f;
+    public float GrenadierDamage = 10f;
+    public float GrenadierSpeed = 10f;
+    public float AbilityOneDamage = 50f;
+    public float AbilityOneRange = 5f;
+    public float AbilityTwoDamage = 40f;
+    public float AbilityTwoRange = 2.5f;
+    public float AbilityTwoslowTime = 2f;
+    public float UltiDamage = 10f;
    
 
     void Start()
