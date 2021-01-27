@@ -26,7 +26,7 @@ public class NewThiefAbilityOne : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Input.GetKeyDown("q") && canUseAbility)
+        if (Input.GetButtonDown("Ability One") && canUseAbility)
         {
             //Should I disable jumping during this ability?  nah fuck it dud
             IsSliding = true;

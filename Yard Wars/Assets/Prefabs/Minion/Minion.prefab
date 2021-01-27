@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -5991294570088636633}
   - component: {fileID: 7086946271873579684}
   - component: {fileID: 7380466412345064840}
+  - component: {fileID: -4768455491216889003}
   m_Layer: 21
   m_Name: Minion
   m_TagString: Enemy
@@ -208,6 +209,22 @@ MonoBehaviour:
   m_pathfinding: {fileID: 6256169380176961693}
   Player: {fileID: 0}
   previousnode: {x: 0, y: 0, z: 0}
+--- !u!208 &-4768455491216889003
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256169380176961682}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &2780360661619144817
 PrefabInstance:
   m_ObjectHideFlags: 0

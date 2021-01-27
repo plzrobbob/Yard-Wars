@@ -6,12 +6,11 @@ using UnityEngine.AI;
 public class GuardAbilityOne : MonoBehaviour
 {
     public bool attackSuccessful;
-    public float damageAmount;
+    public float abilityOneDamageAmount;
     public float slowDownDuration;
 
-    bool canUseAbility = true;
-    public float abilityOneDuration = 5f;
-    public float abilityOneCooldown = 7f;
+    private float AbilityOneCooldown = 6f;
+    public float maxAbilityOneCooldown = 6f; //maximum seconds per attack
 
     public Collider[] HitTargets;
     private Vector3 overlapCheck;
@@ -23,6 +22,9 @@ public class GuardAbilityOne : MonoBehaviour
 
     public Transform sphereOne;
     public Transform sphereTwo;
+
+    public float slowPercent; // originally this was set to: 0.5f
+    public float slowDuration; // originally this was set to: 5f
 
 
     // Start is called before the first frame update
@@ -43,25 +45,28 @@ public class GuardAbilityOne : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AbilityOneController();
 
-        if (Input.GetKeyDown("q") && canUseAbility)
-        {
-            canUseAbility = false;
-            AttackController();
-
-            StartCoroutine(AbilityCooldown());
-            //StartCoroutine(AbilityDuration());
-        }
+        AbilityOneCooldown += Time.deltaTime;
 
     }
 
-    private void AttackController()
+    private void AbilityOneController()
     {
-            //HitTargets = Physics.OverlapSphere(transform.position, area, layer);
+        if (Input.GetButtonDown("Ability One") && AbilityOneCooldown > maxAbilityOneCooldown)
+        {
             HitTargets = Physics.OverlapCapsule(sphereOne.position, sphereTwo.position, area, layer);
             DoDamage();
 
-            Debug.Log("Attack underway!");
+            AbilityOneCooldown = 0;
+
+            Debug.Log("Ability one currently engaged motherfucker!");
+        }
+        else
+        {
+            Debug.Log("Ability One is still charging up dude, quit mashin the button!");
+        }
+
     }
 
     void DoDamage()
@@ -69,10 +74,10 @@ public class GuardAbilityOne : MonoBehaviour
         for (int i = 0; i < HitTargets.Length; i++)
         {
             HealthScript M_HealthScript = HitTargets[i].gameObject.GetComponent<HealthScript>();
-            M_HealthScript.CurrentHealth -= damageAmount;
+            M_HealthScript.CurrentHealth -= abilityOneDamageAmount;
 
             Pathfinding pathfindingScript = HitTargets[i].GetComponent<Pathfinding>();
-            pathfindingScript.Slowed(0.5f,5);
+            pathfindingScript.Slowed(slowPercent, slowDuration);
 
             /*NavMeshAgent navAgent = HitTargets[i].GetComponent<NavMeshAgent>();
             originalEnemySpeed = navAgent.speed;
@@ -90,23 +95,10 @@ public class GuardAbilityOne : MonoBehaviour
         navAgentEnumerator.speed = originalSpeed;
     }
 
-    IEnumerator AbilityCooldown()
-    {
-        yield return new WaitForSeconds(abilityOneCooldown);
-        canUseAbility = true;
-        Debug.Log("Ability Cooldown Coroutine is a gogogo!!");
-    }
-
-    IEnumerator AbilityDuration()
-    {
-        yield return new WaitForSeconds(abilityOneDuration);
-        Debug.Log("Ability Duration Coroutine is a gogo");
-    }
-
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawSphere(sphereOne.position, area);
-        Gizmos.DrawSphere(sphereTwo.position, area);
+        //Gizmos.DrawSphere(sphereOne.position, area);
+        //Gizmos.DrawSphere(sphereTwo.position, area);
     }
 }
