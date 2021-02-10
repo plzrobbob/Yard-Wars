@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapon: {fileID: 3301317668653171264}
-  bulletSpeed: 15
+  bulletSpeed: 25
   mass: 0
   maxmass: 0
   massMult: 0

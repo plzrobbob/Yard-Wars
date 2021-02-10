@@ -9021,6 +9021,7 @@ MonoBehaviour:
     type: 3}
   m_placeDefense: {fileID: 0}
   LicoRotate: {x: 0, y: 0.1283629, z: 0, w: 0.9917273}
+  LicoStacks: 5
 --- !u!1 &244237144
 GameObject:
   m_ObjectHideFlags: 0
@@ -76257,12 +76258,12 @@ PrefabInstance:
     - target: {fileID: 4404565845105847040, guid: 4682dfba1740f894f838e3c5c2a72e1f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.08036196
+      value: 0.08036193
       objectReference: {fileID: 0}
     - target: {fileID: 4404565845105847040, guid: 4682dfba1740f894f838e3c5c2a72e1f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.033629112
+      value: -0.033629097
       objectReference: {fileID: 0}
     - target: {fileID: 5142888359204558562, guid: 4682dfba1740f894f838e3c5c2a72e1f,
         type: 3}

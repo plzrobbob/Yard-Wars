@@ -16,10 +16,17 @@ public class LicoriceAbility : MonoBehaviour
 
     public Quaternion LicoRotate = Quaternion.Euler(0, 14.75f, 0);
 
+    public int LicoStacks;
 
+    public bool StartedLico;
+
+    public bool isDone;
     private void Start()
     {
         m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
+        LicoStacks = 5;
+        StartedLico = false;
+        isDone = true;
     }
 
     private void Update()
@@ -30,10 +37,16 @@ public class LicoriceAbility : MonoBehaviour
 
     private void ShootController()
     {
-        if (Input.GetButtonDown("Ability2") && WeaponCooldown > .5f && !m_placeDefense.placing)
-        {
+        if (Input.GetButtonDown("Ability2") && WeaponCooldown > .5f && !m_placeDefense.placing && LicoStacks != 0)
+        { 
             CreateBullet();
-            WeaponCooldown = 0;
+            LicoStacks -= 1;
+
+            if (isDone)
+            {
+                StartCoroutine(LicoCooldown());
+            }
+            Debug.Log("YOu have this man LicoStacks = " + LicoStacks);
         }
     }
 
@@ -42,6 +55,35 @@ public class LicoriceAbility : MonoBehaviour
         //projectile.transform.rotation = Quaternion.Euler(0, 14.75f, 0);
         Instantiate(projectile, Weapon.transform.position, LicoRotate * transform.rotation);
     }
+
+    IEnumerator LicoCooldown()
+    {
+        isDone = false;
+        Debug.Log("Hey The Coroutine in the healthscript is turned on");
+        if (LicoStacks <= 4)
+        {
+            Debug.Log("Bullets: " + LicoStacks); //so I can show off                                    
+            yield return new WaitForSeconds(5f); // waits the specified timeframe
+            LicoStacks += 1; //add stacks BITCH
+            if (LicoStacks <= 4)
+            {
+                StartCoroutine(LicoCooldown());
+            }
+            else if (LicoStacks == 5) 
+            {
+                isDone = true;
+            }          
+          
+        }
+        else if(LicoStacks == 5)
+        {
+            isDone = true;
+            Debug.Log("Max Stacks Bruddah");
+            yield return new WaitForSeconds(1f);
+        }
+    }
+        
+
 }
 
 //keep this cause its cool 
