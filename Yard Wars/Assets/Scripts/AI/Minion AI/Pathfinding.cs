@@ -14,6 +14,9 @@ public class Pathfinding : MonoBehaviour
     public float distanceToNode;
     public MinionPlayerAttacking MinionPlayerAttacking;
 
+    public bool isSliding;
+    public Vector3 SlidingDirection;
+    public LayerMask defeatedsigh;
 
 
 
@@ -34,6 +37,7 @@ public class Pathfinding : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isSliding = false;
         navAgent = GetComponent<NavMeshAgent>();
         currentNode = firstNode;
         prcpy = currentNode.GetComponent<IntersectionPathingRandomization>();
@@ -56,6 +60,11 @@ public class Pathfinding : MonoBehaviour
 
             MinionPlayerAttacking.previousnode = target;
         }
+        if (isSliding)
+        {
+            Sliding();
+        }
+       // Debug.Log(navAgent.velocity + "Art thou slowing down?");
     }
 
     void PathToNextNode()
@@ -137,5 +146,31 @@ public class Pathfinding : MonoBehaviour
         MTA.enabled = true;
         MPA.enabled = true;
     }
+
+    void Sliding()
+    {
+        navAgent.velocity = SlidingDirection;
+        //navAgent.Move(SlidingDirection *navAgent.speed * Time.deltaTime);
+       // CharController.Move(Velocity * Time.deltaTime);
+       // CharController.Move(tempSlidingDirection * MoveSpeed * Time.deltaTime);
+        Ray ray;
+        RaycastHit hit;
+        ray = new Ray(gameObject.transform.position, SlidingDirection);
+        if (Physics.Raycast(gameObject.transform.position, SlidingDirection, out hit, 1, defeatedsigh))//cast the ray 1 unit at the specified direction
+        {
+            //This lets them bounce off whatever they hit, as it should be
+            {
+                Debug.Log(hit.collider.gameObject.name);
+                print("Raycast hits wall");
+                //find new ray direction
+               Vector3 inDirection = Vector3.Reflect(ray.direction, hit.normal);
+               Debug.DrawRay(hit.point, inDirection * 8, Color.magenta);
+                Debug.Log(inDirection + "In Direction and then temp sliding direction" + SlidingDirection);
+
+                SlidingDirection = inDirection.normalized * SlidingDirection.magnitude;
+            }
+        }
+    }
+
 
 }

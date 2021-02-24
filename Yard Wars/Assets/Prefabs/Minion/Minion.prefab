@@ -142,6 +142,11 @@ MonoBehaviour:
   distanceForDebug: 0
   distanceToNode: 3.5
   MinionPlayerAttacking: {fileID: 7380466412345064840}
+  isSliding: 0
+  SlidingDirection: {x: 0, y: 0, z: 0}
+  defeatedsigh:
+    serializedVersion: 2
+    m_Bits: 4096
   BaseSpeed: 0
   EditedSpeed: 0
   pathfinding: {fileID: 6256169380176961693}
@@ -191,7 +196,7 @@ MonoBehaviour:
   detectionRadius: 5
   mask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 3149824
   MinionDamage: 10
 --- !u!114 &7380466412345064840
 MonoBehaviour:
@@ -221,7 +226,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
