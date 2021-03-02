@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -5991294570088636633}
   - component: {fileID: 7086946271873579684}
   - component: {fileID: 7380466412345064840}
+  - component: {fileID: 124003059466318846}
   m_Layer: 21
   m_Name: Minion
   m_TagString: Enemy
@@ -141,6 +142,11 @@ MonoBehaviour:
   distanceForDebug: 0
   distanceToNode: 3.5
   MinionPlayerAttacking: {fileID: 7380466412345064840}
+  isSliding: 0
+  SlidingDirection: {x: 0, y: 0, z: 0}
+  defeatedsigh:
+    serializedVersion: 2
+    m_Bits: 4096
   BaseSpeed: 0
   EditedSpeed: 0
   pathfinding: {fileID: 6256169380176961693}
@@ -192,7 +198,7 @@ MonoBehaviour:
   detectionRadius: 5
   mask:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 3149824
   MinionDamage: 10
 --- !u!114 &7380466412345064840
 MonoBehaviour:
@@ -210,6 +216,22 @@ MonoBehaviour:
   m_pathfinding: {fileID: 6256169380176961693}
   Player: {fileID: 0}
   previousnode: {x: 0, y: 0, z: 0}
+--- !u!54 &124003059466318846
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256169380176961682}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &2780360661619144817
 PrefabInstance:
   m_ObjectHideFlags: 0

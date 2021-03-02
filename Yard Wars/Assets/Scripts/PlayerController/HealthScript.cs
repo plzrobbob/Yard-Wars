@@ -108,7 +108,7 @@ public class HealthScript : MonoBehaviour
         {
 
             m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls
-            m_weaponAim_Fire.enabled = false;
+          //  m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
             Player_Animator.SetBool("IsDead", true);
@@ -129,7 +129,7 @@ public class HealthScript : MonoBehaviour
 
             yield return new WaitForSeconds(1);//give controlls back to player
             m_PlayerCharacterController.enabled = true;
-            m_weaponAim_Fire.enabled = true;
+        //    m_weaponAim_Fire.enabled = true;
             m_placeDefense.enabled = true;
             Isdead = false;
         }
