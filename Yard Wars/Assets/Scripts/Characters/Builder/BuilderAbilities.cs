@@ -21,6 +21,7 @@ public class BuilderAbilities : MonoBehaviour
     public GameObject ReticleController;
     public Vector3 DACLAMPA;
     public GameObject reticle;
+    public int Target;
 
 
     void Start()
@@ -76,7 +77,8 @@ public class BuilderAbilities : MonoBehaviour
     void AbilityTwoSpawn()
     {
         GameObject obj = Instantiate(AbilityTwoObject, ReticleController.transform.position+new Vector3(0,0.05f,0), Quaternion.identity);
-        Destroy(obj, 2.5f);
+        obj.GetComponent<BuilderAbilityTwo>().Target = Target;
+        Destroy(obj, 4f);
     }
 
 

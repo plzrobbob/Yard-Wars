@@ -56,6 +56,7 @@ public class PlayerCharacterController : MonoBehaviour
     public Vector3 tempSlidingDirection;
     public Vector3 SlidingDirection;
     public bool SlidingBool;
+    public GameObject Builder2TurnOff;
 
     // Start is called before the first frame update
     void Start()
@@ -277,13 +278,17 @@ public class PlayerCharacterController : MonoBehaviour
         pcc.enabled = true;
     }
 
+    /// <summary>
+    /// I need to make it so it can tell that there is nothing
+    /// </summary>
+
     void Sliding()
     {
         CharController.Move(Velocity * Time.deltaTime);
         CharController.Move(tempSlidingDirection * MoveSpeed * Time.deltaTime);
         Ray ray;
         RaycastHit hit;
-        if (!GameObject.Find("BuilderAbility2Marbles"))
+        if (!Builder2TurnOff)
         {
             SlidingBool = false;
             Debug.Log("Hey so like Builder Ability 2 Marbles is totally gone. It should be gone.");

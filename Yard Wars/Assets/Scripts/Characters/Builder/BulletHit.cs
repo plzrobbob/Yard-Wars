@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletHit : MonoBehaviour
 {
     public float damage;
+    public int target;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,8 @@ public class BulletHit : MonoBehaviour
     {
         gameObject.GetComponent<Rigidbody>().useGravity = true;
         Invoke("DestroyBullet", 2.0f);
-        if (collision.gameObject.GetComponent<HealthScript>() != null)
+        Debug.Log("COLDijougfeeiuwyfgbviwe" + collision.gameObject.layer + "efhibveqwiyfv" + target);
+        if (collision.gameObject.layer == target)
         {
             DoDamage(collision);
         }

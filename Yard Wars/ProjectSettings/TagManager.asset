@@ -12,6 +12,7 @@ TagManager:
   - Defense
   - MinionGoal
   - UltiView
+  - Slide
   layers:
   - Default
   - TransparentFX

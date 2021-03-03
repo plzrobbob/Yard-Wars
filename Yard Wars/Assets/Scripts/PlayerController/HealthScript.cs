@@ -29,6 +29,8 @@ public class HealthScript : MonoBehaviour
 
     public int respawnTimer;
 
+
+
     public GameObject TopBody;
     void Start()
     {
@@ -37,6 +39,7 @@ public class HealthScript : MonoBehaviour
 
     public void Update()
     {
+
         if (CurrentHealth > 0 && TopBody.gameObject.tag == "PlayerHolder")
         {
             RegenHandler();
@@ -123,6 +126,8 @@ public class HealthScript : MonoBehaviour
             Isdead = false;
         }
     }
+
+
 
     public void Respawn()
     {

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4673549478188639801}
   m_Layer: 0
   m_Name: BuilderAbility2Marbles
-  m_TagString: Untagged
+  m_TagString: Slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,4 +108,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShouldSlide: 0
-  SlidingDirection: {x: 0, y: 0, z: 0}
