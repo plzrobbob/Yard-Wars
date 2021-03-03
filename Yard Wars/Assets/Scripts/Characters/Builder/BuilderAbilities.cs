@@ -100,11 +100,6 @@ public class BuilderAbilities : MonoBehaviour
         AbilityOneCooldown += Time.deltaTime;
 
     }
-
-    void AbilityOne()
-    {
-
-    }
     void AbilityTwoHandler()
     {
         if (Ability2Targeting)
