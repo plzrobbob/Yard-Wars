@@ -1,17 +1,20 @@
-﻿using System.Collections;
+﻿/* Description: This script holds all the stats of the Thief class
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ThiefStatHandler : MonoBehaviour
 {
-    private float ThiefHealth = 75f;
-    private float ThiefDamage = 10f;
-    private float ThiefSpeed = 12f;
-    private float JumpCount = 1f;
-    private float ThiefMaxMeleeCooldown = 0.5f; //time between next possible melee attack
-    private float AbilityTwoDamage = 50f;
-    private float AbilityTwoRange = 10f;
-    private bool CanThiefJump = true;
+    private float ThiefHealth = 75f; //Max Health
+    private float ThiefDamage = 10f; //Base damage dealt by weapon
+    private float ThiefSpeed = 12f; //Base speed
+    private float JumpCount = 1f; //How many jumps this boy got in him?
+    private float ThiefMaxMeleeCooldown = 0.5f; //Time between next possible melee attack
+    private float AbilityTwoDamage = 50f; //How much damage does Ability two deal?
+    private float AbilityTwoRange = 10f; //How far does ability two's range extend?
+    private bool CanThiefJump = true; //Can this boy jump at all??????
 
     // Start is called before the first frame update
     void Start()

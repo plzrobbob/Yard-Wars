@@ -204,7 +204,7 @@ public class PlayerCharacterController : MonoBehaviour
         {
             gun.transform.LookAt(aim_placeholder.transform);
         }
-        catch { Debug.Log("NoGun error"); }
+        catch { /*Debug.Log("NoGun error");*/}
     }
 
 
