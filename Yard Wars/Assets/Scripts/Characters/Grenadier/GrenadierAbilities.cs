@@ -90,9 +90,8 @@ public class GrenadierAbilities : MonoBehaviour
     public float UltiDamageNum;
     public Animator Player_Animator;
     public GrenadierBasicAttack GrenBasic;
-
-
-
+    public GameObject UltWeapon;
+    bool VisibleUltWeapon;
 
     public GameObject UltiBalloon;
    // public CinemachineFreeLook brian;
@@ -197,10 +196,24 @@ public class GrenadierAbilities : MonoBehaviour
             GrenBasic.canattack = false;
         }
 
+        if (VisibleUltWeapon && !UltWeapon.activeInHierarchy)
+        {
+            UltWeapon.SetActive(true);
+            Player_Animator.SetLayerWeight(1, 0);
+        }
+        else if (!VisibleUltWeapon && UltWeapon.activeInHierarchy)
+        {
+            UltWeapon.SetActive(false);
+            Invoke("reacLayer", .5f);
+        }
+    }
+    void reacLayer()
+    {
+        Player_Animator.SetLayerWeight(1, 1);
     }
 
     //Useful Debug tool I added. remove when Grenadier in final stage.
-    
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -580,5 +593,12 @@ public class GrenadierAbilities : MonoBehaviour
     {
         GrenBasic.canattack = true;
     }
-
+    public void enableVisibleUltimate()
+    {
+        VisibleUltWeapon = true;
+    }
+    public void DisableVisibleUltimate()
+    {
+        VisibleUltWeapon = false;
+    }
 }

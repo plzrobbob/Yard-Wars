@@ -12,15 +12,15 @@ AvatarMask:
   - m_Path: 
     m_Weight: 1
   - m_Path: BackPackStrap.002
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: BackPackStrapSack.001
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Body.001
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Goggles.001
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Hat.001
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: Pants.004
     m_Weight: 0
   - m_Path: rig
@@ -34,19 +34,19 @@ AvatarMask:
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002
     m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003/ORG-spine.003
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003/ORG-spine.003/ORG-spine.005
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003/ORG-spine.003/ORG-spine.005/ORG-spine.006
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/MCH-torso.parent/torso/MCH-spine.002/spine_fk.002/MCH-spine.003/spine_fk.003/tweak_spine.003/ORG-spine.003/ORG-spine.005/ORG-spine.006/ORG-spine.006_end
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/root
     m_Weight: 0
   - m_Path: rig/root/DEF-spine
@@ -56,9 +56,9 @@ AvatarMask:
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002
     m_Weight: 0
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.L
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.L/DEF-upper_arm.L
     m_Weight: 1
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.L/DEF-upper_arm.L/DEF-forearm.L
@@ -130,7 +130,7 @@ AvatarMask:
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.L/DEF-upper_arm.L/DEF-forearm.L/DEF-hand.L/ORG-palm.04.L/DEF-palm.04.L/DEF-palm.04.L_end
     m_Weight: 1
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.R
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.R/DEF-upper_arm.R
     m_Weight: 1
   - m_Path: rig/root/DEF-spine/DEF-spine.001/DEF-spine.002/DEF-spine.003/DEF-shoulder.R/DEF-upper_arm.R/DEF-forearm.R
@@ -222,7 +222,7 @@ AvatarMask:
   - m_Path: rig/root/DEF-spine/DEF-thigh.R/DEF-shin.R/DEF-foot.R/DEF-toe.R/DEF-toe.R_end
     m_Weight: 0
   - m_Path: Shirt.004
-    m_Weight: 1
+    m_Weight: 0
   - m_Path: ShoeL
     m_Weight: 0
   - m_Path: ShoeR

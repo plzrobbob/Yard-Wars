@@ -20,6 +20,8 @@ public class GrenadierBasicAttack : MonoBehaviour
     public PlaceDefense m_placeDefense;
 
     public bool canattack;
+    bool VisibleBasicWeapon;
+    public GameObject basicWeapon;
 
     void Start()
     {
@@ -37,6 +39,14 @@ public class GrenadierBasicAttack : MonoBehaviour
             CreateBalloon();
             Debug.Log(TeamLayer);
             weaponCooldown = 0;
+        }
+        if (VisibleBasicWeapon)
+        {
+            basicWeapon.SetActive(true);
+        }
+        else if (!VisibleBasicWeapon)
+        {
+            basicWeapon.SetActive(false);
         }
     }
 
@@ -56,5 +66,14 @@ public class GrenadierBasicAttack : MonoBehaviour
     private void ShootingFalse()
     {
         Player_Animator.SetBool("Shooting", false);
+    }
+
+    public void enableVisibleWeapon()
+    {
+        VisibleBasicWeapon = true;
+    }
+    public void DisableVisibleWeapon()
+    {
+        VisibleBasicWeapon = false;
     }
 }

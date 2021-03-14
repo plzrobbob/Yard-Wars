@@ -103,7 +103,7 @@ public class HealthScript : MonoBehaviour
           //  m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
-            Player_Animator.SetBool("IsDead", true);
+            Player_Animator.SetBool("Dead", true);
             yield return new WaitForSeconds(1);
 
             yield return new WaitForSeconds(2);//camera transition
@@ -114,7 +114,7 @@ public class HealthScript : MonoBehaviour
             yield return new WaitForSeconds(respawnTimer);//reset player values and renable cameras to begin transition after specified respawn timer
             CurrentHealth = MaxHealth;
             Playerbody.SetActive(true);
-            Player_Animator.SetBool("IsDead", false);
+            Player_Animator.SetBool("Dead", false);
             PlayerCineCamera.SetActive(true);
             DeathCamCineCamera.SetActive(true);
             Respawn();
