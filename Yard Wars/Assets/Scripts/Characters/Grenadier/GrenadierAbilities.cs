@@ -88,6 +88,8 @@ public class GrenadierAbilities : MonoBehaviour
     private Collider[] damaging;
     public LayerMask Target;
     public float UltiDamageNum;
+    public Animator Player_Animator;
+    public GrenadierBasicAttack GrenBasic;
 
 
 
@@ -128,7 +130,9 @@ public class GrenadierAbilities : MonoBehaviour
             DoDamageAbilityOne();
             Debug.Log(EnemiesDamaged.Length);
             Debug.Log("AbilityOneInitiated");
+            Player_Animator.SetBool("Ability1", true);
             AbilityOnecooldown = 0f;
+            GrenBasic.canattack = false;
         }
 
 
@@ -158,7 +162,11 @@ public class GrenadierAbilities : MonoBehaviour
         if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !UltimatePressed)
         {
             AbilityTwoV2();
-         //   AbilityTwoCooldown = 0f;
+
+            //Invoke("AbilityTwoV2", 1f);
+            Player_Animator.SetBool("Ability2", true);
+            GrenBasic.canattack = false;
+            //   AbilityTwoCooldown = 0f;
         }
 
 
@@ -185,7 +193,8 @@ public class GrenadierAbilities : MonoBehaviour
 
             GameObject obj = Instantiate(reticle, gameObject.transform.position, reticle.transform.rotation);
             ReticleController = obj;
-
+            Player_Animator.SetBool("Ability3", true);
+            GrenBasic.canattack = false;
         }
 
     }
@@ -243,6 +252,7 @@ public class GrenadierAbilities : MonoBehaviour
             obj.GetComponent<Rigidbody>().velocity = (obj.transform.forward * 4f);
 
         }
+        Invoke("Ability1False", .2f);
     }
 
 
@@ -293,6 +303,8 @@ public class GrenadierAbilities : MonoBehaviour
         {
             obj.GetComponentInChildren<GrenadierAbilityTwoBola>().targetNum = 20;
         }
+        Invoke("Ability2False", .2f);
+
     }
 
     private void RotateDefense()
@@ -407,6 +419,9 @@ public class GrenadierAbilities : MonoBehaviour
         //This section of the code is the part that launches the player out of its current control loop. This will give the player control again and throw it out of its current loop
         if (Input.GetButtonDown("Ultimate") || Input.GetButtonDown("Fire1"))
         {
+            Invoke("Ability3False", .1f);
+
+            Player_Animator.SetBool("Ability3Fire", true);
             Debug.Log("Jump out of lOOp");
             gameObject.GetComponent<PlayerCharacterController>().enabled = true;
             UltimateCooldown = 0f;
@@ -432,6 +447,7 @@ public class GrenadierAbilities : MonoBehaviour
         //HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f)
         Destroy(obj, 2.5f);
         Invoke("UltiDamage", 2.5f);
+        Invoke("Ability3False", .2f);
     }
     void UltiDamage()
     {
@@ -543,6 +559,26 @@ public class GrenadierAbilities : MonoBehaviour
         Vector3 output;
         output = Vector3.Project(AtoB, gravityBase);
         return output;
+    }
+
+    private void Ability1False()
+    {
+        Player_Animator.SetBool("Ability1", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void Ability2False()
+    {
+        Player_Animator.SetBool("Ability2", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void Ability3False()
+    {
+        Player_Animator.SetBool("Ability3", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void GrenBasicCanFire()
+    {
+        GrenBasic.canattack = true;
     }
 
 }

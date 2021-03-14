@@ -120,11 +120,11 @@ public class PlayerCharacterController : MonoBehaviour
 
         if ((x != 0 || z != 0) && Grounded)
         {
-            Player_Animator.SetBool("IsWalking", true);
+            Player_Animator.SetBool("Walking", true);
         }
         else
         {
-            Player_Animator.SetBool("IsWalking", false);
+            Player_Animator.SetBool("Walking", false);
         }
 
         //transform.right and transform.forward uses local coords instead of world coords
@@ -137,8 +137,13 @@ public class PlayerCharacterController : MonoBehaviour
             tempSlidingDirection = move;
         }
 
-        CharController.Move(Velocity * Time.deltaTime);
-        CharController.Move(move * MoveSpeed * Time.deltaTime);
+        CharController.Move(Velocity * Time.deltaTime);//used for jumping and falling
+        CharController.Move(move * MoveSpeed * Time.deltaTime);//used for moving
+
+        Player_Animator.SetFloat("y", z);
+        Player_Animator.SetFloat("x", x);
+
+
 
     }
     void CameraRotate()
@@ -165,11 +170,18 @@ public class PlayerCharacterController : MonoBehaviour
         if (Grounded && Input.GetAxis("Jump") == 0)
         {
             Velocity.y = 0f;
+            if (Player_Animator.GetBool("Jump"))
+            {
+                Player_Animator.SetBool("Landing", true);
+            }
+            Player_Animator.SetBool("Jump", false);
         }
         if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
         {
             Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
             CanJmp = false;
+            Player_Animator.SetBool("Landing", false);
+            Player_Animator.SetBool("Jump", true);
         }
         if (!Grounded)
         {
@@ -250,6 +262,7 @@ public class PlayerCharacterController : MonoBehaviour
         EditedSpeed = UnEditedSpeed * percentage;
         MoveSpeed = EditedSpeed;
         Invoke("resetSpeed", time);
+
     }
 
     void resetSpeed()
@@ -268,14 +281,15 @@ public class PlayerCharacterController : MonoBehaviour
         StunVFX.SetActive(true);
 
         Invoke("Unstunned", time);
+        Player_Animator.SetBool("Stunned", true);
     }
 
     void Unstunned()
     {
-
         StunVFX.SetActive(false);
 
         pcc.enabled = true;
+        Player_Animator.SetBool("Stunned", false);
     }
 
     /// <summary>
