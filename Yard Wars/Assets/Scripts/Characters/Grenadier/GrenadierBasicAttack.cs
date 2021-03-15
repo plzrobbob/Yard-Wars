@@ -18,6 +18,7 @@ public class GrenadierBasicAttack : MonoBehaviour
     public Animator Player_Animator;
 
     public PlaceDefense m_placeDefense;
+    public PlayerCharacterController pcc;
 
     public bool canattack;
     bool VisibleBasicWeapon;
@@ -27,13 +28,14 @@ public class GrenadierBasicAttack : MonoBehaviour
     {
         m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
         canattack = true;
+        VisibleBasicWeapon = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         weaponCooldown += Time.deltaTime;
-        if (Input.GetButtonDown("Fire1") && weaponCooldown > 1.3f && !m_placeDefense.placing && canattack)
+        if (Input.GetButtonDown("Fire1") && weaponCooldown > 1.3f && !m_placeDefense.placing && canattack && !pcc.IsStunned)
         {
             Player_Animator.SetBool("Shooting", true);
             CreateBalloon();

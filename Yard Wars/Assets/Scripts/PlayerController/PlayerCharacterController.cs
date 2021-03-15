@@ -35,6 +35,7 @@ public class PlayerCharacterController : MonoBehaviour
     private bool CanJmp;
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
+    public bool IsStunned;
 
     public PlaceDefense m_placeDefense;
 
@@ -50,7 +51,7 @@ public class PlayerCharacterController : MonoBehaviour
     public float EditedSpeed;
     public float UnEditedSpeed;
 
-    public bool test;
+    public bool Stuntest;
 
     //This is for sliding
     public Vector3 tempSlidingDirection;
@@ -97,7 +98,7 @@ public class PlayerCharacterController : MonoBehaviour
           //  gun.SetActive(true);
         }
 
-        if(test)
+        if(Stuntest)
         {
             Stunned(4.0f);
         }
@@ -277,8 +278,11 @@ public class PlayerCharacterController : MonoBehaviour
     public void Stunned(float time)
     {
         Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
+        IsStunned = true;
         pcc.enabled = false;
         StunVFX.SetActive(true);
+        Player_Animator.SetLayerWeight(1, 0);
+        Player_Animator.SetLayerWeight(2, 0);
 
         Invoke("Unstunned", time);
         Player_Animator.SetBool("Stunned", true);
@@ -286,6 +290,11 @@ public class PlayerCharacterController : MonoBehaviour
 
     void Unstunned()
     {
+        IsStunned = false;
+
+        Player_Animator.SetLayerWeight(1, 1);
+        Player_Animator.SetLayerWeight(2, 1);
+        Debug.Log("reset layer - unstun");
         StunVFX.SetActive(false);
 
         pcc.enabled = true;
