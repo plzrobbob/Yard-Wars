@@ -1,10 +1,11 @@
-﻿/* Description of this ability: Pillow Talk: brings forth pillow and uses it for a shield. Shield health = 201. Do we want to disable
- * attacking while the shield is active?
+﻿/* Description of this ability: Pillow Talk: brings forth pillow and uses it for a shield. Shield health = 201. The pillow takes damage for you
+ * and every second while the ability is active you push back every enemy around you
  */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GuardUltimateAbility : MonoBehaviour
 {
@@ -20,6 +21,32 @@ public class GuardUltimateAbility : MonoBehaviour
     GameObject thisPillow; //The current instantiated pillow
     Coroutine currentDuration; //The current Duration coroutine going on. We'll use this to stop a specific coroutine if the pillow is destroyed
                                //prematurely
+    float tempHealth; //How much health the player has when a pillow is deployed but before taking damage
+    HealthScript P_HealthScript; //The health script of the player
+    bool inPushBack = false; //Is there currently a pushback coroutine going on?
+    public float pushMagnitude; //How hard will the enemy be pushed?
+    public float pushCooldown; //How many seconds between pushes
+
+    [Header("Hitbox Variables")]
+    public Collider[] HitTargets; //This array stores all the colliders for things we've hit with our attack
+    public float area; //The area of our spherical hitbox
+    public int layernum; //What layer are we on right now?
+    private LayerMask layer; //The layer of the opposing team
+
+    private void Start()
+    {
+        P_HealthScript = this.gameObject.GetComponent<HealthScript>(); //Declare the health script of the player
+
+        //This tells us which layer the opposing team is on so that the script knows which people to attack
+        if (layernum == 20)
+        {
+            layer = LayerMask.GetMask("Team2");
+        }
+        else if (layernum == 21)
+        {
+            layer = LayerMask.GetMask("Team1");
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -28,6 +55,16 @@ public class GuardUltimateAbility : MonoBehaviour
         if (Input.GetButtonDown("Ultimate") && canUlt)
         {
             UltimateActivated();
+        }
+
+        if (pillowIsActive)
+        {
+            RedirectDamage();
+
+            if (inPushBack == false)
+            {
+                StartCoroutine(PillowPushBack());
+            }
         }
 
         //If the current instantiated pillow is destroyed prematurely, then the cooldown for the next use of this ability will begin
@@ -59,11 +96,32 @@ public class GuardUltimateAbility : MonoBehaviour
 
         //Now that a pillow is instantiated we flip the bool to let the rest of the script know that
         pillowIsActive = true;
-        
+
+        //How much health does the player have the MOMENT a pillow is spawned?
+        tempHealth = P_HealthScript.CurrentHealth; 
+
         //Keep pillow active for however many seconds we decide. We make sure to keep this coroutine stored as a variable to prevent duplicates
         currentDuration = StartCoroutine(GuardUltimateDuration(thisPillow));
         
 
+    }
+
+    //The purpose of this function is that any time damage is dealt while a pillow is active it will be redirected to the pillow
+    void RedirectDamage()
+    {
+        if (P_HealthScript.CurrentHealth != tempHealth) //this tells us if the player has taken damage
+        {
+            float tempDamage = tempHealth - P_HealthScript.CurrentHealth; //How much damage was dealt?
+
+            P_HealthScript.CurrentHealth = tempHealth; //Undo the damage done
+
+            HealthScript Pillow_HealthScript = thisPillow.gameObject.GetComponent<HealthScript>(); //Declare temp variable to hold the pillow's 
+                                                                                                   //health script
+
+            Pillow_HealthScript.CurrentHealth -= tempDamage; //Deal that damage to the pillow
+        }
+
+        tempHealth = P_HealthScript.CurrentHealth; //Reset the tempHealth value
     }
 
     //This coroutine handles how long the pillow stays active
@@ -101,6 +159,72 @@ public class GuardUltimateAbility : MonoBehaviour
         inCooldown = false;
 
         Debug.Log("Well I'll be a motherfucking scumsucking bottom feeder son of a bitch you can spawn another pillow. Good job!");
+    }
+
+    //This coroutine handles the pillow push back
+    IEnumerator PillowPushBack()
+    {
+        Debug.Log("Motherfuckin' pillow pushback is happening RIGHT NOW");
+
+        //We are currently in the process of pushing enemies back
+        inPushBack = true; 
+
+        //Here we determine that what qualifies as something to enter our "HitTargets" array is anything that enters our overlap sphere in
+        //the enemy layer.
+        HitTargets = Physics.OverlapSphere(transform.position, area, layer);
+
+        for (int i = 0; i < HitTargets.Length; i++)
+        {
+            //Within this for loop we will get the health script of whatever we've hit
+            HealthScript M_HealthScript = HitTargets[i].gameObject.GetComponent<HealthScript>();
+
+            //Debug.Log("Name of thing being pushed back is: " + M_HealthScript);
+
+            //Disable Nav Mesh Agent
+            HitTargets[i].GetComponent<NavMeshAgent>().enabled = false;
+
+            //Enable nav mesh obstacle
+            HitTargets[i].GetComponent<NavMeshObstacle>().enabled = true;
+
+            //Add Rigidbody
+            Rigidbody minionRigidBody = HitTargets[i].gameObject.AddComponent<Rigidbody>();
+
+            //Add force to the rigidbody
+            Vector3 force = (HitTargets[i].transform.position) - (transform.position);
+            minionRigidBody.AddForce(force * pushMagnitude);
+
+            //once velocity = 0 destroy the rigidbody, disable the navmesh obstacle, Enable Nav Mesh Agent, and stun the minion
+            StartCoroutine(RigidBodySpeedTest(HitTargets[i].gameObject));
+        }
+
+        yield return new WaitForSeconds(pushCooldown);
+
+        //We are NOT currently in the process of pushing enemies back
+        inPushBack = false;
+    }
+
+    IEnumerator RigidBodySpeedTest(GameObject obj)
+    {
+        //Wait about half a second to allow time for the enemy to be pushed back
+        yield return new WaitForSeconds(0.5f);
+
+        //Declare the current enemy's rigidbody as a local variable
+        Rigidbody minionRB = obj.GetComponent<Rigidbody>();
+
+        //Destroy said local variable
+        Destroy(minionRB);
+
+        //The enemy is no longer a Nav Mesh Obstacle
+        obj.GetComponent<NavMeshObstacle>().enabled = false;
+
+        //The enemy once again has it's Nav Mesh Agent so it can continue to pathfind
+        obj.GetComponent<NavMeshAgent>().enabled = true;
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, area);
     }
 
 }
