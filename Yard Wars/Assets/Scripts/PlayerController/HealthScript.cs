@@ -6,8 +6,8 @@ using UnityEngine;
 public class HealthScript : MonoBehaviour
 {
     public GameObject[] RespawnBoundries;
-    public bool PleaseWork;
-    public float MaxHealth = 100;
+
+    public float MaxHealth;
     public float CurrentHealth;
 
     public float regentimer;
@@ -24,6 +24,8 @@ public class HealthScript : MonoBehaviour
     public PlaceDefense m_placeDefense;
     public GameObject PlayerCineCamera;
     public GameObject DeathCamCineCamera;
+    public PlayerResourceSystem player_resources;
+    public float death_value;
 
     public Animator Player_Animator;
 
@@ -35,12 +37,16 @@ public class HealthScript : MonoBehaviour
     void Start()
     {
         CurrentHealth = MaxHealth;
+        if (TopBody.gameObject.CompareTag("Enemy"))
+        {
+            GameObject tempPlayer = GameObject.FindGameObjectWithTag("PlayerHolder");
+            player_resources = tempPlayer.GetComponent<PlayerResourceSystem>();
+        }
     }
 
     public void Update()
     {
-      
-        if (CurrentHealth > 0 && TopBody.gameObject.tag == "PlayerHolder")
+        if (CurrentHealth > 0 && TopBody.gameObject.CompareTag("PlayerHolder"))
         {
             RegenHandler();
         }
@@ -50,7 +56,7 @@ public class HealthScript : MonoBehaviour
             StartCoroutine(Dead());
         }
 
-        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.tag == "PlayerHolder")
+        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.CompareTag("PlayerHolder"))
         {
             Debug.Log("dead");
             CurrentHealth = 0;
@@ -97,16 +103,20 @@ public class HealthScript : MonoBehaviour
 
     public IEnumerator Dead()
     {
-        if (TopBody.gameObject.tag != "PlayerHolder")//destroy ai and defenses
+        if (!TopBody.gameObject.CompareTag("PlayerHolder"))//destroy ai and defenses
         {
+            if(TopBody.gameObject.CompareTag("Enemy"))
+            {
+                player_resources.Gain(death_value);
+            }
             yield return new WaitForSeconds(1);
             Destroy(TopBody);
         }
-        if (TopBody.gameObject.tag == "PlayerHolder")//respawn the player
+        if (TopBody.gameObject.CompareTag("PlayerHolder"))//respawn the player
         {
 
             m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls
-            m_weaponAim_Fire.enabled = false;
+          //  m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
             Player_Animator.SetBool("IsDead", true);
@@ -127,7 +137,7 @@ public class HealthScript : MonoBehaviour
 
             yield return new WaitForSeconds(1);//give controlls back to player
             m_PlayerCharacterController.enabled = true;
-            m_weaponAim_Fire.enabled = true;
+        //    m_weaponAim_Fire.enabled = true;
             m_placeDefense.enabled = true;
             Isdead = false;
         }
