@@ -21,7 +21,8 @@ public class GuardUltimateAbility : MonoBehaviour
     GameObject thisPillow; //The current instantiated pillow
     Coroutine currentDuration; //The current Duration coroutine going on. We'll use this to stop a specific coroutine if the pillow is destroyed
                                //prematurely
-    float tempHealth; //How much health the player has when a pillow is deployed but before taking damage
+    float tempHealth = 201; //The amount of health the pillow has. We add this to the player's current health
+    float originalHealth;
     HealthScript P_HealthScript; //The health script of the player
     bool inPushBack = false; //Is there currently a pushback coroutine going on?
     public float pushMagnitude; //How hard will the enemy be pushed?
@@ -57,9 +58,9 @@ public class GuardUltimateAbility : MonoBehaviour
             UltimateActivated();
         }
 
-        if (pillowIsActive)
+        if (pillowIsActive == true)
         {
-            RedirectDamage();
+            //RedirectDamage();
 
             if (inPushBack == false)
             {
@@ -68,8 +69,12 @@ public class GuardUltimateAbility : MonoBehaviour
         }
 
         //If the current instantiated pillow is destroyed prematurely, then the cooldown for the next use of this ability will begin
-        if (pillowIsActive == true && thisPillow == null)
+        if (pillowIsActive == true && P_HealthScript.CurrentHealth <= originalHealth)
         {
+            Debug.Log("Premature pillow destruction is a problem that a lot of men deal with it really isn't so bad.");
+
+            Destroy(thisPillow);
+
             pillowIsActive = false;
         }
 
@@ -98,7 +103,13 @@ public class GuardUltimateAbility : MonoBehaviour
         pillowIsActive = true;
 
         //How much health does the player have the MOMENT a pillow is spawned?
-        tempHealth = P_HealthScript.CurrentHealth; 
+        //tempHealth = P_HealthScript.CurrentHealth; 
+
+        //Before we add the temp health, how much health did we have before that?
+        originalHealth = P_HealthScript.CurrentHealth;
+
+        //Add the temp health
+        P_HealthScript.CurrentHealth += tempHealth;
 
         //Keep pillow active for however many seconds we decide. We make sure to keep this coroutine stored as a variable to prevent duplicates
         currentDuration = StartCoroutine(GuardUltimateDuration(thisPillow));
@@ -107,7 +118,7 @@ public class GuardUltimateAbility : MonoBehaviour
     }
 
     //The purpose of this function is that any time damage is dealt while a pillow is active it will be redirected to the pillow
-    void RedirectDamage()
+    /*void RedirectDamage()
     {
         if (P_HealthScript.CurrentHealth != tempHealth) //this tells us if the player has taken damage
         {
@@ -122,7 +133,7 @@ public class GuardUltimateAbility : MonoBehaviour
         }
 
         tempHealth = P_HealthScript.CurrentHealth; //Reset the tempHealth value
-    }
+    }*/
 
     //This coroutine handles how long the pillow stays active
     IEnumerator GuardUltimateDuration(GameObject currentPillow)
@@ -134,6 +145,25 @@ public class GuardUltimateAbility : MonoBehaviour
 
         //Destroy the current pillow once the duration is up
         Destroy(currentPillow);
+
+        //How much damage did we take?
+        float damageTaken = originalHealth + tempHealth - P_HealthScript.CurrentHealth;
+        Debug.Log(damageTaken + " is the amount of the damageTaken Value");
+
+        //We lost less damage than we gained so we need to take away the rest of the temp HP
+        if (damageTaken < tempHealth)
+        {
+            Debug.Log(tempHealth + " is the amount of the tempHealth Value");
+            Debug.Log(damageTaken + " is the amount of the damageTaken Value");
+            Debug.Log(originalHealth + " is the amount of the originalHealth Value");
+
+            //Amount of temp HP to take away
+            float hpToLose = tempHealth - damageTaken;
+
+            Debug.Log("Fuck dawg the player is about to lose " + hpToLose + " health. What a fuckin' bummer.");
+
+            P_HealthScript.CurrentHealth -= hpToLose;
+        }
 
         //If the pillow is destroyed then uh yeah the fuckin pillow ain't active no more
         pillowIsActive = false;
@@ -181,10 +211,13 @@ public class GuardUltimateAbility : MonoBehaviour
             //Debug.Log("Name of thing being pushed back is: " + M_HealthScript);
 
             //Disable Nav Mesh Agent
-            HitTargets[i].GetComponent<NavMeshAgent>().enabled = false;
+            //HitTargets[i].GetComponent<NavMeshAgent>().enabled = false;
 
             //Enable nav mesh obstacle
             HitTargets[i].GetComponent<NavMeshObstacle>().enabled = true;
+
+            //Cameron told me to add this for some fuckin reason it makes it all work idk
+            HitTargets[i].GetComponent<NavMeshAgent>().isStopped = true;
 
             //Add Rigidbody
             Rigidbody minionRigidBody = HitTargets[i].gameObject.AddComponent<Rigidbody>();
@@ -218,7 +251,11 @@ public class GuardUltimateAbility : MonoBehaviour
         obj.GetComponent<NavMeshObstacle>().enabled = false;
 
         //The enemy once again has it's Nav Mesh Agent so it can continue to pathfind
-        obj.GetComponent<NavMeshAgent>().enabled = true;
+        //obj.GetComponent<NavMeshAgent>().enabled = true;
+
+        //Cameron told me to add this for some fuckin reason it makes it all work idk
+        obj.GetComponent<NavMeshAgent>().isStopped = false;
+
     }
 
     void OnDrawGizmos()
