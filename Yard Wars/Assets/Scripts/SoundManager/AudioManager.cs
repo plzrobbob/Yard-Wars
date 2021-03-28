@@ -26,6 +26,13 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
+    // Overload that lets you play a sound from a specific point
+    public void Play(string name, Vector3 pos)
+    {
+        Sound s = Array.Find(sounds, Sound => Sound.name == name);
+        AudioSource.PlayClipAtPoint(s.clip, pos);
+    }
+
     public void StopPlaying(string name)
     {
         Sound s = Array.Find(sounds, Sound => Sound.name == name);
