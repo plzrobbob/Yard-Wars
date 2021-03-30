@@ -33,6 +33,8 @@ public class Pathfinding : MonoBehaviour
     public MinionPlayerAttacking MPA;
 
     //public float speedHolder;
+    public GameObject Builder2TurnOff;
+
 
     // Start is called before the first frame update
     void Start()
@@ -151,11 +153,20 @@ public class Pathfinding : MonoBehaviour
     {
         navAgent.velocity = SlidingDirection;
         //navAgent.Move(SlidingDirection *navAgent.speed * Time.deltaTime);
-       // CharController.Move(Velocity * Time.deltaTime);
-       // CharController.Move(tempSlidingDirection * MoveSpeed * Time.deltaTime);
+        // CharController.Move(Velocity * Time.deltaTime);
+        // CharController.Move(tempSlidingDirection * MoveSpeed * Time.deltaTime);
+        if (!Builder2TurnOff)
+        {
+            isSliding = false;
+            Debug.Log("Hey so like Builder Ability 2 Marbles is totally gone. It should be gone.");
+            NavMeshAgent m_navmeshagent = gameObject.GetComponent<NavMeshAgent>();
+
+            m_navmeshagent.isStopped = false;
+        }
         Ray ray;
         RaycastHit hit;
         ray = new Ray(gameObject.transform.position, SlidingDirection);
+        
         if (Physics.Raycast(gameObject.transform.position, SlidingDirection, out hit, 1, defeatedsigh))//cast the ray 1 unit at the specified direction
         {
             //This lets them bounce off whatever they hit, as it should be

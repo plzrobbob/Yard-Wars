@@ -35,6 +35,7 @@ public class PlayerCharacterController : MonoBehaviour
     private bool CanJmp;
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
+    public bool IsStunned;
 
     public PlaceDefense m_placeDefense;
 
@@ -50,12 +51,13 @@ public class PlayerCharacterController : MonoBehaviour
     public float EditedSpeed;
     public float UnEditedSpeed;
 
-    public bool test;
+    public bool Stuntest;
 
     //This is for sliding
     public Vector3 tempSlidingDirection;
     public Vector3 SlidingDirection;
     public bool SlidingBool;
+    public GameObject Builder2TurnOff;
 
     // Start is called before the first frame update
     void Start()
@@ -96,7 +98,7 @@ public class PlayerCharacterController : MonoBehaviour
           //  gun.SetActive(true);
         }
 
-        if(test)
+        if(Stuntest)
         {
             Stunned(4.0f);
         }
@@ -119,11 +121,11 @@ public class PlayerCharacterController : MonoBehaviour
 
         if ((x != 0 || z != 0) && Grounded)
         {
-            Player_Animator.SetBool("IsWalking", true);
+            Player_Animator.SetBool("Walking", true);
         }
         else
         {
-            Player_Animator.SetBool("IsWalking", false);
+            Player_Animator.SetBool("Walking", false);
         }
 
         //transform.right and transform.forward uses local coords instead of world coords
@@ -136,8 +138,13 @@ public class PlayerCharacterController : MonoBehaviour
             tempSlidingDirection = move;
         }
 
-        CharController.Move(Velocity * Time.deltaTime);
-        CharController.Move(move * MoveSpeed * Time.deltaTime);
+        CharController.Move(Velocity * Time.deltaTime);//used for jumping and falling
+        CharController.Move(move * MoveSpeed * Time.deltaTime);//used for moving
+
+        Player_Animator.SetFloat("y", z);
+        Player_Animator.SetFloat("x", x);
+
+
 
     }
     void CameraRotate()
@@ -164,11 +171,18 @@ public class PlayerCharacterController : MonoBehaviour
         if (Grounded && Input.GetAxis("Jump") == 0)
         {
             Velocity.y = 0f;
+            if (Player_Animator.GetBool("Jump"))
+            {
+                Player_Animator.SetBool("Landing", true);
+            }
+            Player_Animator.SetBool("Jump", false);
         }
         if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
         {
             Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
             CanJmp = false;
+            Player_Animator.SetBool("Landing", false);
+            Player_Animator.SetBool("Jump", true);
         }
         if (!Grounded)
         {
@@ -249,6 +263,7 @@ public class PlayerCharacterController : MonoBehaviour
         EditedSpeed = UnEditedSpeed * percentage;
         MoveSpeed = EditedSpeed;
         Invoke("resetSpeed", time);
+
     }
 
     void resetSpeed()
@@ -263,19 +278,32 @@ public class PlayerCharacterController : MonoBehaviour
     public void Stunned(float time)
     {
         Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
+        IsStunned = true;
         pcc.enabled = false;
         StunVFX.SetActive(true);
+        Player_Animator.SetLayerWeight(1, 0);
+        Player_Animator.SetLayerWeight(2, 0);
 
         Invoke("Unstunned", time);
+        Player_Animator.SetBool("Stunned", true);
     }
 
     void Unstunned()
     {
+        IsStunned = false;
 
+        Player_Animator.SetLayerWeight(1, 1);
+        Player_Animator.SetLayerWeight(2, 1);
+        Debug.Log("reset layer - unstun");
         StunVFX.SetActive(false);
 
         pcc.enabled = true;
+        Player_Animator.SetBool("Stunned", false);
     }
+
+    /// <summary>
+    /// I need to make it so it can tell that there is nothing
+    /// </summary>
 
     void Sliding()
     {
@@ -283,7 +311,7 @@ public class PlayerCharacterController : MonoBehaviour
         CharController.Move(tempSlidingDirection * MoveSpeed * Time.deltaTime);
         Ray ray;
         RaycastHit hit;
-        if (!GameObject.Find("BuilderAbility2Marbles"))
+        if (!Builder2TurnOff)
         {
             SlidingBool = false;
             Debug.Log("Hey so like Builder Ability 2 Marbles is totally gone. It should be gone.");

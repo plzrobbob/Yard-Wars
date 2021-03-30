@@ -23,6 +23,20 @@ public class BuilderStatBlock : MonoBehaviour
         this.GetComponent<BuilderBasicAttack>().damage = BuilderDamage;
 
 
+
+
+        if (gameObject.layer == 20)
+        {
+            this.GetComponent<BuilderBasicAttack>().Target = 21;
+            this.GetComponent<BuilderAbilities>().Target = 21;
+        }
+        else
+        {
+            this.GetComponent<BuilderBasicAttack>().Target = 20;
+            this.GetComponent<BuilderAbilities>().Target = 20;
+
+        }
+
     }
 
     // Update is called once per frame

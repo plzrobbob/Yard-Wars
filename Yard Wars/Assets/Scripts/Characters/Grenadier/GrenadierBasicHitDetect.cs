@@ -52,25 +52,19 @@ public class GrenadierBasicHitDetect : MonoBehaviour
     {
         
     }
-
- 
-
     private void OnCollisionEnter(Collision collision)
     {
         //The reason I have it spawning on collision.contacts[0].point is to try and replicate how a balloon would work
         //When it pops, the water will splash off of the first thign it, so the aoe damage is based on that location
 
-        FindObjectOfType<AudioManager>().Play("WaterBalloonSplash1");
+        FindObjectOfType<AudioManager>().Play("WaterBalloonSplash1", transform.position);
         HitTargets = Physics.OverlapSphere(collision.contacts[0].point, area, layer);
         DoDamage();
         Destroy(gameObject);
         
     }
-
-    
     private void DoDamage()
     {
-
         //This should work against enemy players. Hopefully.
         
         for (int  i = 0; i < HitTargets.Length; i++)

@@ -33,6 +33,8 @@ public class HealthScript : MonoBehaviour
 
     public int respawnTimer;
 
+
+
     public GameObject TopBody;
     void Start()
     {
@@ -46,7 +48,8 @@ public class HealthScript : MonoBehaviour
 
     public void Update()
     {
-        if (CurrentHealth > 0 && TopBody.gameObject.CompareTag("PlayerHolder"))
+
+        if (CurrentHealth > 0 && TopBody.gameObject.tag == "PlayerHolder")
         {
             RegenHandler();
         }
@@ -119,7 +122,10 @@ public class HealthScript : MonoBehaviour
           //  m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
-            Player_Animator.SetBool("IsDead", true);
+            Player_Animator.SetBool("Dead", true);
+            Player_Animator.SetLayerWeight(1, 0);
+            Player_Animator.SetLayerWeight(2, 0);
+
             yield return new WaitForSeconds(1);
 
             yield return new WaitForSeconds(2);//camera transition
@@ -130,7 +136,11 @@ public class HealthScript : MonoBehaviour
             yield return new WaitForSeconds(respawnTimer);//reset player values and renable cameras to begin transition after specified respawn timer
             CurrentHealth = MaxHealth;
             Playerbody.SetActive(true);
-            Player_Animator.SetBool("IsDead", false);
+
+            Player_Animator.SetBool("Dead", false);
+            Player_Animator.SetLayerWeight(1, 1);
+            Player_Animator.SetLayerWeight(2, 1);
+
             PlayerCineCamera.SetActive(true);
             DeathCamCineCamera.SetActive(true);
             Respawn();
@@ -142,6 +152,8 @@ public class HealthScript : MonoBehaviour
             Isdead = false;
         }
     }
+
+
 
     public void Respawn()
     {

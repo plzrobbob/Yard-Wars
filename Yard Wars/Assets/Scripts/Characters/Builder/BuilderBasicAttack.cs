@@ -11,6 +11,7 @@ public class BuilderBasicAttack : MonoBehaviour
     public GameObject RotationSetter;
     public float FireCooldown;
     public float ExitSpeed;
+    public int Target;
 
     public float Rounds_In_Mag; //This is for later :)
 
@@ -41,5 +42,7 @@ public class BuilderBasicAttack : MonoBehaviour
        GameObject obj = Instantiate(Projectile, Weapon.transform.position, RotationSetter.transform.rotation);
         obj.GetComponent<Rigidbody>().velocity = (Camera.main.transform.forward * ExitSpeed);
         obj.GetComponent<BulletHit>().damage = damage;
+        obj.GetComponent<BulletHit>().target = Target;
+
     }
 }
