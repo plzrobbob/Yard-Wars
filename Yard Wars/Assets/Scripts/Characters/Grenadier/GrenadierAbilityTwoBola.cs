@@ -58,6 +58,8 @@ public class GrenadierAbilityTwoBola : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        AudioSource audio = gameObject.GetComponent<AudioSource>();
+        audio.Stop();
         Debug.Log("Hit something");
         Debug.Log(collision.gameObject.layer);
         Debug.Log(targetNum);
