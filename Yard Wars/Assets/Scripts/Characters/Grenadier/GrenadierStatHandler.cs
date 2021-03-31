@@ -14,7 +14,7 @@ public class GrenadierStatHandler : MonoBehaviour
     public float AbilityTwoRange = 2.5f;
     public float AbilityTwoslowTime = 2f;
     public float UltiDamage = 10f;
-   
+
 
     void Start()
     {

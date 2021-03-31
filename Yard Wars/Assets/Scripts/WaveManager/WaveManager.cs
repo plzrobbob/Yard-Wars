@@ -10,7 +10,6 @@ public class WaveManager : MonoBehaviour
     public List<GameObject> firstNodeList = new List<GameObject>(); // List of first nodes corresponding with each spawn point
     GameObject currEnemyPrefab; // The most current enemy prefab, meant to be overwritten at each iteration
     GameObject newFirstNode; // The first node for the pathfinding script to follow along a path for each enemy
-
    public int waveNumber;
     int waveAmount;
 
@@ -21,18 +20,26 @@ public class WaveManager : MonoBehaviour
     public GameObject minionPrefabTypeFive;
 
     private int spawn; // n is equal to spawn n 
-                        // 1 is equal to spawn 1, 2 is equal to spawn 2, 3 is equal to spawn 3, 4 random pick spawner
+                       // 1 is equal to spawn 1, 2 is equal to spawn 2, 3 is equal to spawn 3, 4 random pick spawner
+
+
+    public GameObject PlayerSpawn;
+    public GameObject[] RespawnBoundries;
+    Vector3 destination;
+    public PlayerCharacterController m_PlayerCharacterController;
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayerSpawn = GameMaster.ClassSpawning();
+        Debug.Log(PlayerSpawn.name);
         ready4Wave = true;
-
+        m_PlayerCharacterController = PlayerSpawn.GetComponent<PlayerCharacterController>();
         waveInProgress = false;
-
+        destination = new Vector3(Random.Range(RespawnBoundries[0].transform.position.x, RespawnBoundries[1].transform.position.x), RespawnBoundries[0].transform.position.y + m_PlayerCharacterController.CharController.height / 2, Random.Range(RespawnBoundries[0].transform.position.z, RespawnBoundries[2].transform.position.z));
         spawn = 0;
         waveNumber = 1;
-
+        Instantiate(PlayerSpawn, destination, Quaternion.identity);
         //Instantiate(minionPrefabTypeOne, spawnPointList[0], Quaternion.identity);
     }
 

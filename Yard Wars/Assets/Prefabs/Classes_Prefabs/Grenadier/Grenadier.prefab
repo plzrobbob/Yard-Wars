@@ -1782,6 +1782,10 @@ MonoBehaviour:
   EditedSpeed: 0
   UnEditedSpeed: 0
   test: 0
+  tempSlidingDirection: {x: 0, y: 0, z: 0}
+  SlidingDirection: {x: 0, y: 0, z: 0}
+  SlidingBool: 0
+  Builder2TurnOff: {fileID: 0}
 --- !u!114 &1968719523517222907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1956,7 +1960,7 @@ MonoBehaviour:
   AbilityTwoDistance: 20
   UltimateCooldown: 0
   UltimatePressed: 0
-  PlayerCam: {fileID: 0}
+  PlayerCam: {fileID: 5700525968271604203}
   UltiCam: {fileID: 668606593847743623}
   reticle: {fileID: 6998897573902600388, guid: b6c2b2af289190f47b475f77c4145477, type: 3}
   ReticleController: {fileID: 0}
