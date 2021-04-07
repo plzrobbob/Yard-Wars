@@ -15,24 +15,41 @@ public class GrenadierBasicAttack : MonoBehaviour
     public GameObject BalloonOrigin;
     public int TeamLayer;
     public float damage;
+    public Animator Player_Animator;
 
     public PlaceDefense m_placeDefense;
+    public PlayerCharacterController pcc;
+
+    public bool canattack;
+    bool VisibleBasicWeapon;
+    public GameObject basicWeapon;
 
     void Start()
     {
         m_placeDefense = this.GetComponentInChildren<PlaceDefense>();
-
+        canattack = true;
+        VisibleBasicWeapon = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         weaponCooldown += Time.deltaTime;
-        if (Input.GetButtonDown("Fire1") && weaponCooldown > 1 && !m_placeDefense.placing)
+        if (Input.GetButtonDown("Fire1") && weaponCooldown > 1.3f && !m_placeDefense.placing && canattack && !pcc.IsStunned)
         {
+            Player_Animator.SetBool("Shooting", true);
             CreateBalloon();
             Debug.Log(TeamLayer);
             weaponCooldown = 0;
+
+        }
+        if (VisibleBasicWeapon)
+        {
+            basicWeapon.SetActive(true);
+        }
+        else if (!VisibleBasicWeapon)
+        {
+            basicWeapon.SetActive(false);
         }
     }
 
@@ -47,5 +64,23 @@ public class GrenadierBasicAttack : MonoBehaviour
         //is me setting the integer that is going to be compared later on down the line in HitDetect
         obj.GetComponent<GrenadierBasicHitDetect>().layernum = TeamLayer;
         obj.GetComponent<GrenadierBasicHitDetect>().damage = damage;
+        Invoke("ShootingFalse", .2f);
+    }
+    private void ShootingFalse()
+    {
+        Player_Animator.SetBool("Shooting", false);
+    }
+
+    public void enableVisibleWeapon()
+    {
+        VisibleBasicWeapon = true;
+    }
+    public void DisableVisibleWeapon()
+    {
+        VisibleBasicWeapon = false;
+    }
+    public void playBalloonSqueak()
+    {
+        FindObjectOfType<AudioManager>().Play("BalloonReload", transform.position);
     }
 }

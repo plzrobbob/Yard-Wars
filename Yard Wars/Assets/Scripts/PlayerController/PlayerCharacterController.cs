@@ -35,6 +35,8 @@ public class PlayerCharacterController : MonoBehaviour
     private bool CanJmp;
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
+    public bool IsStunned;
+
 
     public PlaceDefense m_placeDefense;
 
@@ -120,11 +122,13 @@ public class PlayerCharacterController : MonoBehaviour
 
         if ((x != 0 || z != 0) && Grounded)
         {
-            Player_Animator.SetBool("IsWalking", true);
+            Player_Animator.SetBool("Walking", true);
+            Debug.Log(Player_Animator.GetBool("Walking"));
+
         }
         else
         {
-            Player_Animator.SetBool("IsWalking", false);
+            Player_Animator.SetBool("Walking", false);
         }
 
         //transform.right and transform.forward uses local coords instead of world coords
@@ -165,11 +169,18 @@ public class PlayerCharacterController : MonoBehaviour
         if (Grounded && Input.GetAxis("Jump") == 0)
         {
             Velocity.y = 0f;
+            if (Player_Animator.GetBool("Jump"))
+            {
+                Player_Animator.SetBool("Landing", true);
+            }
+            Player_Animator.SetBool("Jump", false);
         }
         if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
         {
             Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
             CanJmp = false;
+            Player_Animator.SetBool("Landing", false);
+            Player_Animator.SetBool("Jump", true);
         }
         if (!Grounded)
         {
@@ -264,18 +275,29 @@ public class PlayerCharacterController : MonoBehaviour
     public void Stunned(float time)
     {
         Debug.Log(gameObject.name + " is currently stunned for " + time + " seconds!");
-        pcc.enabled = false;
-        StunVFX.SetActive(true);
+        IsStunned = true;
 
+        pcc.enabled = false;
+
+        StunVFX.SetActive(true);
+        Player_Animator.SetLayerWeight(1, 0);
+        Player_Animator.SetLayerWeight(2, 0);
         Invoke("Unstunned", time);
+        Player_Animator.SetBool("Stunned", true);
+
     }
 
     void Unstunned()
     {
+        IsStunned = false;
 
+        Player_Animator.SetLayerWeight(1, 1);
+        Player_Animator.SetLayerWeight(2, 1);
+        Debug.Log("reset layer - unstun");
         StunVFX.SetActive(false);
 
         pcc.enabled = true;
+        Player_Animator.SetBool("Stunned", false);
     }
 
     /// <summary>

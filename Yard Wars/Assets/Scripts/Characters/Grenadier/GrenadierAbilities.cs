@@ -88,7 +88,12 @@ public class GrenadierAbilities : MonoBehaviour
     private Collider[] damaging;
     public LayerMask Target;
     public float UltiDamageNum;
-
+    public Animator Player_Animator;
+    public GrenadierBasicAttack GrenBasic;
+    public GameObject UltWeapon;
+    public PlayerCharacterController pcc;
+    public bool VisibleUltWeapon;
+    public bool IPfireult;
 
 
 
@@ -128,6 +133,10 @@ public class GrenadierAbilities : MonoBehaviour
             DoDamageAbilityOne();
             Debug.Log(EnemiesDamaged.Length);
             Debug.Log("AbilityOneInitiated");
+            Player_Animator.SetBool("Ability1", true);
+            Player_Animator.SetLayerWeight(1, 0);
+            Player_Animator.SetLayerWeight(2, 0);
+            Invoke("reacLayer", 1f);
             AbilityOnecooldown = 0f;
         }
 
@@ -158,7 +167,13 @@ public class GrenadierAbilities : MonoBehaviour
         if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !UltimatePressed)
         {
             AbilityTwoV2();
-         //   AbilityTwoCooldown = 0f;
+            Player_Animator.SetBool("Ability2", true);
+            //Player_Animator.SetLayerWeight(1, 0);
+            //Player_Animator.SetLayerWeight(2, 0);
+            Invoke("reacLayer", 1f);
+
+            GrenBasic.canattack = false;
+            //   AbilityTwoCooldown = 0f;
         }
 
 
@@ -185,13 +200,32 @@ public class GrenadierAbilities : MonoBehaviour
 
             GameObject obj = Instantiate(reticle, gameObject.transform.position, reticle.transform.rotation);
             ReticleController = obj;
+            Player_Animator.SetBool("Ability3", true);
+            enableVisibleUltimate();
+            GrenBasic.canattack = false;
+        }
 
+        if (VisibleUltWeapon && !UltWeapon.activeInHierarchy && !IPfireult)
+        {
+            UltWeapon.SetActive(true);
+            Player_Animator.SetLayerWeight(1, 0);
+            Player_Animator.SetLayerWeight(2, 0);
+        }
+        if (!VisibleUltWeapon && UltWeapon.activeInHierarchy)
+        {
+            Debug.Log("ip reset layer - ult");
         }
 
     }
+    void reacLayer()
+    {
+        Player_Animator.SetLayerWeight(1, 1);
+        Player_Animator.SetLayerWeight(2, 1);
 
+        Debug.Log("reset layer - ult");
+    }
     //Useful Debug tool I added. remove when Grenadier in final stage.
-    
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -242,7 +276,10 @@ public class GrenadierAbilities : MonoBehaviour
             //Current Exit velocity looks weird. it works, but I am going to figure out if it needs to be faster or not
             obj.GetComponent<Rigidbody>().velocity = (obj.transform.forward * 4f);
 
+
         }
+        Invoke("Ability1False", .2f);
+
     }
 
 
@@ -293,6 +330,8 @@ public class GrenadierAbilities : MonoBehaviour
         {
             obj.GetComponentInChildren<GrenadierAbilityTwoBola>().targetNum = 20;
         }
+        Invoke("Ability2False", .2f);
+
     }
 
     private void RotateDefense()
@@ -407,6 +446,11 @@ public class GrenadierAbilities : MonoBehaviour
         //This section of the code is the part that launches the player out of its current control loop. This will give the player control again and throw it out of its current loop
         if (Input.GetButtonDown("Ultimate") || Input.GetButtonDown("Fire1"))
         {
+            IPfireult = true;
+            Player_Animator.SetBool("Ability3Fire", true);
+            UltWeapon.SetActive(false);
+            Invoke("reacLayer", 1f);
+
             Debug.Log("Jump out of lOOp");
             gameObject.GetComponent<PlayerCharacterController>().enabled = true;
             UltimateCooldown = 0f;
@@ -414,8 +458,6 @@ public class GrenadierAbilities : MonoBehaviour
             UltiCam.SetActive(false);
             PlayerCam.SetActive(true);
             PlayerCam.transform.rotation = UltiCam.transform.rotation;
-
-            
 
             ReticleController.GetComponent<MeshRenderer>().enabled = false;
             Destroy(ReticleController, 2.5f);
@@ -427,11 +469,15 @@ public class GrenadierAbilities : MonoBehaviour
     }
     void fireUlti()
     {
+        Ability3False();
+
         GameObject obj = Instantiate(UltiBalloon, transform.position, Quaternion.identity);
         obj.gameObject.GetComponent<Rigidbody>().velocity = HitTargetAtTime(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 2.5f);
+        //FindObjectOfType<AudioManager>().Play("UltExhale", transform.position);
         //HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f)
         Destroy(obj, 2.5f);
         Invoke("UltiDamage", 2.5f);
+        Invoke("DisableVisibleUltimate", 1f);
     }
     void UltiDamage()
     {
@@ -443,6 +489,8 @@ public class GrenadierAbilities : MonoBehaviour
             M_HealthScript.CurrentHealth -= UltiDamageNum;
             Debug.Log("UltiDamage");
         }
+        IPfireult = false;
+
     }
     public static Vector3 HitTargetAtTime(Vector3 startPosition, Vector3 targetPosition, Vector3 gravityBase, float timeToTarget)
     {
@@ -543,6 +591,33 @@ public class GrenadierAbilities : MonoBehaviour
         Vector3 output;
         output = Vector3.Project(AtoB, gravityBase);
         return output;
+    }
+    private void Ability1False()
+    {
+        Player_Animator.SetBool("Ability1", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void Ability2False()
+    {
+        Player_Animator.SetBool("Ability2", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void Ability3False()
+    {
+        Player_Animator.SetBool("Ability3", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void GrenBasicCanFire()
+    {
+        GrenBasic.canattack = true;
+    }
+    public void enableVisibleUltimate()
+    {
+        VisibleUltWeapon = true;
+    }
+    public void DisableVisibleUltimate()
+    {
+        VisibleUltWeapon = false;
     }
 
 }
