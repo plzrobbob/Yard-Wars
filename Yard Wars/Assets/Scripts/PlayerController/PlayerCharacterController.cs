@@ -33,6 +33,10 @@ public class PlayerCharacterController : MonoBehaviour
 
     public bool Grounded;
     private bool CanJmp;
+    public float MaxJmpCount; //This is new, I added this for Thief
+    public float JmpCount; //This is new, I added this for Thief
+    public bool CanThiefJump;
+
     public bool ThirdPesronCamera;
     public bool IsOnSlope;
     public bool IsStunned;
@@ -123,7 +127,6 @@ public class PlayerCharacterController : MonoBehaviour
         if ((x != 0 || z != 0) && Grounded)
         {
             Player_Animator.SetBool("Walking", true);
-            Debug.Log(Player_Animator.GetBool("Walking"));
 
         }
         else
@@ -141,9 +144,11 @@ public class PlayerCharacterController : MonoBehaviour
             tempSlidingDirection = move;
         }
 
-        CharController.Move(Velocity * Time.deltaTime);
-        CharController.Move(move * MoveSpeed * Time.deltaTime);
+        CharController.Move(Velocity * Time.deltaTime);//used for jumping and falling
+        CharController.Move(move * MoveSpeed * Time.deltaTime);//used for moving
 
+        Player_Animator.SetFloat("y", z);
+        Player_Animator.SetFloat("x", x);
     }
     void CameraRotate()
     {
@@ -175,7 +180,23 @@ public class PlayerCharacterController : MonoBehaviour
             }
             Player_Animator.SetBool("Jump", false);
         }
-        if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
+        if (CanThiefJump)
+        {
+            if (Input.GetButtonDown("Jump") && CanJmp && JmpCount < MaxJmpCount)
+            {
+                Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                //Jumping = true;
+                CanJmp = false;
+            }
+            else if (Input.GetButtonUp("Jump") && !CanJmp)
+            {
+                Debug.Log("but-up");
+                CanJmp = true;
+                JmpCount++;
+            }
+        }
+        else
+if (Input.GetAxis("Jump") != 0 && CanJmp && Grounded)//get input for jump
         {
             Velocity.y = Mathf.Sqrt(JumpHeight * -2f * Gravity);//calculate velocity
             CanJmp = false;

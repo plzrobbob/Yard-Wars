@@ -111,8 +111,9 @@ public class GrenadierAbilities : MonoBehaviour
         AbilityTwoCooldown = 10f;
         UltimateCooldown = 60f;
         UltimatePressed = false;
-       // DasBrain = this.gameObject.GetComponentInChildren<CinemachineFreeLook>();
-       // PlayerView = this.gameObject;
+        DisableVisibleUltimate();
+        // DasBrain = this.gameObject.GetComponentInChildren<CinemachineFreeLook>();
+        // PlayerView = this.gameObject;
     }
 
     // Update is called once per frame
@@ -133,11 +134,15 @@ public class GrenadierAbilities : MonoBehaviour
             DoDamageAbilityOne();
             Debug.Log(EnemiesDamaged.Length);
             Debug.Log("AbilityOneInitiated");
+
             Player_Animator.SetBool("Ability1", true);
             Player_Animator.SetLayerWeight(1, 0);
             Player_Animator.SetLayerWeight(2, 0);
             Invoke("reacLayer", 1f);
+
             AbilityOnecooldown = 0f;
+            GrenBasic.canattack = false;
+
         }
 
 
@@ -473,7 +478,7 @@ public class GrenadierAbilities : MonoBehaviour
 
         GameObject obj = Instantiate(UltiBalloon, transform.position, Quaternion.identity);
         obj.gameObject.GetComponent<Rigidbody>().velocity = HitTargetAtTime(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 2.5f);
-        //FindObjectOfType<AudioManager>().Play("UltExhale", transform.position);
+        FindObjectOfType<AudioManager>().Play("UltExhale", transform.position);
         //HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f)
         Destroy(obj, 2.5f);
         Invoke("UltiDamage", 2.5f);
