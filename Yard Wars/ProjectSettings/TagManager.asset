@@ -13,6 +13,8 @@ TagManager:
   - MinionGoal
   - UltiView
   - Slide
+  - Turret
+  - Wall
   layers:
   - Default
   - TransparentFX

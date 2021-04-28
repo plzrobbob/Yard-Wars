@@ -126,3 +126,4 @@ MonoBehaviour:
   damage: 0
   area: 2
   layernum: 0
+  PlayerThatFired: {fileID: 0}

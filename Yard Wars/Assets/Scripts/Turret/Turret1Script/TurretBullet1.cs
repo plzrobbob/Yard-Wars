@@ -59,7 +59,7 @@ public class TurretBullet1 : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("hit");
+        //Debug.Log("hit");
         if (collision.gameObject.tag != EnemyTag)
         {
             Destroy(gameObject);

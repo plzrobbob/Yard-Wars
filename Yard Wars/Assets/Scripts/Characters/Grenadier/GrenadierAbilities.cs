@@ -489,7 +489,7 @@ public class GrenadierAbilities : MonoBehaviour
         damaging = Physics.OverlapSphere(UltiAreaDamage, 3.0f, Target);
         for (int i = 0; i < damaging.Length; i++)
         {
-            damaging[i].gameObject.GetComponent<Pathfinding>().Stunned(2.0f);
+            damaging[i].gameObject.GetComponent<AINodePath>().Stunned(2.0f);
             HealthScript M_HealthScript = damaging[i].gameObject.GetComponent<HealthScript>();
             M_HealthScript.CurrentHealth -= UltiDamageNum;
             Debug.Log("UltiDamage");

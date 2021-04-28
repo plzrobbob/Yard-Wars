@@ -34,7 +34,7 @@ public class TurretController : MonoBehaviour
 
     void UpdateTarget()
     {
-        Debug.Log("Update");
+        //Debug.Log("Update");
         enemies = GameObject.FindGameObjectsWithTag(EnemyTag);
 
         float shortestDitance = Mathf.Infinity;

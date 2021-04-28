@@ -62,7 +62,7 @@ public class BuilderAbilityTwo : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy") && collision.gameObject.layer == Target)
         {
-            Pathfinding m_pathfinding = collision.gameObject.GetComponent<Pathfinding>();
+            AINodePath m_pathfinding = collision.gameObject.GetComponent<AINodePath>();
             NavMeshAgent m_navmeshagent = collision.gameObject.GetComponent<NavMeshAgent>();
             m_pathfinding.SlidingDirection = m_navmeshagent.velocity;
             m_pathfinding.Builder2TurnOff = gameObject;
@@ -114,7 +114,7 @@ public class BuilderAbilityTwo : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            Pathfinding m_pathfinding = collision.gameObject.GetComponent<Pathfinding>();
+            AINodePath m_pathfinding = collision.gameObject.GetComponent<AINodePath>();
             NavMeshAgent m_navmeshagent = collision.gameObject.GetComponent<NavMeshAgent>();
 
             m_navmeshagent.isStopped = false;

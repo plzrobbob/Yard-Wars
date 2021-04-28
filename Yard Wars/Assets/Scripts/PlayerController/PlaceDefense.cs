@@ -133,12 +133,12 @@ public class PlaceDefense : MonoBehaviour
     private void SetDefenseHeight()
     {
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
-        if (Physics.Raycast(transform.position, transform.forward, out var hit, 5.5f, raymask))//placing against a wall.  defenses will not intersect
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, 5.5f, raymask, QueryTriggerInteraction.Ignore))//placing against a wall.  defenses will not intersect
         {
             Debug.DrawRay(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up * 20, Color.blue);
-            if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask))
+            if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask, QueryTriggerInteraction.Ignore))
             {
-                if (hit2.collider.gameObject.layer == 12)
+                if (hit2.collider.gameObject.layer == 12) 
                 {
                     canplace = false;
                     return;
@@ -157,7 +157,7 @@ public class PlaceDefense : MonoBehaviour
         else//if there is no wall player can just place
         {
             Debug.DrawRay(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up * 20, Color.blue);
-            if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask))
+            if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask, QueryTriggerInteraction.Ignore))
             {
                 if (hit2.collider.gameObject.layer == 12)
                 {

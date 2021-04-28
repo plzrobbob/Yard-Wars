@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2358703379989481302}
   - component: {fileID: 2358703379989481289}
   - component: {fileID: 2358703379989481288}
-  - component: {fileID: 2358703379989481303}
   m_Layer: 12
   m_Name: Cube
   m_TagString: Untagged
@@ -80,19 +79,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2358703379989481303
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2358703379989481301}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2358703380112429935
 GameObject:
   m_ObjectHideFlags: 0
@@ -104,7 +90,6 @@ GameObject:
   - component: {fileID: 2358703380112429920}
   - component: {fileID: 2358703380112429923}
   - component: {fileID: 2358703380112429922}
-  - component: {fileID: 2358703380112429921}
   m_Layer: 12
   m_Name: Cylinder
   m_TagString: Untagged
@@ -173,20 +158,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &2358703380112429921
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2358703380112429935}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &2358703380950018144
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,9 +170,12 @@ GameObject:
   - component: {fileID: 67541905745364531}
   - component: {fileID: 7382398885801488264}
   - component: {fileID: 537640984439907047}
+  - component: {fileID: -2849906827836134967}
+  - component: {fileID: 7413950057363567308}
+  - component: {fileID: 7276672651157502820}
   m_Layer: 12
   m_Name: Turret
-  m_TagString: Defense
+  m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -248,6 +222,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 0}
   PlayerCineCamera: {fileID: 0}
   DeathCamCineCamera: {fileID: 0}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 0}
   respawnTimer: 0
   TopBody: {fileID: 2358703380950018144}
@@ -293,6 +269,52 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &-2849906827836134967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358703380950018144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4769302b064c2c94fbb2a08e16b643d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTurret: 1
+  isPlayer: 0
+  isWall: 0
+  agronum: 0
+  onpath: 0
+--- !u!54 &7413950057363567308
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358703380950018144}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &7276672651157502820
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358703380950018144}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5361176953130853322
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,7 +442,12 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6574251975746196667, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
+    - {fileID: 6574251977623922320, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
+    - {fileID: 6574251977341141109, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
+    - {fileID: 6574251976075389218, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
+    - {fileID: 6574251975872058786, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: fd3dc12f7e1f2ff438e837c0b1953905, type: 3}
 --- !u!4 &2358703379495286024 stripped
 Transform:

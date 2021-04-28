@@ -107,11 +107,11 @@ public class HealthScript : MonoBehaviour
     {
         if (!TopBody.gameObject.CompareTag("PlayerHolder"))//destroy ai and defenses
         {
-            if (TopBody.gameObject.CompareTag("Enemy"))
-            {
-                player_resources.Gain(death_value);
-            }
-            yield return new WaitForSeconds(1);
+            //if (TopBody.gameObject.CompareTag("Enemy"))
+            //{
+            //    player_resources.Gain(death_value);
+            //}
+            //yield return new WaitForSeconds(1);
             Destroy(TopBody);
         }
         if (TopBody.gameObject.CompareTag("PlayerHolder"))//respawn the player

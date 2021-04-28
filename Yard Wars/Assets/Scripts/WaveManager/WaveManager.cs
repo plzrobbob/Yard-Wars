@@ -118,7 +118,7 @@ public class WaveManager : MonoBehaviour
                 }
 
                 currEnemyPrefab = Instantiate(minionPrefabTypeOne, tempSpawnLocation, Quaternion.identity); //spawn a specified amount of minions at a random spawn point
-                currEnemyPrefab.GetComponent<Pathfinding>().firstNode = newFirstNode;
+                currEnemyPrefab.GetComponent<Pathfinding_old>().firstNode = newFirstNode;
                 yield return new WaitForSeconds(0.1f);
                 //Debug.Log("Holy fuck my guy, did you fucking see that shit spawn in a fucking random location???");
             }
@@ -147,7 +147,7 @@ public class WaveManager : MonoBehaviour
                 }
 
                 currEnemyPrefab = Instantiate(minionPrefabTypeOne, tempSpawnLocation, Quaternion.identity);
-                currEnemyPrefab.GetComponent<Pathfinding>().firstNode = newFirstNode;
+                currEnemyPrefab.GetComponent<Pathfinding_old>().firstNode = newFirstNode;
                 yield return new WaitForSeconds(0.1f);
                 //Debug.Log("Holy fuck my guy, did you fucking see that shit spawn in a totally NOT fucking random location???");
             }

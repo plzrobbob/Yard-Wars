@@ -97,7 +97,7 @@ public class GrenadierAbilitytwodamage : MonoBehaviour
             }
             else if (enemiesHit[i].gameObject.tag == "Enemy")
             {
-                enemiesHit[i].gameObject.GetComponent<Pathfinding>().Slowed(0.65f, 3f);
+                enemiesHit[i].gameObject.GetComponent<AINodePath>().Slowed(0.65f, 3f);
                 //Actually not sure what to call in here. Maybe add a function to pathfinding script that calls to NavMeshAgent and temporarily changes speed.
                 //It would be something like: enemiesHit[i].gameObject.getComponent<Pathfinding>().*functionName*
             }

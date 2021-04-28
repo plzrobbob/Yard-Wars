@@ -64,6 +64,7 @@ public class GrenadierBasicAttack : MonoBehaviour
         //is me setting the integer that is going to be compared later on down the line in HitDetect
         obj.GetComponent<GrenadierBasicHitDetect>().layernum = TeamLayer;
         obj.GetComponent<GrenadierBasicHitDetect>().damage = damage;
+        obj.GetComponent<GrenadierBasicHitDetect>().PlayerThatFired = this.gameObject;
         Invoke("ShootingFalse", .2f);
     }
     private void ShootingFalse()

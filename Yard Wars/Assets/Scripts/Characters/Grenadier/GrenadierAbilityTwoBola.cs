@@ -90,7 +90,7 @@ public class GrenadierAbilityTwoBola : MonoBehaviour
 
     void SlowedMinion(Collision collision)
     {
-        collision.gameObject.GetComponent<Pathfinding>().Slowed(0.65f, slowTime);
+        collision.gameObject.GetComponent<AINodePath>().Slowed(0.65f, slowTime);
     }
     void SlowedPlayer(Collision collision)
     {

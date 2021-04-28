@@ -122,7 +122,7 @@ public class GuardAbilityTwo : MonoBehaviour
         obj.GetComponent<NavMeshAgent>().enabled = true;
 
         //Declare the current enemy's pathfinding script as a local variable
-        Pathfinding pathfindingScript = obj.GetComponent<Pathfinding>();
+        AINodePath pathfindingScript = obj.GetComponent<AINodePath>();
 
         //In the current enemy's pathfinding script, activate their stun function to stun them
         pathfindingScript.Stunned(stunDuration);

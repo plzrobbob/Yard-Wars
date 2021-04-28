@@ -85,7 +85,7 @@ public class GuardAbilityOne : MonoBehaviour
             M_HealthScript.CurrentHealth -= abilityOneDamageAmount;
 
             //Within this for loop we will get the pathfinding script of whatever we've hit
-            Pathfinding pathfindingScript = HitTargets[i].GetComponent<Pathfinding>();
+            AINodePath pathfindingScript = HitTargets[i].GetComponent<AINodePath>();
 
             //Once we have the pathfinding script, we'll use it to slow down the enemy hit by the amount and duration specified
             pathfindingScript.Slowed(slowPercent, slowDuration);
