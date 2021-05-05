@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-
-
-//need to change algorithm that tells if the minion is closer to node 1 vs node 2 vs node 3 ...
-//          Potential fix: use a ditance check to see the distance between two ndoes.  then check this distance with referecne to the minion.  This can give the exact spot the minion is currently at on the lane
-
 //need to change algorithm that will reset path until a valid path is found.  
 //          potential fix: It should slowly increase the random range circleradius until it is possible to navigate to the point
+//          fixed but still rough.  minions will just start indiscriminately targeting walls.  Blood for the blood god.
 
 //need to fix the agrotarget function.  The targets are not picked in the correct order.  If the path is blocked then minions will prioritze this target.  This could be difficult to fix.  Will have to brain storm.
+//          might be fixed?  
+//          the probelm was it was chekcing the path to the target when it was blocked by a wall to see if you could navigate to it.  
+//          it would do this by checking if the path was partial.  but it was always partial because the turret itself is an obstacle.  
+//          so turret would never be targeted if a wall weas blocking any part of the path.
 
 
 
@@ -25,6 +25,8 @@ public class AINodePath : MonoBehaviour
     [Header("Minion Info")]
     public int CurNode;//the current node the minion is pathing to
     public float circleRadius = 1.0f;//float to plot a random point around the node to path to
+    [SerializeField]
+    private float tempcircleRadius = 0;//float to plot a random point around the node to path to
     public bool PartialPath;//is the minion path blocked?
     public bool onpath;//is the minion on a path?
     private bool nodeIsEmpty;//this bool will reset the struct if(path is not empty, and it is not currently pathfinding)
@@ -130,18 +132,30 @@ public class AINodePath : MonoBehaviour
 
         if (!Minionagent.hasPath && Minionagent.enabled && !nodeIsEmpty && nodepathing)//this will recalculate a path if the path is blocked by an obstacle
         {
+            Debug.Log("attemptgetpath");
             if (Target != null)
             {
-                TargetRandPos = new Vector3(Target.transform.position.x + UnityEngine.Random.Range(-circleRadius, circleRadius), Target.transform.position.y, Target.transform.position.z + UnityEngine.Random.Range(-circleRadius, circleRadius));
+                tempcircleRadius = 5;
+                TargetRandPos = new Vector3(path[CurNode].transform.position.x + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius), path[CurNode].transform.position.y, path[CurNode].transform.position.z + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius));
             }
-            else
+            else if(tempcircleRadius < 10)//this else needs to be changed to fix the error
             {
                 var temp = new PathArr();
                 temp.Node = path[CurNode];
                 temp.ReachedNode = false;
-                temp.position = new Vector3(path[CurNode].transform.position.x + UnityEngine.Random.Range(-circleRadius, circleRadius), path[CurNode].transform.position.y, path[CurNode].transform.position.z + UnityEngine.Random.Range(-circleRadius, circleRadius));
+                tempcircleRadius += .1f;
+                temp.position = new Vector3(path[CurNode].transform.position.x + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius), path[CurNode].transform.position.y, path[CurNode].transform.position.z + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius));
                 data2[CurNode] = temp;
             }
+            else if (WallTarget != null)
+            {
+                Target = WallTarget;
+                AgroTarget = true;
+            }
+        }
+        else if(tempcircleRadius != circleRadius)
+        {
+            tempcircleRadius = circleRadius;
         }
 
         if (!nodepathing && nodeIsEmpty && path.Length > 0)//on the first frame get the path and make a set of nodes for minions to follow.
@@ -247,20 +261,17 @@ public class AINodePath : MonoBehaviour
                 mask += 0 << NavMesh.GetAreaFromName("offPath");
                 mask += 1 << NavMesh.GetAreaFromName("Lane");
 
-                var pathOnlyLane = new NavMeshPath();
-                NavMesh.CalculatePath(transform.position, data2[CurNode].position, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
-                if (pathOnlyLane.status == NavMeshPathStatus.PathComplete)
-                {
-                    PathToNextNodeIsPartial = false;
-                }
-
                 if (PlayerTarget != null )
                 {
                     bool Playeronpath = PlayerTarget.GetComponent<TargetProperty>().onpath;
                     if (Playeronpath)
                     {
-                        NavMesh.CalculatePath(transform.position, PlayerTarget.transform.position, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
-                        if (pathOnlyLane.status == NavMeshPathStatus.PathComplete)
+                        var pathpalyer = new NavMeshPath();
+
+                        var tempTargetRandPos = new Vector3(PlayerTarget.transform.position.x + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius), PlayerTarget.transform.position.y, PlayerTarget.transform.position.z + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius));
+
+                        NavMesh.CalculatePath(transform.position, tempTargetRandPos, mask, pathpalyer);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
+                        if (pathpalyer.status == NavMeshPathStatus.PathComplete)
                         {
                             PathToPlayerTargetIsPartial = false;
 
@@ -269,11 +280,23 @@ public class AINodePath : MonoBehaviour
                 }
                 if (TurretTarget != null)
                 {
-                    NavMesh.CalculatePath(transform.position, TurretTarget.transform.position, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
-                    if (pathOnlyLane.status == NavMeshPathStatus.PathComplete)
+                    var pathTarget = new NavMeshPath();
+
+                    var tempTargetRandPos = new Vector3(TurretTarget.transform.position.x + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius), TurretTarget.transform.position.y, TurretTarget.transform.position.z + UnityEngine.Random.Range(-tempcircleRadius, tempcircleRadius));
+
+                    NavMesh.CalculatePath(transform.position, tempTargetRandPos, mask, pathTarget);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
+                    if (pathTarget.status == NavMeshPathStatus.PathComplete)
                     {
                         PathToTurretTargetIsPartial = false;
                     }
+                }
+
+                var pathOnlyLane = new NavMeshPath();
+                NavMesh.CalculatePath(transform.position, data2[CurNode].position, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
+
+                if (pathOnlyLane.status == NavMeshPathStatus.PathComplete)
+                {
+                    PathToNextNodeIsPartial = false;
                 }
             }
 
@@ -344,8 +367,10 @@ public class AINodePath : MonoBehaviour
                 Invoke("EnAgent", .1f);//enable the agent
                 return;
             }
+            float tempdist4target = Vector3.Distance(Target.transform.position, transform.position);
+            //Debug.Log(tempdist4target);
 
-            if (Vector3.Distance(Target.transform.position, transform.position) > 5)//if minion is pushed away from the goal then pathfind back to the goal
+            if (tempdist4target > 5)//if minion is pushed away from the goal then pathfind back to the goal
             {
                 nodepathing = true;//reactivate pathfinding
                 MinionObstacle.enabled = false;//diable the obstacle
@@ -479,10 +504,10 @@ public class AINodePath : MonoBehaviour
     {
         if (CurNode < data2.Count && onpath) //if dist to node 1 >= dist to node 2, make sure node 2 is the curent target node.
         {
-            for (int i = CurNode + 1; i < data2.Count; i++)
+            for (int i = CurNode; i < data2.Count-1; i++)
             {
-                float tmp1 = Vector3.Distance(transform.position, data2[CurNode].Node.transform.position);
-                float tmp2 = Vector3.Distance(transform.position, data2[i].Node.transform.position);
+                float tmp1 = Vector3.Distance(data2[i].Node.transform.position, data2[i + 1].Node.transform.position);
+                float tmp2 = Vector3.Distance(transform.position, data2[i + 1].Node.transform.position);
                 if (tmp1 > tmp2)
                 {
                     var temp = new PathArr();
@@ -491,7 +516,7 @@ public class AINodePath : MonoBehaviour
                     data2[CurNode] = temp;//the node is no longer reached
                 }
             }
-        }
+        }        
 
         if (Minionagent.enabled == true && MinionObstacle.enabled == true)//this case should never happen .  If it does it needs to eb imemdiately resolved.
         {
