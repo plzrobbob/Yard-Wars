@@ -2936,8 +2936,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2744595535597246624}
-  m_LocalRotation: {x: -0.000000003184625, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.086208, y: -1.1040001, z: -13.1500025}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6.0422096, y: 0.05300021, z: -10.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3404367220897175232}
@@ -3317,7 +3317,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2744595537090436669}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.0422096, y: 0.052999973, z: -10.14}
+  m_LocalPosition: {x: -6.0422096, y: 0.05300021, z: -10.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2744595536893814679}
@@ -3354,7 +3354,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.9826498, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 1
@@ -3507,7 +3507,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2744595537212092053}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 71.730034}
+  m_LocalPosition: {x: 0, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2744595537121329918}
@@ -3515,7 +3515,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 15, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2744595537212092048
@@ -3888,7 +3888,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.9230769, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 1
@@ -4160,6 +4160,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 0}
   PlayerCineCamera: {fileID: 0}
   DeathCamCineCamera: {fileID: 0}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 0}
   respawnTimer: 0
   TopBody: {fileID: 4468940200875643320}
@@ -4646,6 +4648,9 @@ MonoBehaviour:
   camera: {fileID: 6535307165381972686}
   aim_placeholder: {fileID: 6535307165692800490}
   Grounded: 0
+  MaxJmpCount: 0
+  JmpCount: 0
+  CanThiefJump: 0
   ThirdPesronCamera: 0
   IsOnSlope: 0
   IsStunned: 0
@@ -4688,6 +4693,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 29865687047964748}
   PlayerCineCamera: {fileID: 3805251271929148383}
   DeathCamCineCamera: {fileID: 8101721689296102459}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 1024556451}
   respawnTimer: 3
   TopBody: {fileID: 6535307164466816565}
@@ -4923,7 +4930,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6535307165381972686}
-  m_LocalRotation: {x: -0.0000000015923125, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.4560013, y: 1.4660001, z: -5.010002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5719,7 +5726,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.9230769, y: 1}
+    m_SensorSize: {x: 1.3333334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6762,6 +6769,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 0}
   PlayerCineCamera: {fileID: 0}
   DeathCamCineCamera: {fileID: 0}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 0}
   respawnTimer: 0
   TopBody: {fileID: 8793804972251744886}
@@ -6923,7 +6932,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8941895288622408054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 74.86551}
+  m_LocalPosition: {x: 0, y: 0, z: 200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8711885118808150282}
@@ -6931,7 +6940,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000019073486}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &930066293941109379
