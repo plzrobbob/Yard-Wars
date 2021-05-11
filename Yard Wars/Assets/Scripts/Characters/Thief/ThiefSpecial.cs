@@ -31,7 +31,7 @@ public class ThiefSpecial : MonoBehaviour
     void Start()
     {
         //As soon as the character is spawned we store the amount of damage their weapon deals without buffs
-        originalDamageValue = Weapon.GetComponent<MeleeWeaponDamage>().damageAmount;
+        originalDamageValue = Weapon.GetComponent<MeleeWeaponFire>().damageAmount;
     }
 
     // Update is called once per frame
@@ -63,7 +63,7 @@ public class ThiefSpecial : MonoBehaviour
 
     void DamageBuff()
     {
-        if (Player_Animator.GetBool("IsWalking") == true && Weapon.GetComponent<MeleeWeaponDamage>().attackSuccessful == true
+        if (Player_Animator.GetBool("IsWalking") == true && Weapon.GetComponent<MeleeWeaponFire>().attackSuccessful == true
                 && stackPrevention == false)
         {
             Debug.Log("Damage increased motherfucker!");
@@ -96,14 +96,14 @@ public class ThiefSpecial : MonoBehaviour
     IEnumerator DamageMultiplier()
     {
         //The damage buff itself
-        Weapon.GetComponent<MeleeWeaponDamage>().damageAmount = Weapon.GetComponent<MeleeWeaponDamage>().damageAmount + 
-            (Weapon.GetComponent<MeleeWeaponDamage>().damageAmount * 0.25f);
+        Weapon.GetComponent<MeleeWeaponFire>().damageAmount = Weapon.GetComponent<MeleeWeaponFire>().damageAmount + 
+            (Weapon.GetComponent<MeleeWeaponFire>().damageAmount * 0.25f);
 
         //Wait the amount of time the buff lasts
         yield return new WaitForSeconds(damageIncreaseTime);
 
         //After the buff is done, return the damage amount to it's original state
-        Weapon.GetComponent<MeleeWeaponDamage>().damageAmount = originalDamageValue;
+        Weapon.GetComponent<MeleeWeaponFire>().damageAmount = originalDamageValue;
 
         //Buff is done we don't need this Stack prevention anymore
         stackPrevention = false;

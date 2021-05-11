@@ -59,4 +59,8 @@ public class GrenadierStatHandler : MonoBehaviour
     {
         return GrenadierDamage;
     }
+    public float GrenadierHealthCall()
+    {
+        return GrenadierHealth;
+    }
 }
