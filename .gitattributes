@@ -11,7 +11,6 @@
 *.cs text diff=csharp
 
 # Unity Text Assets
-*.meta unityyaml
 *.unity unityyaml
 *.asset unityyaml
 *.prefab unityyaml
@@ -52,7 +51,6 @@
 *.atsc lfs
 *.gif lfs
 *.bmp lfs
-*.exr lfs
 *.tga lfs
 *.tiff lfs
 *.tif lfs
@@ -117,7 +115,6 @@
 *.exe lfs
 *.dll lfs
 *.so lfs
-*.pdb lfs
 *.mdb lfs
 
 # Packaging
