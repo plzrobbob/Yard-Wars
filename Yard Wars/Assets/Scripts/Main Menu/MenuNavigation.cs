@@ -91,6 +91,40 @@ public class MenuNavigation : MonoBehaviour
 
         //Play Animation of menu closing out
 
+        TitleScreen.SetActive(false);
+
+        UpdateMenuState();
+    }
+
+    public void OnClick_MainMenu()
+    {
+        AudioManager.Select();
+        currentState = MenuState.MainMenu;
+
+        UpdateMenuState();
+    }
+
+    public void OnClick_Settings()
+    {
+        AudioManager.Select();
+        currentState = MenuState.Settings;
+
+        UpdateMenuState();
+    }
+
+    public void OnClick_Singleplayer()
+    {
+        AudioManager.Select();
+        currentState = MenuState.Singleplayer;
+
+        UpdateMenuState();
+    }
+
+    public void OnClick_Multiplayer()
+    {
+        AudioManager.Select();
+        currentState = MenuState.Multiplayer;
+
         UpdateMenuState();
     }
 }
