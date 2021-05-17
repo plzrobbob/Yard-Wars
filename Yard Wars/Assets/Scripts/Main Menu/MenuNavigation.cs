@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuNavigation : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class MenuNavigation : MonoBehaviour
 
     MenuState currentState;
 
-
     [Header("Menu Screen Game Objects")]
     [SerializeField] GameObject TitleScreen;
     [SerializeField] GameObject MainMenu;
@@ -29,17 +29,36 @@ public class MenuNavigation : MonoBehaviour
     [Header("Animations")]
     [SerializeField] Animator MenuAnimator;
 
+    [Header("Singleplayer Level Preview Images")]
+    [SerializeField] Image LevelPreviewImage;
+    [SerializeField] List<Sprite> PreviewImages;
+
     // Start is called before the first frame update
     void Start()
     {
         currentState = MenuState.Title;
+        UpdateMenuState();
+    }
+
+    void Update()
+    {
+        if(currentState == MenuState.Title && Input.anyKeyDown)
+        {
+            OnClick_TitleScreen();
+        }
     }
 
     // Update is called once per frame
     void UpdateMenuState()
     {
+        TitleScreen.SetActive(false);
+        MainMenu.SetActive(false);
+        Settings.SetActive(false);
+        Singleplayer.SetActive(false);
+        Multiplayer.SetActive(false);
+
         // Choose new menu to activate based on state and animate
-        switch(currentState)
+        switch (currentState)
         {
             case MenuState.Title:
                 TitleScreen.SetActive(true);
@@ -62,20 +81,10 @@ public class MenuNavigation : MonoBehaviour
                 // Fade in anim
                 break;
             default:    // MenuState glitched, reset all menus and states, restart
-                ResetMenuState();
+                currentState = MenuState.Title;
+                UpdateMenuState();
                 break;
         }
-    }
-
-    void ResetMenuState()
-    {
-        currentState = MenuState.Title;
-        TitleScreen.SetActive(false);
-        MainMenu.SetActive(false);
-        Settings.SetActive(false);
-        Singleplayer.SetActive(false);
-        Multiplayer.SetActive(false);
-        UpdateMenuState();
     }
 
     public void OnClick_ExitGame()
@@ -91,7 +100,7 @@ public class MenuNavigation : MonoBehaviour
 
         //Play Animation of menu closing out
 
-        TitleScreen.SetActive(false);
+        //TitleScreen.SetActive(false);
 
         UpdateMenuState();
     }
@@ -118,6 +127,8 @@ public class MenuNavigation : MonoBehaviour
         currentState = MenuState.Singleplayer;
 
         UpdateMenuState();
+
+        LevelPreviewImage.sprite = PreviewImages[0];
     }
 
     public void OnClick_Multiplayer()
@@ -126,5 +137,25 @@ public class MenuNavigation : MonoBehaviour
         currentState = MenuState.Multiplayer;
 
         UpdateMenuState();
+    }
+
+    public void OnClick_ConfirmSettings()
+    {
+        Debug.Log("Confirm Settings Clicked");
+    }
+
+    public void OnClick_UpdateLevelImage(int selectedLevel)
+    {
+        LevelPreviewImage.sprite = PreviewImages[selectedLevel];
+    }
+
+    public void OnClick_SingleplayerLoadLevel()
+    {
+        Debug.Log("Singleplayer Load Level Clicked");
+    }
+
+    public void OnClick_MultiplayerJoinGame()
+    {
+        Debug.Log("Multiplayer Join Game Clicked");
     }
 }
