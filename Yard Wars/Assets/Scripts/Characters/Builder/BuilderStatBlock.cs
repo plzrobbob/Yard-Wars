@@ -44,4 +44,19 @@ public class BuilderStatBlock : MonoBehaviour
     {
         
     }
+
+    public float BuilderDamageFunction()
+    {
+        return BuilderDamage;
+    }
+
+    public float BuilderHealthFunction()
+    {
+        return BuilderHealth;
+    }
+
+    public float BuilderSpeedFunction()
+    {
+        return BuilderSpeed;
+    }
 }

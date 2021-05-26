@@ -45,8 +45,6 @@ public class GrenadierStatHandler : MonoBehaviour
             this.GetComponent<GrenadierAbilities>().Target = LayerMask.GetMask("Team1");
 
         }
-
-
     }
 
     // Update is called once per frame
@@ -58,5 +56,15 @@ public class GrenadierStatHandler : MonoBehaviour
    public float GrenadierDamageCall()
     {
         return GrenadierDamage;
+    }
+
+    public float GrenadierMaxHealth()
+    {
+        return GrenadierHealth;
+    }
+
+    public float GrenadierSpeedFunction()
+    {
+        return GrenadierSpeed;
     }
 }

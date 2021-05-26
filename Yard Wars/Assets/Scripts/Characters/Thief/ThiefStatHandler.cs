@@ -25,5 +25,20 @@ public class ThiefStatHandler : MonoBehaviour
     {
 
     }
+
+    public float ThiefHealthFunction()
+    {
+        return ThiefHealth;
+    }
+
+    public float ThiefDamageFunction()
+    {
+        return ThiefDamage;
+    }
+
+    public float ThiefSpeedFunction()
+    {
+        return ThiefSpeed;
+    }
 }
 

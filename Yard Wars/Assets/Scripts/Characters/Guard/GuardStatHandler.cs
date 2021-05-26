@@ -32,4 +32,19 @@ public class GuardStatHandler : MonoBehaviour
     {
         
     }
+
+    public float GuardHealthFunction()
+    {
+        return GuardHealth;
+    }
+
+    public float GuardDamageFunction()
+    {
+        return GuardDamage;
+    }
+
+    public float GuardSpeedFunction()
+    {
+        return GuardSpeed;
+    }
 }
