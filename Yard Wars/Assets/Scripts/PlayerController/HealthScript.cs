@@ -13,6 +13,8 @@ public class HealthScript : MonoBehaviour
     public float regentimer;
     public float regenmult;
     private float curregentime;
+    private IEnumerator dotDamage;
+    private bool DottyDamage = false;
 
     public bool damaged;
 
@@ -22,6 +24,8 @@ public class HealthScript : MonoBehaviour
     public PlaceDefense m_placeDefense;
     public GameObject PlayerCineCamera;
     public GameObject DeathCamCineCamera;
+    public PlayerResourceSystem player_resources;
+    public float death_value;
 
     public Animator Player_Animator;
 
@@ -33,11 +37,16 @@ public class HealthScript : MonoBehaviour
     void Start()
     {
         CurrentHealth = MaxHealth;
+        if (TopBody.gameObject.CompareTag("Enemy"))
+        {
+            GameObject tempPlayer = GameObject.FindGameObjectWithTag("PlayerHolder");
+            player_resources = tempPlayer.GetComponent<PlayerResourceSystem>();
+        }
     }
 
     public void Update()
     {
-        if (CurrentHealth > 0 && TopBody.gameObject.tag == "PlayerHolder")
+        if (CurrentHealth > 0 && TopBody.gameObject.CompareTag("PlayerHolder"))
         {
             RegenHandler();
         }
@@ -47,10 +56,15 @@ public class HealthScript : MonoBehaviour
             StartCoroutine(Dead());
         }
 
-        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.tag == "PlayerHolder")
+        if (Input.GetAxis("Die") != 0 && TopBody.gameObject.CompareTag("PlayerHolder"))
         {
             Debug.Log("dead");
             CurrentHealth = 0;
+        }
+        else if(DottyDamage)
+        {
+            StartCoroutine(SpecialDuration());
+            DottyDamage = false;
         }
     }
 
@@ -83,21 +97,26 @@ public class HealthScript : MonoBehaviour
     public void DamageHandler()
     {
         damaged = true;
+        Debug.Log("Current  Health = " + CurrentHealth);
         curregentime = 0;
     }
 
     public IEnumerator Dead()
     {
-        if (TopBody.gameObject.tag != "PlayerHolder")//destroy ai and defenses
+        if (!TopBody.gameObject.CompareTag("PlayerHolder"))//destroy ai and defenses
         {
+            if(TopBody.gameObject.CompareTag("Enemy"))
+            {
+                player_resources.Gain(death_value);
+            }
             yield return new WaitForSeconds(1);
             Destroy(TopBody);
         }
-        if (TopBody.gameObject.tag == "PlayerHolder")//respawn the player
+        if (TopBody.gameObject.CompareTag("PlayerHolder"))//respawn the player
         {
 
             m_PlayerCharacterController.enabled = false;//player is dead play animation and remove controlls
-            m_weaponAim_Fire.enabled = false;
+          //  m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
             Player_Animator.SetBool("IsDead", true);
@@ -118,7 +137,7 @@ public class HealthScript : MonoBehaviour
 
             yield return new WaitForSeconds(1);//give controlls back to player
             m_PlayerCharacterController.enabled = true;
-            m_weaponAim_Fire.enabled = true;
+        //    m_weaponAim_Fire.enabled = true;
             m_placeDefense.enabled = true;
             Isdead = false;
         }
@@ -130,5 +149,21 @@ public class HealthScript : MonoBehaviour
 
         Vector3 destination = new Vector3(Random.Range(RespawnBoundries[0].transform.position.x, RespawnBoundries[1].transform.position.x), RespawnBoundries[0].transform.position.y + m_PlayerCharacterController.CharController.height / 2, Random.Range(RespawnBoundries[0].transform.position.z, RespawnBoundries[2].transform.position.z));
         TopBody.transform.position = destination;
+    }
+
+    // This is Tin's code. The code made by tin. Tin's code. The code specifically written by Tin.
+  
+   //BELOW IS HOW THE DOT DAMAGE WORKS 
+    IEnumerator SpecialDuration()      //Its initiated by a SendMessage function from BlackLicoriceAbility
+    {
+        int i;
+        Debug.Log("Hey The Coroutine in the healthscript is turned on");
+        for (i = 0; i < 4; i++)   // for three seconds, 0 > 1 > 2 > 3 but not 4
+        {
+            CurrentHealth -= 1; //take damage BITCH
+            Debug.Log("Health of the Minion: " + CurrentHealth); //so I can show off
+            //Debug.Log(i);
+            yield return new WaitForSeconds(1f); // waits the specified timeframe
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrenadierBasicHitDetect : MonoBehaviour
 {
     // Start is called before the first frame update
+    private AudioManager audio_manager;
     private Collider[] HitTargets;
     private Vector3 overlapCheck;
    // public float mainDamage;  
@@ -15,7 +16,6 @@ public class GrenadierBasicHitDetect : MonoBehaviour
 
     void Start()
     {
-
 
         /// <summary>
         /// Somewhere in another script attached to this there is a cry for help over this situation. This is dumb. Why is this like this? this should be easier.
@@ -57,15 +57,17 @@ public class GrenadierBasicHitDetect : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-       //The reason I have it spawning on collision.contacts[0].point is to try and replicate how a balloon would work
-       //When it pops, the water will splash off of the first thign it, so the aoe damage is based on that location
+        //The reason I have it spawning on collision.contacts[0].point is to try and replicate how a balloon would work
+        //When it pops, the water will splash off of the first thign it, so the aoe damage is based on that location
 
-       
+        FindObjectOfType<AudioManager>().Play("WaterBalloonSplash1");
         HitTargets = Physics.OverlapSphere(collision.contacts[0].point, area, layer);
         DoDamage();
         Destroy(gameObject);
-
+        
     }
+
+    
     private void DoDamage()
     {
 
