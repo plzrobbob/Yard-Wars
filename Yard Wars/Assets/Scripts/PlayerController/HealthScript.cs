@@ -153,8 +153,8 @@ public class HealthScript : MonoBehaviour
 
     // This is Tin's code. The code made by tin. Tin's code. The code specifically written by Tin.
   
-   
-    IEnumerator SpecialDuration()
+   //BELOW IS HOW THE DOT DAMAGE WORKS 
+    IEnumerator SpecialDuration()      //Its initiated by a SendMessage function from BlackLicoriceAbility
     {
         int i;
         Debug.Log("Hey The Coroutine in the healthscript is turned on");

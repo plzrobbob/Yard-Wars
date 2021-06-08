@@ -14,7 +14,7 @@ public class LicoriceAbility : MonoBehaviour
 
     public PlaceDefense m_placeDefense;
 
-    public Quaternion LicoRotate = Quaternion.Euler(0, 14.75f, 0);
+    public Quaternion LicoRotate = Quaternion.Euler(0, 14.75f, 0);  //To adjust the licorice model to move in a straight line
 
     public int LicoStacks;
 
@@ -61,11 +61,11 @@ public class LicoriceAbility : MonoBehaviour
     {
         isDone = false;
         Debug.Log("Hey The Coroutine in the healthscript is turned on");
-        if (LicoStacks <= 4)
+        if (LicoStacks <= 4)  
         {
             Debug.Log("Bullets: " + LicoStacks); //so I can show off                                    
             yield return new WaitForSeconds(5f); // waits the specified timeframe
-            LicoStacks += 1; //add stacks BITCH
+            LicoStacks += 1; //add stacks BITCH 
             if (LicoStacks <= 4)
             {
                 StartCoroutine(LicoCooldown());

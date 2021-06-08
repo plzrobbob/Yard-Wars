@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BlackLicoriceAbility : MonoBehaviour
 {
-    private IEnumerator whatever;
     private GameObject Target;
     private Vector3 targettransform;
     private float timer = 10;
@@ -33,20 +32,6 @@ public class BlackLicoriceAbility : MonoBehaviour
 
     private void Update()
     {
-        /*
-        if (Target == null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        */
-        /*
-        if (Vector3.Distance(transform.position, Target.transform.position) < 1)
-        {
-            HitTarget();
-            return;
-        }*/
-
         rb.AddForce(transform.forward * speed);
 
         if (bullettime >= timer)
@@ -55,45 +40,21 @@ public class BlackLicoriceAbility : MonoBehaviour
         }
         bullettime += Time.deltaTime;
     }
-    /*
-    void HitTarget()
-    {
-        Destroy(this.gameObject);
-        HealthScript M_HealthScript = Target.gameObject.GetComponent<HealthScript>();
-        //M_HealthScript.DamageHandler();
-        M_HealthScript.CurrentHealth -= Damages;
-    }
-    /*
 
-    private void OnCollision(Collision collision)
-    {
-        
-            Debug.Log("hit");
-            whatever = SpecialDuration(collision);
-            StartCoroutine(whatever);
-            Debug.Log("Coroutine start");
-            
-        if (collision.gameObject.tag == EnemyTag)
-        {
-            Debug.Log("Hey an enemy got hit");
-            collision.gameObject.SendMessage("SpecialDuration", 4);
-        }
-    }
-*/
     
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision) // If the bullet collides
     {
-        Debug.Log("hit");
-        if (collision.gameObject.tag == "Enemy")
+        Debug.Log("hit"); 
+        if (collision.gameObject.tag == "Enemy")  //and the collider is an enemy
         {
-            collision.gameObject.SendMessage("SpecialDuration");
+            collision.gameObject.SendMessage("SpecialDuration"); // Activate DOT Damage
         }
         Destroy(gameObject);
     }
     
 
-
-    IEnumerator SpecialDuration(Collision collision)
+    // BELOW IS A TEST FUNCTION, THE REAL FUNCTION IS ON THE HEALTHSCRIPT
+    IEnumerator SpecialDuration(Collision collision) // This code is where the Dot Damage works.
     {
         int i = 4;
         for (i = 0; i < 4; i++)   // for three seconds, 0 > 1 > 2 > 3 but not 4
