@@ -1038,7 +1038,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 786efb136d1c6814a94488e68834a55c, type: 3}
+    m_Font: {fileID: 12800000, guid: 076ea49b0a4b8dc459bba45ccb231047, type: 3}
     m_FontSize: 20
     m_FontStyle: 2
     m_BestFit: 0
@@ -1050,7 +1050,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Press any Button to Start
+  m_Text: PRESS ANY BUTTON TO START
 --- !u!1 &2018851018784801047
 GameObject:
   m_ObjectHideFlags: 0
