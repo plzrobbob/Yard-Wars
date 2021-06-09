@@ -125,3 +125,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   area: 2
+  layernum: 0

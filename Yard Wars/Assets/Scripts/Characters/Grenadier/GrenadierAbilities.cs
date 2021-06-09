@@ -62,6 +62,12 @@ public class GrenadierAbilities : MonoBehaviour
     public float newrot;
     public LayerMask raymask;
 
+    public GameObject AbilitytwoSpawn;
+    public GameObject AbilityTwoBola;
+    [Range(5.0f, 25.0f)]
+    public float AbilityTwoSpeed;
+    public float AbilityTwoSlowSpeed;
+    public float AbilityTwoDistance;
 
 
 
@@ -82,7 +88,12 @@ public class GrenadierAbilities : MonoBehaviour
     private Collider[] damaging;
     public LayerMask Target;
     public float UltiDamageNum;
-
+    public Animator Player_Animator;
+    public GrenadierBasicAttack GrenBasic;
+    public GameObject UltWeapon;
+    public PlayerCharacterController pcc;
+    public bool VisibleUltWeapon;
+    public bool IPfireult;
 
 
 
@@ -100,8 +111,9 @@ public class GrenadierAbilities : MonoBehaviour
         AbilityTwoCooldown = 10f;
         UltimateCooldown = 60f;
         UltimatePressed = false;
-       // DasBrain = this.gameObject.GetComponentInChildren<CinemachineFreeLook>();
-       // PlayerView = this.gameObject;
+        DisableVisibleUltimate();
+        // DasBrain = this.gameObject.GetComponentInChildren<CinemachineFreeLook>();
+        // PlayerView = this.gameObject;
     }
 
     // Update is called once per frame
@@ -122,7 +134,15 @@ public class GrenadierAbilities : MonoBehaviour
             DoDamageAbilityOne();
             Debug.Log(EnemiesDamaged.Length);
             Debug.Log("AbilityOneInitiated");
+
+            Player_Animator.SetBool("Ability1", true);
+            Player_Animator.SetLayerWeight(1, 0);
+            Player_Animator.SetLayerWeight(2, 0);
+            Invoke("reacLayer", 1f);
+
             AbilityOnecooldown = 0f;
+            GrenBasic.canattack = false;
+
         }
 
 
@@ -135,18 +155,30 @@ public class GrenadierAbilities : MonoBehaviour
         //Here we will control the rotating and placing of the ability.
         if (placing)
         {
-            RotateDefense();
-            SetDefenseHeight();
-            DoAbilityTwo();
+          //  RotateDefense();
+        //    SetDefenseHeight();
+        //    DoAbilityTwo();
         }
 
         if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !placing && !UltimatePressed)
         {
             Debug.Log("Ability Two initiated");
-            placing = true;
+         //   placing = true;
             
-            deactivate = true;
-            TripWire.SetActive(true);
+      //      deactivate = true;
+       //     TripWire.SetActive(true);
+        }
+
+        if (Input.GetButtonDown("Ability Two") && AbilityTwoCooldown > 10 && !UltimatePressed)
+        {
+            AbilityTwoV2();
+            Player_Animator.SetBool("Ability2", true);
+            //Player_Animator.SetLayerWeight(1, 0);
+            //Player_Animator.SetLayerWeight(2, 0);
+            Invoke("reacLayer", 1f);
+
+            GrenBasic.canattack = false;
+            //   AbilityTwoCooldown = 0f;
         }
 
 
@@ -171,45 +203,34 @@ public class GrenadierAbilities : MonoBehaviour
             UltiCam.SetActive(true);
             //UltiCam.transform.rotation = PlayerCam.transform.rotation;
 
-            GameObject obj = Instantiate(reticle, gameObject.transform.position, Quaternion.identity);
+            GameObject obj = Instantiate(reticle, gameObject.transform.position, reticle.transform.rotation);
             ReticleController = obj;
-
+            Player_Animator.SetBool("Ability3", true);
+            enableVisibleUltimate();
+            GrenBasic.canattack = false;
         }
 
-
-        // I am working on vfx.
-        /*
-        if (UltiFired && !inProgress)
+        if (VisibleUltWeapon && !UltWeapon.activeInHierarchy && !IPfireult)
         {
-
-            effect.Play();
-            inProgress = true;
-            UltiFired = false;
+            UltWeapon.SetActive(true);
+            Player_Animator.SetLayerWeight(1, 0);
+            Player_Animator.SetLayerWeight(2, 0);
         }
-
-        if (inProgress)
+        if (!VisibleUltWeapon && UltWeapon.activeInHierarchy)
         {
-            Debug.Log("gets hjere");
-            Debug.Log(effect.GetFloat("Current_time_to_impact"));
-
-            if (effect.GetFloat("Current_time_to_impact") < 1f)
-            {
-                effect.SetFloat("Current_time_to_impact", effect.GetFloat("Current_time_to_impact") + (Time.deltaTime));
-            }
-            else
-            {
-                inProgress = false;
-                effect.SetFloat("Current_time_to_impact", 0f);
-            }
+            Debug.Log("ip reset layer - ult");
         }
-        
-
-        */
 
     }
+    void reacLayer()
+    {
+        Player_Animator.SetLayerWeight(1, 1);
+        Player_Animator.SetLayerWeight(2, 1);
 
+        Debug.Log("reset layer - ult");
+    }
     //Useful Debug tool I added. remove when Grenadier in final stage.
-    
+
     void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -260,7 +281,10 @@ public class GrenadierAbilities : MonoBehaviour
             //Current Exit velocity looks weird. it works, but I am going to figure out if it needs to be faster or not
             obj.GetComponent<Rigidbody>().velocity = (obj.transform.forward * 4f);
 
+
         }
+        Invoke("Ability1False", .2f);
+
     }
 
 
@@ -292,6 +316,27 @@ public class GrenadierAbilities : MonoBehaviour
             
 
         }
+    }
+
+    void AbilityTwoV2 ()
+    {
+        GameObject obj = Instantiate(AbilityTwoBola, AbilitytwoSpawn.transform.position, AbilitytwoSpawn.transform.rotation);
+        obj.gameObject.GetComponent<Rigidbody>().velocity = AbilitytwoSpawn.transform.forward * AbilityTwoSpeed;
+        obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().damage = AbilityTwoDamage;
+        obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().slowTime = AbilityTwoSlowSpeed;
+        obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().distanceAllowed = AbilityTwoDistance;
+
+        if (gameObject.layer == 20)
+        {
+            obj.GetComponentInChildren<GrenadierAbilityTwoBola>().targetNum = 21;
+
+        }
+        else if (gameObject.layer == 21)
+        {
+            obj.GetComponentInChildren<GrenadierAbilityTwoBola>().targetNum = 20;
+        }
+        Invoke("Ability2False", .2f);
+
     }
 
     private void RotateDefense()
@@ -381,9 +426,8 @@ public class GrenadierAbilities : MonoBehaviour
 
     void DoUltimate()
     {
-        Debug.DrawRay(Cam.transform.position, Cam.transform.forward *2000000, Color.red);
+       // Debug.DrawRay(Cam.transform.position, Cam.transform.forward *2000000, Color.red);
         Physics.Raycast(Cam.transform.position, Cam.transform.forward, out var hit, 75f, UltiRaymask);
-      //  Debug.Log(hit.point);
 
         if (hit.point != new Vector3(0,0,0))
         {
@@ -394,12 +438,6 @@ public class GrenadierAbilities : MonoBehaviour
 
         }
 
-        ///<summary>
-        ///So This works as is, but I don't like how this currently works and it needs to change. The problem can be seen when playing the game. 
-        ///The issue is when you get outside of the raycasts range, the aiming reticle stops right where it is. I want it to smoothly go around in a circle 
-        ///when it reaches the extent of it's in game range. I am not exactly sure how to do this except using a radius to try and restrict its range
-        /// </summary>
-
         if (Vector3.Distance(transform.position, ReticleController.transform.position) > 50f)
         {
 
@@ -409,24 +447,22 @@ public class GrenadierAbilities : MonoBehaviour
 
         }
 
-
-
         ReticleController.transform.position = Vector3.Lerp(ReticleController.transform.position, DACLAMPA, 1f);
-
         //This section of the code is the part that launches the player out of its current control loop. This will give the player control again and throw it out of its current loop
         if (Input.GetButtonDown("Ultimate") || Input.GetButtonDown("Fire1"))
         {
+            IPfireult = true;
+            Player_Animator.SetBool("Ability3Fire", true);
+            UltWeapon.SetActive(false);
+            Invoke("reacLayer", 1f);
+
             Debug.Log("Jump out of lOOp");
             gameObject.GetComponent<PlayerCharacterController>().enabled = true;
             UltimateCooldown = 0f;
             UltimatePressed = false;
-            //DasBrain.Follow = PlayerView.transform;
-            //DasBrain.LookAt = PlayerView.transform;
             UltiCam.SetActive(false);
             PlayerCam.SetActive(true);
             PlayerCam.transform.rotation = UltiCam.transform.rotation;
-
-            
 
             ReticleController.GetComponent<MeshRenderer>().enabled = false;
             Destroy(ReticleController, 2.5f);
@@ -435,38 +471,19 @@ public class GrenadierAbilities : MonoBehaviour
             fireUlti();
             UltiFired = true;
         }
-
-
-        /// <summary>
-        ///STEPS REQUIRED:
-        ///1. I need to lock down the controls. Can't fire other abilities while using this one - DONE
-        ///2. I need to zoom out the camera. Ask Ben how I do this - DONE, LOOK BELOW MORE INFO
-        ///3. I need to have a reticle pop up that will allow me to move it based off of the camera input but only allow it to reach a certain distance before it won't move -DONE LOOK BELOW MORE INFO
-        ///4. I need to have it fly into the air with a drop time of about 2 seconds. This is actually pretty easy just a lot of math stuff. - DONE
-        /// 
-        /// 2. More info: Camera works, but has strange interactions, sometimes spinning camera back when it shouldn't be. Need to fix this.
-        /// 3. I believe I commented earlier about this but will post here again:
-        ///So This works as is, but I don't like how this currently works and it needs to change. The problem can be seen when playing the game. 
-        ///The issue is when you get outside of the raycasts range, the aiming reticle stops right where it is. I want it to smoothly go around in a circle 
-        ///when it reaches the extent of it's in game range. I am not exactly sure how to do this except using a radius to try and restrict its range
-        ///
-        /// 
-        /// </summary>  
-
-
-
     }
-
-
     void fireUlti()
     {
+        Ability3False();
+
         GameObject obj = Instantiate(UltiBalloon, transform.position, Quaternion.identity);
         obj.gameObject.GetComponent<Rigidbody>().velocity = HitTargetAtTime(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 2.5f);
+        FindObjectOfType<AudioManager>().Play("UltExhale", transform.position);
         //HitTargetByAngle(obj.transform.position, ReticleController.transform.position, new Vector3(0f, -9.81f, 0f), 60f)
         Destroy(obj, 2.5f);
         Invoke("UltiDamage", 2.5f);
+        Invoke("DisableVisibleUltimate", 1f);
     }
-
     void UltiDamage()
     {
         damaging = Physics.OverlapSphere(UltiAreaDamage, 3.0f, Target);
@@ -477,18 +494,9 @@ public class GrenadierAbilities : MonoBehaviour
             M_HealthScript.CurrentHealth -= UltiDamageNum;
             Debug.Log("UltiDamage");
         }
+        IPfireult = false;
 
     }
-
-
-
-    /// <summary>
-    /// This glorious set of code is something I heisted from online. With this, you are able to accurately give an object a velocity and have it hit a specific target from a specific starting
-    /// point. Below I have the three different ways: HitTargetAttime, HitTargetByAngle, and HitTargetBySpeed. I will make sure to comment all of this so that anyone who looks/needs it
-    /// understands it. This legitimately saved me like 3 hours.
-    /// Link: https://answers.unity.com/questions/1087568/3d-trajectory-prediction.html
-    /// </summary>
-
     public static Vector3 HitTargetAtTime(Vector3 startPosition, Vector3 targetPosition, Vector3 gravityBase, float timeToTarget)
     {
         Vector3 AtoB = targetPosition - startPosition;
@@ -588,6 +596,33 @@ public class GrenadierAbilities : MonoBehaviour
         Vector3 output;
         output = Vector3.Project(AtoB, gravityBase);
         return output;
+    }
+    private void Ability1False()
+    {
+        Player_Animator.SetBool("Ability1", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void Ability2False()
+    {
+        Player_Animator.SetBool("Ability2", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void Ability3False()
+    {
+        Player_Animator.SetBool("Ability3", false);
+        Invoke("GrenBasicCanFire", .2f);
+    }
+    private void GrenBasicCanFire()
+    {
+        GrenBasic.canattack = true;
+    }
+    public void enableVisibleUltimate()
+    {
+        VisibleUltWeapon = true;
+    }
+    public void DisableVisibleUltimate()
+    {
+        VisibleUltWeapon = false;
     }
 
 }
