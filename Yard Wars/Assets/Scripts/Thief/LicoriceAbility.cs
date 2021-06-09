@@ -39,7 +39,7 @@ public class LicoriceAbility : MonoBehaviour
     {
         if (Input.GetButtonDown("Ability2") && WeaponCooldown > .5f && !m_placeDefense.placing && LicoStacks != 0)
         {
-            FindObjectOfType<AudioManager>().Play("SHOOT");
+            FindObjectOfType<AudioManager>().Play("LiqThrow");
             CreateBullet();
             LicoStacks -= 1;
 
