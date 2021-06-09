@@ -26,7 +26,7 @@ public class HealthScript : MonoBehaviour
     public GameObject DeathCamCineCamera;
     public PlayerResourceSystem player_resources;
     public float death_value;
-    public Animator Player_Animator;
+    public Animator healthAnimator;
 
     private bool Isdead;
 
@@ -107,12 +107,19 @@ public class HealthScript : MonoBehaviour
     {
         if (!TopBody.gameObject.CompareTag("PlayerHolder"))//destroy ai and defenses
         {
-            //if (TopBody.gameObject.CompareTag("Enemy"))
-            //{
-            //    player_resources.Gain(death_value);
-            //}
-            //yield return new WaitForSeconds(1);
-            Destroy(TopBody);
+            if (healthAnimator != null)
+            {
+                healthAnimator.SetBool("IsDead", true);
+                yield return new WaitForSeconds(4);
+            }
+            //camera transition            
+
+                //if (TopBody.gameObject.CompareTag("Enemy"))
+                //{
+                //    player_resources.Gain(death_value);
+                //}
+                //yield return new WaitForSeconds(1);
+                Destroy(TopBody);
         }
         if (TopBody.gameObject.CompareTag("PlayerHolder"))//respawn the player
         {
@@ -121,9 +128,13 @@ public class HealthScript : MonoBehaviour
           //  m_weaponAim_Fire.enabled = false;
             m_placeDefense.enabled = false;
             PlayerCineCamera.SetActive(false);
-            Player_Animator.SetBool("IsDead", true);
-            Player_Animator.SetLayerWeight(1, 0);
-            Player_Animator.SetLayerWeight(2, 0);
+            healthAnimator.SetBool("IsDead", true);
+            try
+            {
+                healthAnimator.SetLayerWeight(1, 0);
+                healthAnimator.SetLayerWeight(2, 0);
+            }
+            catch { }
             yield return new WaitForSeconds(1);
 
             yield return new WaitForSeconds(2);//camera transition
@@ -135,9 +146,13 @@ public class HealthScript : MonoBehaviour
             CurrentHealth = MaxHealth;
             Playerbody.SetActive(true);
 
-            Player_Animator.SetBool("IsDead", false);
-            Player_Animator.SetLayerWeight(1, 1);
-            Player_Animator.SetLayerWeight(2, 1);
+            healthAnimator.SetBool("IsDead", false);
+            try
+            {
+                healthAnimator.SetLayerWeight(1, 1);
+                healthAnimator.SetLayerWeight(2, 1);
+            }
+            catch { }
 
             PlayerCineCamera.SetActive(true);
             DeathCamCineCamera.SetActive(true);

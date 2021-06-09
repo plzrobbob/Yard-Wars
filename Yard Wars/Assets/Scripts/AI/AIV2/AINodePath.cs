@@ -100,6 +100,16 @@ public class AINodePath : MonoBehaviour
     //public float speedHolder;
     public GameObject Builder2TurnOff;
 
+    //minions animator
+    public Animator MinionAnimator;
+
+    //minions health script
+    public HealthScript Minion_healthscript;
+    private bool isdead;
+
+    //image for when minion is mad at something and wants to attack
+    public GameObject AgroIcon;
+
     void Start()
     {
         Minionagent = GetComponent<NavMeshAgent>();
@@ -124,7 +134,14 @@ public class AINodePath : MonoBehaviour
         //Debug.Log(Minionagent.pathStatus);
         //Debug.Log(Minionagent.isPathStale);
         //Debug.Log("turret " + PathToTurretTargetIsPartial);
-
+        if (Target != null)
+        {
+            AgroIcon.SetActive(true);
+        }
+        else
+        {
+            AgroIcon.SetActive(false);
+        }
 
         var path2 = Minionagent.path;
         for (int i = 0; i < path2.corners.Length - 1; i++)
@@ -152,6 +169,7 @@ public class AINodePath : MonoBehaviour
                 Target = WallTarget;
                 AgroTarget = true;
             }
+            //MinionAnimator.SetBool("Walk", false);
         }
         else if(tempcircleRadius != circleRadius)
         {
@@ -160,6 +178,7 @@ public class AINodePath : MonoBehaviour
 
         if (!nodepathing && nodeIsEmpty && path.Length > 0)//on the first frame get the path and make a set of nodes for minions to follow.
         {
+            //MinionAnimator.SetBool("Walk", true);
             try
             {
                 if (data2.Count <= 0)//only run this once.  the else statement should never run
@@ -201,16 +220,52 @@ public class AINodePath : MonoBehaviour
             PartialPath = false;
         }
 
+        if (Minion_healthscript.CurrentHealth <= 0)
+        {
+            isdead = true;
+            Minionagent.ResetPath();
+        }
+
+        if (isdead)
+        {
+            Minionagent.enabled = false;
+        }
+
         if (isSliding)
         {
             Sliding();
         }
 
+        if (Minionagent.hasPath)
+        {
+            float singleStep = 1 * Time.deltaTime;
+
+            Vector3 targetDirection = Minionagent.destination - transform.position;
+
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+
+            transform.rotation = Quaternion.LookRotation(newDirection);
+
+
+            //Vector3 rot = new Vector3(0,Minionagent.destination.,0)
+            //transform.rotation = 
+        }
+
+        if (nodepathing)
+        {
+            MinionAnimator.SetBool("Walk", true);
+        }
+        else
+        {
+            MinionAnimator.SetBool("Walk", true);
+        }
+
         //call the state machine to determine the AI's next state if the minion is not stunned
-        if (!IsStunned)
+        if (!IsStunned && !isdead)
         {
             FSM();
         }
+
     }
 
     void GetTarget()
@@ -403,7 +458,16 @@ public class AINodePath : MonoBehaviour
             if (Target.GetComponent<HealthScript>().CurrentHealth > 0 && tempdist < 5)
             {
                 Target.GetComponent<HealthScript>().CurrentHealth -= MinionDamage;
+                MinionAnimator.SetBool("Attack", true);
             }
+            else
+            {
+                MinionAnimator.SetBool("Attack", false);
+            }
+        }
+        else
+        {
+            MinionAnimator.SetBool("Attack", false);
         }
     }
 
@@ -442,12 +506,14 @@ public class AINodePath : MonoBehaviour
                 var pathOnlyLane = new NavMeshPath();
                 NavMesh.CalculatePath(transform.position, PlayerTarget.transform.position, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
                 Minionagent.path = pathOnlyLane;
+                //MinionAnimator.SetBool("Walk", true);
             }
             else
             {
                 MinionObstacle.enabled = false;
                 Minionagent.enabled = true;
                 Minionagent.SetDestination(PlayerTarget.transform.position);
+                //MinionAnimator.SetBool("Walk", true);
             }
         }
         else
@@ -468,6 +534,7 @@ public class AINodePath : MonoBehaviour
                 var pathOnlyLane = new NavMeshPath();
                 NavMesh.CalculatePath(transform.position, TargetRandPos, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
                 Minionagent.path = pathOnlyLane;
+                //MinionAnimator.SetBool("Walk", true);
             }
             else if (!onpath)//if the minion is off the path then he should path back to last known path position.
             {
@@ -476,6 +543,7 @@ public class AINodePath : MonoBehaviour
                     MinionObstacle.enabled = false;
                     Minionagent.enabled = true;
                     Minionagent.SetDestination(LastKnownLanePos.transform.position);
+                    //MinionAnimator.SetBool("Walk", true);
                 }
             }
         }
@@ -588,6 +656,7 @@ public class AINodePath : MonoBehaviour
                 var pathOnlyLane = new NavMeshPath();
                 NavMesh.CalculatePath(transform.position, data2[CurNode].position, mask, pathOnlyLane);//calculate the path using an area mask.  This makes it so minions wont leave the lane surface
                 Minionagent.path = pathOnlyLane;
+                //MinionAnimator.SetBool("Walk", true);
             }
             else if (!onpath)//if the minion is off the path then he should path back to last known path position.
             {
@@ -597,6 +666,7 @@ public class AINodePath : MonoBehaviour
                     Minionagent.enabled = true;
                     Vector3 position = new Vector3(LastKnownLanePos.transform.position.x, 0, LastKnownLanePos.transform.position.z);
                     Minionagent.SetDestination(position);
+                    //MinionAnimator.SetBool("Walk", true);
                 }
             }
 
