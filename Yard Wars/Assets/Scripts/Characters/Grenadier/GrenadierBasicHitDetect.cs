@@ -17,7 +17,6 @@ public class GrenadierBasicHitDetect : MonoBehaviour
     void Start()
     {
 
-
         /// <summary>
         /// Somewhere in another script attached to this there is a cry for help over this situation. This is dumb. Why is this like this? this should be easier.
         /// Please answer the call for help - Cameron
@@ -66,8 +65,10 @@ public class GrenadierBasicHitDetect : MonoBehaviour
         HitTargets = Physics.OverlapSphere(collision.contacts[0].point, area, layer);
         DoDamage();
         Destroy(gameObject);
-
+        
     }
+
+    
     private void DoDamage()
     {
 

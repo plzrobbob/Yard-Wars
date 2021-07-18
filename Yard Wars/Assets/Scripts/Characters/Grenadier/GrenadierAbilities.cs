@@ -196,6 +196,7 @@ public class GrenadierAbilities : MonoBehaviour
         if (Input.GetButtonDown("Ultimate") && UltimateCooldown > 60 && !UltimatePressed)
         {
             Debug.Log("Ultimate initiated");
+            FindObjectOfType<AudioManager>().Play("GUlti");
             UltimatePressed = true;
             this.gameObject.GetComponent<PlayerCharacterController>().enabled = false;
 
@@ -274,6 +275,7 @@ public class GrenadierAbilities : MonoBehaviour
             spawnPos.y = SpawnheightAbilityOne.position.y;
 
             GameObject obj = Instantiate(BalloonPrefab, spawnPos, Quaternion.identity);
+            FindObjectOfType<AudioManager>().Play("WaterRing");
 
             //This rotates the spawned object to look AWAY from the player, this way I can add velocity and fire it in the OPPOSITE direction of the player
             obj.transform.rotation = Quaternion.LookRotation(obj.transform.position - this.transform.position);
@@ -325,6 +327,7 @@ public class GrenadierAbilities : MonoBehaviour
         obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().damage = AbilityTwoDamage;
         obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().slowTime = AbilityTwoSlowSpeed;
         obj.gameObject.GetComponent<GrenadierAbilityTwoBola>().distanceAllowed = AbilityTwoDistance;
+        FindObjectOfType<AudioManager>().Play("GBola");
 
         if (gameObject.layer == 20)
         {

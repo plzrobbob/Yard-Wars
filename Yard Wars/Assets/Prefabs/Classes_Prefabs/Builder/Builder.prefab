@@ -228,6 +228,8 @@ GameObject:
   - component: {fileID: 5398776262814189010}
   - component: {fileID: 8873965160813041126}
   - component: {fileID: 6775618104684842001}
+  - component: {fileID: 8438235081149337093}
+  - component: {fileID: 8591587100878904114}
   - component: {fileID: 4648842880815375622}
   m_Layer: 20
   m_Name: Builder
@@ -258,6 +260,7 @@ Transform:
   - {fileID: 1679873359754714188}
   - {fileID: 7888971684433047812}
   - {fileID: 4652679685742867036}
+  - {fileID: 5681740734365582133}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -349,6 +352,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 5398776263618816486}
   PlayerCineCamera: {fileID: 7888971684433047814}
   DeathCamCineCamera: {fileID: 4245007913655633297}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 5398776263281774918}
   respawnTimer: 3
   TopBody: {fileID: 1167637345980434335}
@@ -372,6 +377,8 @@ MonoBehaviour:
   - {fileID: 3499169094901033948}
   m_Camera: {fileID: 0}
   DefenseHolder: {fileID: 5398776262842127500}
+  player_resources: {fileID: 0}
+  defense_cost: 0
   placing: 0
   currentdefense: 0
   newrot: 0
@@ -1198,6 +1205,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 0}
   PlayerCineCamera: {fileID: 0}
   DeathCamCineCamera: {fileID: 0}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 0}
   respawnTimer: 0
   TopBody: {fileID: 3499169094901033948}
@@ -1225,6 +1234,7 @@ MonoBehaviour:
   range: 20
   bulletDamages: 5
   bulletSpeed: 50
+  buffed: 0
   timerToShoot: 0.5
   enemies: []
 --- !u!208 &1675992560128713051
@@ -2399,6 +2409,36 @@ MonoBehaviour:
     m_Bits: 1
   IgnoreTag: PlayerHolder
   CameraRadius: 0.2
+--- !u!1 &7918976163716769909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5681740734365582133}
+  m_Layer: 0
+  m_Name: SliderOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5681740734365582133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7918976163716769909}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.90800095, y: -1.415, z: 1.6169968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1167637345980434320}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8395424010793332754
 GameObject:
   m_ObjectHideFlags: 0
@@ -2518,6 +2558,8 @@ MonoBehaviour:
   m_placeDefense: {fileID: 0}
   PlayerCineCamera: {fileID: 0}
   DeathCamCineCamera: {fileID: 0}
+  player_resources: {fileID: 0}
+  death_value: 0
   Player_Animator: {fileID: 0}
   respawnTimer: 0
   TopBody: {fileID: 8395424010793332754}

@@ -9,21 +9,17 @@ public class PlaceDefense : MonoBehaviour
     public GameObject[] Placeholderdefenses;
     public GameObject m_Camera;
     public GameObject DefenseHolder;
+    public PlayerResourceSystem player_resources;
+
+    public float defense_cost;
 
     private Vector3 defensepos;
-
     public bool placing;
-
     public int currentdefense;
-
     public float newrot;
-
     private bool deactivate;
-
     public LayerMask raymask;
-
     public bool canplace;
-
 
     // Start is called before the first frame update
     void Start()
@@ -124,16 +120,22 @@ public class PlaceDefense : MonoBehaviour
 
     private void SetDefense()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && player_resources.player_funds >= defense_cost) // if the player can afford it...
         {
             Instantiate(defenses[currentdefense], Placeholderdefenses[currentdefense].transform.position, Placeholderdefenses[currentdefense].transform.rotation);
+            player_resources.Spend(defense_cost);
         }
     }
 
     private void SetDefenseHeight()
     {
         Debug.DrawRay(transform.position, transform.forward * 10, Color.red);
-        if (Physics.Raycast(transform.position, transform.forward, out var hit, 5.5f, raymask))//placing against a wall.  defenses will not intersect
+        if (player_resources.player_funds < defense_cost)
+        {
+            canplace = false;
+            return;
+        }
+        if (Physics.Raycast(transform.position, transform.forward, out var hit, 5.5f, raymask)) //placing against a wall.  defenses will not intersect
         {
             Debug.DrawRay(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up * 20, Color.blue);
             if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask))
@@ -154,7 +156,8 @@ public class PlaceDefense : MonoBehaviour
                 return;
             }
         }
-        else//if there is no wall player can just place
+        //if there is no wall player can just place
+        else
         {
             Debug.DrawRay(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up * 20, Color.blue);
             if (Physics.Raycast(this.transform.position + (transform.forward * 5) + (transform.up * 10), -transform.up, out var hit2, 20f, raymask))
@@ -175,7 +178,7 @@ public class PlaceDefense : MonoBehaviour
             }
         }
 
-        //if hit.point exists and it isnt more than 1.5 meters from the palyer then you can palce a defense
+        //if hit.point exists and it isn't more than 1.5 meters from the player then you can place a defense
         if (Vector3.Distance(this.transform.position, hit.point) < 1.5f)
         {
             canplace = false;
